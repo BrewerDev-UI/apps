@@ -1,0 +1,2077 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Library Shelf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Cormorant+SC:wght@600;700&family=Courier+Prime:wght@400;700&family=IM+Fell+English+SC&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: one walnut bookcase under a sticky brass toolbar, or the master ledger laid out in its place. Shelves are rows packed in script by spine width; the ledger, a book's catalog card and the accession slip are paper laid over the dimmed room.
+   Single look by choice: an old library at lamplight. Wood, leather, cloth and dust jackets stay lamp-lit in every theme; anything meant for close reading is printed on card stock. */
+:root{
+  color-scheme:dark;
+  --wall:#111915;
+  --glow:rgba(255,184,104,.15);
+  --wood-back:#28150b;
+  --brass:#b98f3e;
+  --brass-hi:#f0d78f;
+  --brass-lo:#6a4c1b;
+  --gilt:#dcb862;
+  --paper:#efe5cd;
+  --rule:#b5392f;
+  --ledger-line:rgba(58,96,150,.25);
+  --ink:#24232b;
+  --ink-soft:#655d56;
+  --stamp:#56398b;
+  --stamp-red:#a3332b;
+  --parch:#ebdfc4;
+  --parch-mute:#ab9d80;
+  --font-gilt:"IM Fell English SC","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --font-body:"Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --font-type:"Courier Prime","Courier New",Courier,monospace;
+  --font-spine:"Barlow Condensed","Arial Narrow","Roboto Condensed",sans-serif;
+  --font-roman:"Cormorant SC","Cormorant Garamond",Georgia,serif;
+  --stile:18px;--over:10px;--pad:12px;--H:236px;
+  --tex-leather:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 -.42'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tex-grit:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .7 -.31'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tex-cloth:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.13) 0 1px,transparent 1px 3px);
+  --tex-grain-h:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.003 .14' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .07 0 0 0 0 .035 0 0 0 0 .01 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --tex-grain-v:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='900'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.14 .003' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .07 0 0 0 0 .035 0 0 0 0 .01 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --tex-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .18 0 0 0 .5 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  --tex-ink:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='70'%3E%3Cfilter id='i'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.6 -.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23i)'/%3E%3C/svg%3E");
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background-color:var(--wall);
+  background-image:radial-gradient(ellipse 75% 460px at 50% -40px,var(--glow),transparent 72%),repeating-linear-gradient(90deg,rgba(255,255,255,.016) 0 1px,transparent 1px 44px);
+  color:var(--parch);font:16px/1.5 var(--font-body);
+}
+body:has(dialog[open]){overflow:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--wall);z-index:30}
+.sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--brass-hi);outline-offset:2px}
+button{font:inherit;color:inherit}
+
+/* ---------- toolbar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(14,20,17,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(220,184,98,.16)}
+.bar-in{max-width:1180px;margin:0 auto;padding-block:9px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px}
+.tally{margin:0;min-width:0;font:400 13px/1.3 var(--font-type);color:var(--parch-mute);letter-spacing:.01em}
+.tally b{color:var(--parch);font-weight:700}
+.bar-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.viewtog{display:inline-flex;border:1px solid rgba(220,184,98,.45);border-radius:3px;overflow:hidden;background:rgba(0,0,0,.25)}
+.vbtn{appearance:none;display:inline-flex;align-items:center;gap:6px;margin:0;border:0;padding:8px 12px 7px;background:transparent;color:var(--parch-mute);font:400 15px/1 var(--font-gilt);letter-spacing:.04em;white-space:nowrap;cursor:pointer}
+.vbtn + .vbtn{border-left:1px solid rgba(220,184,98,.35)}
+.vbtn svg{width:15px;height:15px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.vbtn:hover{color:#fff4d6}
+.vbtn[aria-pressed="true"]{color:#fff4d6;background:linear-gradient(180deg,rgba(240,215,143,.2),rgba(185,143,62,.14));box-shadow:inset 0 -2px 0 var(--brass)}
+.vbtn:focus-visible{outline-offset:-3px}
+.sortctl{display:flex;align-items:center;gap:8px;font:400 15px/1 var(--font-gilt);letter-spacing:.04em;color:var(--parch-mute)}
+.sortctl select{appearance:none;-webkit-appearance:none;font:400 14px/1.2 var(--font-type);color:var(--parch);background:#1a231e url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23dcb862' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 9px center/10px 6px;border:1px solid rgba(220,184,98,.38);border-radius:3px;padding:8px 28px 7px 10px;cursor:pointer}
+.brass{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--brass-lo);border-radius:3px;padding:9px 16px 8px;font:400 16px/1 var(--font-gilt);letter-spacing:.04em;white-space:nowrap;color:#2e210b;background:linear-gradient(180deg,var(--brass-hi),var(--brass) 48%,#d8b768 62%,#8d6a2a);box-shadow:inset 0 1px 0 rgba(255,250,225,.7),inset 0 -1px 0 rgba(0,0,0,.25),0 2px 5px rgba(0,0,0,.45);text-shadow:0 1px 0 rgba(255,240,200,.55);cursor:pointer}
+.brass:hover{filter:brightness(1.07)}
+.brass:active{transform:translateY(1px)}
+.brass[disabled]{opacity:.6;cursor:default;filter:none}
+.brass-danger{color:#3a0d0a}
+.ghost{appearance:none;border:1px solid rgba(220,184,98,.45);background:rgba(0,0,0,.25);color:var(--parch);border-radius:3px;padding:9px 14px 8px;font:400 16px/1 var(--font-gilt);letter-spacing:.04em;cursor:pointer;white-space:nowrap}
+.ghost:hover{border-color:var(--brass-hi);color:#fff6dc}
+.ghost-danger{border-color:rgba(214,110,96,.55);color:#f0c2b8}
+.add-short{display:none}
+@media (max-width:460px){
+  .add-short{display:inline}
+  .sortlbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .t-more{display:none}
+  .bar-in{gap:8px 10px}
+  .tally{flex:1 1 100%;font-size:12px}
+  .bar-actions{gap:8px;width:100%;margin-left:0}
+  .viewtog{margin-right:auto}
+  .vbtn{padding:8px 10px 7px}
+  .vbtn svg{display:none}
+  .sortctl select{font-size:13px;padding:7px 24px 6px 8px;background-position:right 8px center}
+  .bar .brass{padding:8px 11px 7px;font-size:15px}
+  .add-long{display:none}
+}
+
+/* ---------- room & bookcase ---------- */
+.stage{max-width:1180px;margin:0 auto;padding-block:22px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.notice{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 18px;padding:12px 14px;border:1px solid rgba(220,184,98,.28);border-radius:3px;background:rgba(8,12,10,.6);font:14px/1.45 var(--font-type);color:var(--parch)}
+.notice p{margin:0;min-width:0;flex:1 1 280px}
+.notice b{color:var(--gilt)}
+.notice-acts{display:flex;gap:8px;flex-wrap:wrap}
+.case{position:relative;padding:0 var(--stile);border-radius:4px 4px 3px 3px;background-color:#43240f;background-image:linear-gradient(90deg,rgba(0,0,0,.5),transparent 5px,rgba(255,214,160,.1) 8px,transparent 13px,transparent calc(100% - 13px),rgba(255,214,160,.08) calc(100% - 8px),transparent calc(100% - 5px),rgba(0,0,0,.55)),var(--tex-grain-v),linear-gradient(180deg,#563016,#40220f);box-shadow:0 40px 70px -30px rgba(0,0,0,.95),0 0 0 1px rgba(0,0,0,.55)}
+.case::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;border-radius:inherit;background:radial-gradient(ellipse 90% 380px at 50% 0,rgba(255,196,120,.09),transparent 70%),linear-gradient(180deg,transparent 55%,rgba(0,0,0,.2))}
+.cornice{position:relative;margin:0 calc(-1 * (var(--stile) + var(--over)))}
+.crown{height:28px;border-radius:5px 5px 0 0;background:linear-gradient(180deg,#8b5a30 0,#6a3e1e 4px,#2a150a 5px,#7a4a25 7px,#5a3218 15px,#2a150a 16px,#6b3f1f 18px,#4a2913 27px,#2a150a 28px);box-shadow:0 3px 4px rgba(0,0,0,.55)}
+.frieze{position:relative;margin:0 var(--over);padding:18px 14px 20px;display:flex;justify-content:center;background:var(--tex-grain-h),linear-gradient(180deg,#4e2b15,#3c200f);box-shadow:inset 0 -10px 12px -8px rgba(0,0,0,.7),inset 0 8px 10px -8px rgba(0,0,0,.6);border-bottom:4px solid #1f1008}
+.plaque{position:relative;display:flex;flex-direction:column;align-items:center;max-width:100%;padding:10px 34px 9px;border-radius:3px;color:#3a2810;background:linear-gradient(180deg,#f2dc97 0,#cfa552 38%,#ecd082 55%,#ad8235 100%);box-shadow:inset 0 1px 0 rgba(255,250,228,.75),inset 0 -1px 0 rgba(60,40,10,.35),0 0 0 1px #5d4216,0 3px 6px rgba(0,0,0,.6)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff1c4,#a17833 55%,#4f3911);box-shadow:0 1px 0 rgba(255,240,200,.5)}
+.plaque::before{left:12px}.plaque::after{right:12px}
+.lib-name{margin:0;font:400 clamp(22px,4.6vw,36px)/1.08 var(--font-gilt);letter-spacing:.05em;text-align:center;text-wrap:balance;text-shadow:0 1px 0 rgba(255,244,210,.65),0 -1px 0 rgba(70,45,10,.25)}
+.name-btn{appearance:none;border:0;background:none;padding:0;margin:0;font:inherit;letter-spacing:inherit;color:inherit;text-shadow:inherit;cursor:text;text-align:center}
+.name-input{font:inherit;letter-spacing:inherit;color:inherit;text-align:center;background:rgba(255,250,230,.35);border:0;border-bottom:1px dashed #5d4216;width:min(15ch,62vw);padding:0 4px}
+.est{margin:4px 0 0;font:700 10px/1 var(--font-type);letter-spacing:.32em;text-transform:uppercase;color:#5a4318;text-shadow:0 1px 0 rgba(255,244,210,.5)}
+.shelves{position:relative;background-color:var(--wood-back);background-image:repeating-linear-gradient(90deg,transparent 0 calc(20% - 1px),rgba(0,0,0,.42) calc(20% - 1px) 20%),linear-gradient(180deg,rgba(0,0,0,.18),transparent 30%,rgba(0,0,0,.25)),var(--tex-grain-v);box-shadow:inset 8px 0 12px -6px rgba(0,0,0,.85),inset -8px 0 12px -6px rgba(0,0,0,.85)}
+.shelf{position:relative;padding:22px var(--pad) 0}
+.row{position:relative;z-index:2;height:var(--H);display:flex;align-items:flex-end}
+/* the shelf above throws its shadow over the tops of the books */
+.row::after{content:"";position:absolute;left:calc(-1 * var(--pad));right:calc(-1 * var(--pad));top:-22px;height:66px;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.64),rgba(0,0,0,.22) 40%,transparent)}
+.board{position:relative;z-index:1;height:30px;margin:0 calc(-1 * var(--pad));background:var(--tex-grain-h),linear-gradient(180deg,#93603a 0,#73472a 6px,#2c160a 7px,#6a3d1f 8px,#55301a 60%,#3a1f0f 100%);box-shadow:0 12px 14px -8px rgba(0,0,0,.85)}
+.holder{position:absolute;left:50%;bottom:3px;z-index:3;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;min-width:80px;max-width:calc(100% - 24px);height:15px;padding:0 9px;border-radius:2px;background:var(--paper);color:var(--ink);font:700 9px/1 var(--font-type);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;box-shadow:0 0 0 2px #b08a3e,0 0 0 3px #4f3912,inset 0 1px 2px rgba(0,0,0,.28),0 3px 4px rgba(0,0,0,.55)}
+.holder.blank{background:#d8cbab}
+.plinth{height:36px;margin:0 calc(-1 * (var(--stile) + 4px));border-radius:0 0 4px 4px;background:var(--tex-grain-h),linear-gradient(180deg,#2a150a 0,#7a4a25 3px,#5a3218 12px,#2a150a 13px,#6b3f1f 15px,#43240f 100%);box-shadow:0 10px 18px rgba(0,0,0,.7)}
+
+/* ---------- spines: leather, cloth, dust jacket, paperback ---------- */
+.book{position:relative;flex:0 0 auto;width:var(--w);height:var(--h);margin:0 0 0 var(--g,0px);padding:0;border:0;background:none;color:inherit;cursor:pointer;border-radius:3px 3px 1px 1px;transform-origin:50% 100%;transition:transform .22s ease,filter .22s ease;-webkit-tap-highlight-color:transparent;box-shadow:4px 0 6px -3px rgba(0,0,0,.75),0 2px 2px rgba(0,0,0,.55)}
+.book.s-jacket{border-radius:2px 2px 1px 1px}
+.book.s-paper{border-radius:1px}
+button.book:hover,button.book:focus-visible{transform:translateY(-8px);filter:brightness(1.1)}
+.spine{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;overflow:hidden;border-radius:inherit;background-color:var(--bg);color:var(--ink)}
+.spine::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;background:linear-gradient(90deg,rgba(0,0,0,.42),transparent 11%,transparent 87%,rgba(0,0,0,.5)),linear-gradient(180deg,rgba(0,0,0,.34),transparent 2.5%,transparent 97%,rgba(0,0,0,.42))}
+.s-leather .spine{background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(0,0,0,.06) 14%,rgba(255,236,214,.18) 32%,rgba(255,236,214,.05) 48%,rgba(0,0,0,.05) 70%,rgba(0,0,0,.34)),var(--tex-leather)}
+.s-cloth .spine{background-image:linear-gradient(90deg,rgba(0,0,0,.24),rgba(255,240,220,.1) 30%,rgba(255,240,220,.03) 52%,rgba(0,0,0,.2)),var(--tex-cloth)}
+.s-jacket .spine{background-image:linear-gradient(90deg,rgba(0,0,0,.24),rgba(0,0,0,.03) 9%,rgba(255,255,255,.24) 20%,rgba(255,255,255,.05) 30%,transparent 50%,rgba(0,0,0,.08) 80%,rgba(0,0,0,.3)),var(--tex-grit)}
+.s-paper .spine{background-image:linear-gradient(90deg,rgba(0,0,0,.2),rgba(0,0,0,.03) 6%,rgba(255,255,255,.14) 8%,transparent 11.5%,transparent 88.5%,rgba(255,255,255,.1) 92%,rgba(0,0,0,.05) 94%,rgba(0,0,0,.26)),var(--tex-grit)}
+.z{position:relative;z-index:2;flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden}
+.z-title{flex:1 1 0}
+.z-par{flex-direction:row-reverse;gap:2px}
+.vtx{display:block;flex:0 0 auto;writing-mode:vertical-rl;white-space:nowrap;text-align:center;color:var(--ink);font-kerning:normal;font-synthesis:none}
+.vtx.a{color:var(--ink2)}
+.f-spine{font-family:var(--font-spine)}
+.f-roman{font-family:var(--font-roman)}
+.f-book{font-family:var(--font-body)}
+.gilt .vtx{text-shadow:0 1px 0 rgba(0,0,0,.65),0 0 2px rgba(0,0,0,.35)}
+.s-jacket:not(.ink-dark) .vtx,.s-paper:not(.ink-dark) .vtx{text-shadow:0 1px 1px rgba(0,0,0,.35)}
+/* leather: gilt rules at head and tail, raised bands, a contrasting title label */
+.s-leather .z-cap::after,.s-leather .z-foot::before{content:"";position:absolute;left:3px;right:3px;height:4px;border-top:1px solid rgba(226,190,104,.8);border-bottom:1px solid rgba(226,190,104,.55)}
+.s-leather .z-cap::after{bottom:2px}
+.s-leather .z-foot::before{top:3px}
+.z-cap svg{width:min(58%,14px);height:auto;margin-bottom:3px;fill:var(--ink);filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
+.rb{position:relative;z-index:3;flex:0 0 6px;margin:0 -1px;border-radius:2px;background:linear-gradient(180deg,rgba(255,236,206,.28),rgba(255,236,206,.05) 35%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.52));box-shadow:0 1px 2px rgba(0,0,0,.55)}
+.rb::before,.rb::after{content:"";position:absolute;left:3px;right:3px;height:1px;background:linear-gradient(90deg,transparent,rgba(232,200,120,.85) 18%,rgba(250,226,150,.95) 45%,rgba(190,150,70,.85) 78%,transparent)}
+.rb::before{top:-3px}.rb::after{bottom:-3px}
+.lab{position:absolute;inset:4px 3px;display:flex;align-items:center;justify-content:center;border-radius:1px;background-color:var(--lab);background-image:linear-gradient(90deg,rgba(0,0,0,.42),rgba(255,236,214,.09) 34%,rgba(0,0,0,.36)),var(--tex-leather);box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 0 0 0 2px rgba(226,190,104,.55),0 0 0 .5px rgba(0,0,0,.6)}
+/* cloth: blind rules, a gilt lozenge, sometimes a pasted paper label */
+.s-cloth .z-cap::before,.s-cloth .z-cap::after,.s-cloth .z-foot::before,.s-cloth .z-foot::after{content:"";position:absolute;left:2px;right:2px;height:1px;background:var(--ink);opacity:.6}
+.s-cloth .z-cap::before{top:4px}.s-cloth .z-cap::after{top:7px}
+.s-cloth .z-foot::before{top:3px}.s-cloth .z-foot::after{top:6px}
+.dot{display:block;width:4px;height:4px;transform:rotate(45deg);background:var(--ink);opacity:.85}
+.paste .lab{background-color:var(--lab);background-image:var(--tex-paper);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 1px 1px rgba(0,0,0,.45)}
+.paste .lab .vtx{color:var(--lab-ink);text-shadow:none}
+/* dust jacket: sometimes a colored band at the head */
+.z-band{background:var(--acc);box-shadow:inset 0 -1px 0 rgba(0,0,0,.25)}
+.z-band .vtx{color:var(--acc-ink)}
+/* paperback: sometimes a printed stripe */
+.stripe{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--acc)}
+/* the library's own spine label */
+.z-foot{flex-direction:column;justify-content:flex-start;padding-top:9px}
+.s-jacket .z-foot,.s-paper .z-foot{padding-top:5px}
+.call{display:block;max-width:calc(100% - 6px);padding:2px 2px 1px;border-radius:1px;background:#ece1c5;color:#28231e;font:700 var(--cf,7px)/1.08 var(--font-type);text-align:center;white-space:nowrap;overflow:hidden;box-shadow:0 1px 1px rgba(0,0,0,.45),inset 0 0 0 .5px rgba(0,0,0,.18)}
+.book.audio .call{background:#c6dbd4}
+.call svg{display:block;width:calc(var(--cf,7px) * 1.4);height:auto;margin:0 auto 1px;fill:currentColor;color:currentColor}
+/* in progress: a ribbon for bound books, a paper slip for the rest */
+.ribbon{position:absolute;z-index:2;top:calc(100% - 1px);left:56%;width:6px;height:20px;transform:rotate(10deg);transform-origin:50% 0;filter:drop-shadow(1px 1px 1px rgba(0,0,0,.55));pointer-events:none}
+.ribbon::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#6e0f12,#c4332d 45%,#8a1616);clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)}
+.bmk{position:absolute;z-index:0;bottom:calc(100% - 10px);left:var(--bx,34%);width:clamp(6px,24%,10px);height:24px;border-radius:1px 1px 0 0;background:#efe6cd linear-gradient(180deg,transparent 4px,#b5392f 4px 6px,transparent 6px);box-shadow:1px 0 2px rgba(0,0,0,.5);transform:rotate(-3deg);transform-origin:50% 100%;pointer-events:none}
+.book.arrive{animation:arrive .75s cubic-bezier(.2,.75,.3,1) both}
+@keyframes arrive{0%{transform:translateY(-54px) rotate(-6deg);opacity:0}55%{transform:translateY(3px) rotate(.8deg);opacity:1}78%{transform:translateY(-3px) rotate(0)}100%{transform:none}}
+.bookend{flex:0 0 14px;align-self:flex-end;height:58%;margin-left:6px;border-radius:8px 8px 1px 1px;background:linear-gradient(90deg,#5a3e12,#e8ca79 34%,#b98d39 60%,#6b4c18);box-shadow:inset 0 1px 0 rgba(255,246,214,.6),2px 0 4px rgba(0,0,0,.55)}
+.slot{flex:0 0 var(--sw,42px);align-self:flex-end;height:80%;margin-left:8px;padding:0;border:1.5px dashed rgba(220,184,98,.5);border-radius:3px;background:rgba(0,0,0,.18);color:var(--gilt);font:400 26px/1 var(--font-gilt);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
+.slot:hover{background:rgba(220,184,98,.1);border-color:var(--brass-hi)}
+.notecard{position:absolute;left:50%;top:50%;z-index:7;transform:translate(-50%,-52%) rotate(-1.2deg);width:min(360px,calc(100% - 16px));padding:16px 18px 18px;border-radius:2px;background-color:var(--paper);background-image:var(--tex-paper);color:var(--ink);text-align:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.8);color-scheme:light}
+.nc-big{margin:0 0 6px;font:400 22px/1.15 var(--font-gilt)}
+.nc-small{margin:0 0 12px;font:14px/1.45 var(--font-type);color:var(--ink-soft)}
+.nc-small:last-child{margin-bottom:0}
+
+/* ---------- the master ledger ---------- */
+.lg-page{position:relative;padding:22px 0 20px;border-radius:3px;background-color:var(--paper);background-image:radial-gradient(ellipse 70% 240px at 18% 0,rgba(255,255,255,.42),transparent 70%),linear-gradient(180deg,rgba(120,90,40,0),rgba(120,90,40,.07)),var(--tex-paper);color:var(--ink);color-scheme:light;box-shadow:inset 0 0 0 1px rgba(120,90,40,.2),0 34px 60px -26px rgba(0,0,0,.95)}
+.lg-page::before{content:"";position:absolute;inset:0 auto 0 0;width:22px;border-radius:3px 0 0 3px;background:linear-gradient(90deg,rgba(60,40,15,.24),transparent);pointer-events:none}
+.lg-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px;padding-inline:24px}
+.lg-eyebrow{margin:0;font:700 11px/1 var(--font-type);letter-spacing:.26em;text-transform:uppercase;color:var(--rule)}
+.lg-title{margin:7px 0 0;font:400 clamp(30px,5.2vw,42px)/1 var(--font-gilt);letter-spacing:.02em;text-wrap:balance}
+.lg-sub{margin:7px 0 0;font:italic 15px/1.4 var(--font-body);color:var(--ink-soft)}
+.lg-totals{display:grid;grid-template-columns:repeat(3,auto);gap:12px 28px;margin:0}
+.lg-totals div{min-width:0}
+.lg-totals dt{font:400 13px/1.15 var(--font-gilt);letter-spacing:.06em;color:var(--ink-soft)}
+.lg-totals dd{margin:3px 0 0;font:700 21px/1.05 var(--font-type);font-variant-numeric:tabular-nums;color:var(--ink)}
+.lg-tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:20px;padding:12px 24px;border-top:1px solid rgba(36,35,43,.14);border-bottom:1.5px solid var(--rule)}
+.lg-search{position:relative;flex:1 1 240px;min-width:0;max-width:420px}
+.lg-search svg{position:absolute;left:2px;top:50%;width:16px;height:16px;margin-top:-8px;fill:none;stroke:var(--ink-soft);stroke-width:1.6;stroke-linecap:round}
+.lg-search input{display:block;width:100%;min-width:0;padding:7px 4px 6px 26px;border:0;border-bottom:1px solid rgba(36,35,43,.45);border-radius:0;background:transparent;color:var(--ink);font:400 16px/1.3 var(--font-type);-webkit-appearance:none;appearance:none}
+.lg-search input::placeholder{color:#8a8177}
+.lg-search input:focus-visible{outline:none;border-color:var(--stamp);box-shadow:0 1.5px 0 var(--stamp)}
+.lg-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{appearance:none;display:inline-flex;align-items:baseline;gap:6px;margin:0;padding:7px 10px 6px;border:1px solid rgba(36,35,43,.38);border-radius:2px;background:transparent;color:var(--ink);font:700 12px/1 var(--font-type);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.chip span{font-weight:400;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip[aria-pressed="true"] span{color:rgba(239,229,205,.72)}
+.chip:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+/* the ruled register: a red double margin after the accession numbers, faint blue lines between entries */
+.lg-list{--mx:calc(12px + 3.2rem + 6px);--cols:3.2rem 10px minmax(0,2.4fr) minmax(0,1.5fr) 4.2rem 5.6rem 7.4rem 6.8rem 7.4rem 5.4rem;position:relative}
+.lg-list,.lg-cols{background-image:linear-gradient(90deg,transparent var(--mx),rgba(181,57,47,.5) var(--mx) calc(var(--mx) + 1px),transparent calc(var(--mx) + 1px) calc(var(--mx) + 3px),rgba(181,57,47,.5) calc(var(--mx) + 3px) calc(var(--mx) + 4px),transparent calc(var(--mx) + 4px))}
+.lg-cols,.entry{display:grid;grid-template-columns:var(--cols);column-gap:12px;padding-left:12px;padding-right:24px}
+.lg-cols{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--barH,56px));z-index:2;align-items:end;padding-top:12px;padding-bottom:7px;background-color:var(--paper);border-bottom:1.5px solid rgba(181,57,47,.75);font:400 13px/1.1 var(--font-gilt);letter-spacing:.06em;color:var(--ink-soft)}
+.lg-cols .c-no{text-align:right}
+.entry{width:100%;margin:0;align-items:baseline;padding-top:10px;padding-bottom:9px;border:0;border-bottom:1px solid var(--ledger-line);background:transparent;color:var(--ink);text-align:left;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.entry:hover{background:rgba(86,57,139,.06)}
+.entry:focus-visible{outline:2px solid var(--stamp);outline-offset:-2px}
+.entry.flash{animation:rowflash 1.8s ease-out}
+@keyframes rowflash{from{background:rgba(220,184,98,.5)}to{background:transparent}}
+.e-no{font:700 13px/1.3 var(--font-type);text-align:right;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.e-chip{align-self:center;width:10px;height:28px;border-radius:2px 2px 1px 1px;background-color:var(--bg);background-image:linear-gradient(90deg,rgba(0,0,0,.35),rgba(255,255,255,.18) 40%,rgba(0,0,0,.3));box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.e-title{min-width:0;font:700 15.5px/1.3 var(--font-body);overflow-wrap:anywhere}
+.e-title i{display:block;margin-top:2px;font:italic 400 13.5px/1.35 var(--font-body);color:var(--ink-soft)}
+.e-author{min-width:0;font:400 14.5px/1.35 var(--font-body);overflow-wrap:anywhere}
+.e-fmt,.e-len,.e-call,.e-start,.e-fin,.e-meta{min-width:0;font:400 13px/1.35 var(--font-type);font-variant-numeric:tabular-nums}
+.e-call{font-weight:700;letter-spacing:.02em}
+.e-rate{white-space:nowrap}
+.e-rate .stars{gap:1px}
+.e-rate .stars svg{width:13px;height:13px}
+.e-nil{color:var(--ink-soft);opacity:.75}
+.e-stamp{display:inline-block;padding:2px 5px 1px;border:1.5px solid currentColor;border-radius:2px;font:700 11.5px/1.1 var(--font-type);letter-spacing:.08em;text-transform:uppercase;color:var(--stamp-red);transform:rotate(-2deg);-webkit-mask-image:var(--tex-ink);mask-image:var(--tex-ink)}
+.e-meta{display:none}
+.lg-group{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0;padding:22px 24px 6px calc(var(--mx) + 16px);border-bottom:1.5px solid rgba(181,57,47,.6);font:400 20px/1.1 var(--font-gilt);letter-spacing:.03em;color:var(--rule)}
+.lg-group span{font:400 12px/1 var(--font-type);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.lg-foot{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 18px;margin-top:-1px;padding:12px 24px 2px calc(var(--mx) + 16px);border-top:3px double rgba(181,57,47,.65);font:400 13px/1.45 var(--font-type);font-variant-numeric:tabular-nums}
+.lg-foot b{font:400 16px/1.2 var(--font-gilt);letter-spacing:.04em}
+.lg-empty{margin:0;padding:28px 24px 6px calc(var(--mx) + 16px);font:15px/1.5 var(--font-type);color:var(--ink-soft)}
+.lg-empty + .lg-empty{padding-top:4px;padding-bottom:20px}
+@media (max-width:1060px){
+  .lg-list{--cols:3.2rem 10px minmax(0,2.2fr) minmax(0,1.4fr) 4.2rem 5.6rem 7.4rem 5.4rem}
+  .e-call,.e-start,.lg-cols .c-call,.lg-cols .c-start{display:none}
+}
+@media (max-width:760px){
+  .lg-head,.lg-tools{padding-inline:16px}
+  .lg-totals{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;width:100%}
+  .lg-totals dd{font-size:19px}
+  .lg-search{flex-basis:100%;max-width:none}
+  .lg-list{--mx:calc(8px + 2.1rem + 5px)}
+  .lg-cols{display:none}
+  .entry{grid-template-columns:2.1rem 10px minmax(0,1fr) auto;grid-template-areas:"no chip title rate" "no chip author author" "no chip meta meta";column-gap:10px;row-gap:2px;align-items:start;padding:9px 14px 8px 8px}
+  .e-no{grid-area:no;padding-top:2px;font-size:12px}
+  .e-chip{grid-area:chip;align-self:start;margin-top:3px}
+  .e-title{grid-area:title;font-size:15px}
+  .e-title i{font-size:13px}
+  .e-rate{grid-area:rate;padding-top:3px}
+  .e-author{grid-area:author;font-size:14px}
+  .e-meta{grid-area:meta;display:block;font-size:12.5px;color:var(--ink-soft)}
+  .e-fmt,.e-len,.e-call,.e-start,.e-fin{display:none}
+  .lg-group{padding:20px 16px 6px calc(var(--mx) + 12px);font-size:19px}
+  .lg-foot,.lg-empty{padding-left:calc(var(--mx) + 12px);padding-right:16px}
+}
+
+/* ---------- dialogs ---------- */
+.dlg{padding:0;border:0;background:transparent;color:var(--parch);width:min(880px,calc(100vw - 20px));max-width:none;max-height:calc(100vh - 20px);max-height:calc(100dvh - 20px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;overscroll-behavior:contain}
+.dlg-form{width:min(700px,calc(100vw - 20px))}
+.dlg::backdrop{background:rgba(5,8,6,.76);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.dlg[open]{animation:rise .24s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.x{position:absolute;top:8px;right:8px;z-index:3;display:flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0 0 3px;border-radius:50%;border:1px solid rgba(220,184,98,.45);background:rgba(12,16,14,.85);color:var(--gilt);font:400 26px/1 var(--font-gilt);cursor:pointer}
+.detail{position:relative;display:grid;grid-template-columns:minmax(0,250px) minmax(0,1fr);gap:30px;align-items:start;padding:54px 18px 18px}
+.d-cover{position:sticky;top:18px}
+.cover-wrap{container-type:inline-size;width:100%;max-width:250px}
+.d-side{min-width:0;display:flex;flex-direction:column;gap:16px}
+.d-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.confirm{flex:1 1 100%;margin:0 0 2px;font:15px/1.45 var(--font-type);color:var(--parch)}
+
+/* front boards, one for each kind of binding */
+.cover{position:relative;width:100%;max-width:100%;aspect-ratio:2/3;border-radius:3px 10px 10px 3px;background-color:var(--bg);color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,240,220,.12),inset -2px 0 3px rgba(0,0,0,.35),0 30px 50px -18px rgba(0,0,0,.9),0 2px 0 #241209}
+.cover::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;background:linear-gradient(90deg,rgba(0,0,0,.6) 0,rgba(0,0,0,.18) 3%,rgba(255,236,214,.14) 5%,rgba(0,0,0,.35) 7.5%,rgba(0,0,0,.05) 9.5%,transparent 30%,transparent 86%,rgba(0,0,0,.28) 100%)}
+.cover.s-leather{background-image:radial-gradient(ellipse 80% 60% at 45% 35%,rgba(255,236,214,.1),transparent 70%),var(--tex-leather)}
+.cover.s-cloth{background-image:radial-gradient(ellipse 80% 60% at 45% 35%,rgba(255,236,214,.08),transparent 70%),var(--tex-cloth)}
+.cover.s-jacket{border-radius:2px 5px 5px 2px;background-image:linear-gradient(118deg,rgba(255,255,255,.16),transparent 40%),var(--tex-grit)}
+.cover.s-paper{border-radius:1px 3px 3px 1px;background-image:linear-gradient(118deg,rgba(255,255,255,.08),transparent 40%),var(--tex-grit)}
+.gh{color:var(--ink);text-shadow:0 1px 0 rgba(0,0,0,.6)}
+.c-frame{position:absolute;inset:7% 8% 7% 15%;border:1px solid rgba(222,186,100,.85);outline:1px solid rgba(222,186,100,.55);outline-offset:3px;border-radius:2px}
+.c-frame svg{position:absolute;width:13%;height:auto;fill:var(--ink);color:var(--ink)}
+.c-frame .k1{left:4%;top:3%}.c-frame .k2{right:4%;top:3%;transform:scaleX(-1)}.c-frame .k3{left:4%;bottom:3%;transform:scaleY(-1)}.c-frame .k4{right:4%;bottom:3%;transform:scale(-1,-1)}
+.c-title{position:absolute;left:19%;right:12%;top:17%;font-family:var(--font-roman);font-weight:700;font-size:calc(var(--fs) * 2.4px);font-size:calc(var(--fs) * 1cqw);line-height:1.08;text-align:center;text-wrap:balance;letter-spacing:.02em}
+.c-orn{position:absolute;left:15%;right:8%;top:57%;display:flex;justify-content:center}
+.c-orn svg{width:30%;height:auto;fill:var(--ink);filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
+.c-author{position:absolute;left:19%;right:12%;bottom:18%;font-family:var(--font-roman);font-weight:600;font-size:15px;font-size:6.6cqw;line-height:1.15;text-align:center;text-wrap:balance}
+.c-ed{position:absolute;left:19%;right:12%;bottom:11%;font-family:var(--font-roman);font-weight:600;font-size:10px;font-size:4.4cqw;letter-spacing:.2em;text-align:center}
+.cv-blind{position:absolute;inset:6% 7% 6% 14%;border:2px solid rgba(0,0,0,.24);border-radius:1px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),0 0 0 1px rgba(255,255,255,.05)}
+.cv-label{position:absolute;left:22%;right:13%;top:15%;display:flex;flex-direction:column;align-items:center;gap:3cqw;padding:5cqw 4cqw;text-align:center;color:var(--ink);text-shadow:0 1px 0 rgba(0,0,0,.55)}
+.paste .cv-label{background-color:var(--lab);background-image:var(--tex-paper);color:var(--lab-ink);text-shadow:none;box-shadow:0 1px 2px rgba(0,0,0,.35),inset 0 0 0 4px var(--lab),inset 0 0 0 5px var(--lab-ink)}
+.cv-title{font:700 calc(var(--fs) * 2.4px)/1.1 var(--font-body);font-size:calc(var(--fs) * 1cqw);text-wrap:balance;overflow-wrap:break-word}
+.cv-title.caps{letter-spacing:.06em}
+.cv-author{font:400 13px/1.25 var(--font-body);font-size:5.2cqw;letter-spacing:.12em;text-transform:uppercase}
+.cv-ed{position:absolute;left:22%;right:13%;bottom:11%;font:400 10px/1 var(--font-body);font-size:4.2cqw;letter-spacing:.2em;text-transform:uppercase;text-align:center;color:var(--ink);text-shadow:0 1px 0 rgba(0,0,0,.55)}
+.cover.band::before{content:"";position:absolute;left:0;right:0;top:0;height:19%;z-index:1;border-radius:2px 5px 0 0;background:var(--acc)}
+.cover.s-paper.stripe::before{content:"";position:absolute;left:0;right:0;top:10%;height:2.5%;z-index:1;background:var(--acc)}
+.cm{position:absolute;inset:0 0 0 10%;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4.5cqw;padding:14cqw 9cqw 12cqw;text-align:center}
+.band .cm{padding-top:26cqw}
+.s-paper .cm{justify-content:flex-start;padding-top:20cqw}
+.cm-title{font:700 calc(var(--fs) * 2.4px)/.98 var(--font-spine);font-size:calc(var(--fs) * 1cqw);letter-spacing:.01em;text-wrap:balance;overflow-wrap:break-word}
+.cm-title.caps{letter-spacing:.03em}
+.cm-sub{font:italic 400 11px/1.3 var(--font-body);font-size:5cqw;color:var(--ink2);text-wrap:balance}
+.cm-rule{flex:0 0 auto;width:20%;height:2px;background:var(--ink2);opacity:.7}
+.cm-author{font:500 14px/1.15 var(--font-spine);font-size:6.6cqw;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.s-paper .cm-author{order:-1;margin-bottom:6cqw}
+.cover .ribbon{left:64%;width:9px;height:30px;top:calc(100% - 2px)}
+.cover .bmk{left:62%;bottom:auto;top:-14px;width:12px;height:34px;z-index:-1}
+
+/* catalog card */
+.card{position:relative;min-width:0;padding:20px 22px 46px;border-radius:3px;background-color:var(--paper);background-image:radial-gradient(ellipse 70% 50% at 25% 10%,rgba(255,255,255,.4),transparent 70%),linear-gradient(180deg,rgba(120,90,40,0),rgba(120,90,40,.08)),var(--tex-paper);color:var(--ink);color-scheme:light;box-shadow:inset 0 0 0 1px rgba(120,90,40,.18),0 22px 44px -16px rgba(0,0,0,.85)}
+.pre{display:block;margin:0 0 4px;font:400 13px/1.15 var(--font-gilt);letter-spacing:.07em;color:var(--ink-soft)}
+.ty{font-family:var(--font-type);font-size:15px;line-height:1.45}
+.c-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 18px;align-items:start}
+.card.has-photo .c-head{padding-right:74px}
+.c-call .ty{display:block;font-weight:700;font-size:14px;line-height:1.25}
+.c-entry p{margin:0}
+.c-main{font-weight:700}
+.c-entry .c-ind{padding-left:2ch;margin-top:3px}
+.c-rule{border:0;height:0;border-top:1.5px solid var(--rule);margin:14px -22px 16px;opacity:.85}
+.c-body{display:grid;gap:16px}
+.c-stamps{display:flex;flex-wrap:wrap;gap:12px 28px}
+.stamp{display:inline-block;padding:5px 7px 4px;border:1.5px solid currentColor;border-radius:3px;font:700 15px/1 var(--font-type);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--stamp);transform:rotate(-2.2deg);opacity:.9;-webkit-mask-image:var(--tex-ink);mask-image:var(--tex-ink)}
+.c-stamps > div:nth-child(2) .stamp{transform:rotate(1.6deg)}
+.stamp.red{color:var(--stamp-red)}
+.stamp.nil{color:var(--ink-soft);border-style:dashed;opacity:.6;-webkit-mask-image:none;mask-image:none;transform:none}
+.stars{display:inline-flex;gap:3px;color:var(--stamp)}
+.stars svg{width:20px;height:20px}
+.c-review .ty{margin:0;overflow-wrap:anywhere}
+.nil-text{color:var(--ink-soft);font-style:italic}
+.c-note{margin:0;padding-top:12px;border-top:1px dashed rgba(36,35,43,.25);font:italic 15px/1.5 var(--font-body);color:#3d3833}
+.c-note .pre{font-style:normal}
+.c-acc{position:absolute;left:22px;bottom:15px;margin:0;font-size:12px;color:var(--ink-soft)}
+.c-hole{position:absolute;left:50%;bottom:13px;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:#0a0d0b;box-shadow:inset 0 1px 3px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.55)}
+.c-sample{position:absolute;right:18px;top:44%;padding:6px 10px 5px;border:2px solid var(--stamp-red);border-radius:4px;font:700 17px/1 var(--font-type);letter-spacing:.14em;text-transform:uppercase;color:var(--stamp-red);transform:rotate(-11deg);opacity:.5;pointer-events:none;-webkit-mask-image:var(--tex-ink);mask-image:var(--tex-ink)}
+.c-photo{position:absolute;top:-12px;right:12px;z-index:2;width:66px;padding:4px 4px 13px;border:0;background:#fbf8f0;box-shadow:0 6px 14px rgba(0,0,0,.35);transform:rotate(5deg);cursor:zoom-in;transition:width .25s,transform .25s}
+.c-photo img{display:block;width:100%;height:auto}
+.c-photo.big{width:min(240px,70%);transform:rotate(2deg);cursor:zoom-out}
+
+/* accession slip (the add / edit form) */
+.slip{position:relative;margin:0;border-radius:3px;background-color:var(--paper);background-image:radial-gradient(ellipse 70% 40% at 20% 0,rgba(255,255,255,.4),transparent 70%),var(--tex-paper);color:var(--ink);color-scheme:light;box-shadow:0 24px 50px -18px rgba(0,0,0,.9)}
+.slip-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 14px;border-bottom:1.5px solid var(--rule)}
+.slip-head h2{margin:0;font:400 26px/1.1 var(--font-gilt);letter-spacing:.03em}
+.slip-sub{margin:5px 0 0;font:italic 15px/1.4 var(--font-body);color:var(--ink-soft)}
+.x-ink{position:static;flex:0 0 auto;width:36px;height:36px;border-color:rgba(36,35,43,.3);background:transparent;color:var(--ink)}
+.step{padding:20px 22px}
+.drop{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:34px 18px 30px;border:1.5px dashed rgba(36,35,43,.42);border-radius:4px;text-align:center;cursor:pointer;transition:background .2s,border-color .2s}
+.drop:hover,.drop.over{background:rgba(86,57,139,.06);border-color:var(--stamp)}
+.drop:focus-within{outline:2px solid var(--stamp);outline-offset:3px}
+.drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.drop svg{width:44px;height:44px;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.drop-title{font:400 22px/1.15 var(--font-gilt)}
+.drop-sub{font:italic 15px/1.4 var(--font-body);color:var(--ink-soft)}
+.drop-err{margin:12px 0 0;font:14px/1.4 var(--font-type);color:var(--stamp-red)}
+.textbtn{appearance:none;border:0;background:none;padding:6px 2px;margin-top:10px;font:400 16px/1.2 var(--font-gilt);letter-spacing:.03em;color:var(--stamp);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.look{display:flex;gap:18px;align-items:center}
+.look img{flex:0 0 auto;width:92px;height:auto;max-height:140px;object-fit:contain;background:#fff;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.25);transform:rotate(-2deg)}
+.look-copy{min-width:0;flex:1}
+.look-status{margin:0 0 10px;font:16px/1.4 var(--font-type)}
+.look-bar{position:relative;height:4px;border-radius:2px;background:rgba(36,35,43,.12);overflow:hidden}
+.look-bar span{position:absolute;top:0;bottom:0;width:36%;border-radius:2px;background:linear-gradient(90deg,var(--brass-lo),var(--brass),var(--brass-lo));animation:sweep 1.4s ease-in-out infinite}
+@keyframes sweep{from{left:-36%}to{left:100%}}
+.look .textbtn{margin-top:8px}
+.found{display:flex;gap:14px;align-items:flex-start;margin:0 0 18px;padding:12px 14px;border:1px solid rgba(36,35,43,.18);border-radius:3px;background:rgba(255,255,255,.35)}
+.found.warn{border-color:rgba(163,51,43,.45);background:rgba(163,51,43,.05)}
+.found img{flex:0 0 auto;width:52px;height:auto;max-height:80px;object-fit:contain;background:#fff;padding:3px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.found-copy{min-width:0;flex:1}
+.found-copy p{margin:0}
+.found-msg{font:15px/1.45 var(--font-type)}
+.found-copy .found-note{margin-top:8px;font:italic 15px/1.45 var(--font-body);color:#3d3833}
+.found-note .pre{font-style:normal}
+.found-acts{display:flex;flex-wrap:wrap;gap:0 16px}
+.found-acts .textbtn{margin-top:4px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px 18px}
+.f{min-width:0;margin:0;padding:0;border:0}
+.grid .wide{grid-column:1/-1}
+.f > label,.f > legend{display:block;padding:0;margin:0 0 4px;font:400 14px/1.15 var(--font-gilt);letter-spacing:.07em;color:var(--ink-soft)}
+.f input:not([type=radio]),.f textarea{display:block;width:100%;min-width:0;padding:6px 2px 5px;border:0;border-bottom:1px solid rgba(36,35,43,.4);border-radius:0;background:transparent;color:var(--ink);font:400 16px/1.35 var(--font-type)}
+.f textarea{resize:vertical;min-height:100px;padding:8px;border:1px solid rgba(36,35,43,.3);background:rgba(255,255,255,.28);line-height:1.5}
+.f input:not([type=radio]):focus-visible{outline:none;border-color:var(--stamp);box-shadow:0 1.5px 0 var(--stamp)}
+.f select{display:block;width:100%;min-width:0;padding:6px 22px 5px 2px;border:0;border-bottom:1px solid rgba(36,35,43,.4);border-radius:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2324232b' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right 4px center/10px 6px;color:var(--ink);font:400 16px/1.35 var(--font-type);color-scheme:light;-webkit-appearance:none;appearance:none;cursor:pointer}
+.f select:focus-visible{outline:none;border-color:var(--stamp);box-shadow:0 1.5px 0 var(--stamp)}
+.f textarea:focus-visible{outline:none;border-color:var(--stamp);box-shadow:0 0 0 1px var(--stamp)}
+.grid.flash input:not([type=radio]){animation:flash 1.3s ease-out}
+@keyframes flash{from{background:rgba(86,57,139,.16)}to{background:transparent}}
+.hint{margin:4px 0 0;font:italic 13px/1.35 var(--font-body);color:var(--ink-soft)}
+.err{margin:6px 0 0;font:14px/1.35 var(--font-type);color:var(--stamp-red)}
+.slip[data-format="print"] .only-audio,.slip[data-format="audio"] .only-print{display:none}
+.seg-row,.rate-in,.swatches{position:relative}
+.seg-row input,.rate-in input,.sw input,.chips input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.seg-row{display:inline-flex;border:1px solid rgba(36,35,43,.45);border-radius:3px;overflow:hidden}
+.seg-row label{display:block;margin:0;padding:9px 16px 8px;font:400 16px/1 var(--font-gilt);letter-spacing:.04em;color:var(--ink);cursor:pointer}
+.seg-row label + input + label{border-left:1px solid rgba(36,35,43,.45)}
+.seg-row input:checked + label{background:var(--ink);color:var(--paper)}
+.seg-row input:focus-visible + label{outline:2px solid var(--stamp);outline-offset:-4px}
+.rate-in{display:flex;align-items:center;flex-wrap:wrap;gap:2px}
+.rate-in label{display:inline-flex;padding:3px;cursor:pointer;color:var(--stamp);border-radius:3px}
+.rate-in svg{width:30px;height:30px}
+.rate-in .fill{opacity:0;transition:opacity .12s}
+.rate-in label.on .fill{opacity:1}
+.rate-in .rate-clear{margin-left:10px;padding:6px 4px;font:400 15px/1 var(--font-gilt);color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
+.rate-in input:focus-visible + label{outline:2px solid var(--stamp);outline-offset:1px}
+.bind{display:flex;align-items:flex-end;gap:18px}
+.bind-prev{position:relative;flex:0 0 76px;display:flex;align-items:flex-end;justify-content:center;height:172px;padding-bottom:9px;border-radius:2px;background:linear-gradient(180deg,#2a170c,#1c0f07 92%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),inset 0 14px 16px -10px rgba(0,0,0,.8)}
+.bind-prev::after{content:"";position:absolute;left:0;right:0;bottom:0;height:9px;border-radius:0 0 2px 2px;background:linear-gradient(180deg,#93603a 0,#73472a 3px,#2c160a 4px,#55301a)}
+.bind-prev .book{cursor:default;box-shadow:3px 0 5px -2px rgba(0,0,0,.7)}
+.bind-opts{min-width:0;flex:1 1 auto;display:flex;flex-direction:column;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.ch{position:relative;display:inline-flex}
+.chips label{display:block;margin:0;padding:8px 11px 7px;border:1px solid rgba(36,35,43,.4);border-radius:2px;font:400 15px/1 var(--font-gilt);letter-spacing:.04em;color:var(--ink);cursor:pointer}
+.chips label:hover{border-color:var(--ink)}
+.chips input:checked + label{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chips input:focus-visible + label{outline:2px solid var(--stamp);outline-offset:2px}
+.swatches{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.sw{position:relative;display:inline-flex}
+.sw label{display:block;width:38px;height:28px;border-radius:3px;cursor:pointer;background-color:var(--c);background-image:linear-gradient(90deg,rgba(0,0,0,.35),rgba(255,236,214,.12) 40%,rgba(0,0,0,.3)),var(--tex-leather);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.3)}
+.sw input:checked + label{outline:2px solid var(--ink);outline-offset:2px}
+.sw input:focus-visible + label{outline:2px solid var(--stamp);outline-offset:2px}
+.sw-name{margin-left:2px;font:italic 15px/1 var(--font-body);color:var(--ink-soft)}
+.slip-foot{position:sticky;bottom:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid rgba(36,35,43,.18);border-radius:0 0 3px 3px;background:var(--paper)}
+.save-err{flex:1 1 100%;margin:0;font:14px/1.4 var(--font-type);color:var(--stamp-red)}
+.ghost-ink{appearance:none;border:1px solid rgba(36,35,43,.4);background:transparent;color:var(--ink);border-radius:3px;padding:9px 15px 8px;font:400 16px/1 var(--font-gilt);letter-spacing:.04em;cursor:pointer}
+.ghost-ink:hover{border-color:var(--ink)}
+.slip :focus-visible{outline-color:var(--stamp)}
+
+.toast{position:fixed;inset:auto auto calc(18px + env(safe-area-inset-bottom,0px)) 50%;margin:0;border:0;z-index:50;max-width:calc(100% - 32px);padding:10px 14px;border-radius:3px;background:var(--paper);color:var(--ink);font:14px/1.4 var(--font-type);box-shadow:0 10px 28px rgba(0,0,0,.55);opacity:0;transform:translate(-50%,16px);transition:opacity .25s,transform .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:640px){
+  :root{--stile:12px;--over:7px;--pad:8px;--H:212px}
+  .board{height:28px}
+  .holder{min-width:64px;font-size:8.5px}
+  .frieze{padding:14px 10px 16px}
+  .plaque{padding:9px 28px 8px}
+  .detail{grid-template-columns:minmax(0,1fr);gap:18px;padding:52px 10px 14px}
+  .d-cover{position:static;display:flex;justify-content:center}
+  .cover-wrap{max-width:172px}
+  .step{padding:18px 16px}
+  .slip-head{padding:18px 16px 12px}
+  .slip-foot{padding:12px 16px}
+  .card{padding:18px 16px 46px}
+  .c-rule{margin:14px -16px 16px}
+  .c-acc{left:16px}
+  .bind{gap:14px}
+  .bind-prev{flex-basis:66px}
+}
+@media (prefers-reduced-motion:reduce){
+  .book,.slot,.c-photo,.toast{transition:none}
+  .book.arrive,.dlg[open],.grid.flash input:not([type=radio]),.entry.flash{animation:none}
+  .look-bar span{animation:none;left:0;width:100%;opacity:.5}
+}
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <p class="tally" id="tally">Checking the stacks…</p>
+    <div class="bar-actions">
+      <div class="viewtog" role="group" aria-label="View">
+        <button type="button" class="vbtn" data-view="shelf" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.8 13.6h12.4M3.6 13.2V4.4M6 13.2V2.8M8.4 13.2V5.2M11.2 13.2l-1.9-7.1"/></svg>Shelf</button>
+        <button type="button" class="vbtn" data-view="ledger" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4.2C6.6 3.2 4.6 2.8 2.4 3v9.6c2.2-.2 4.2.2 5.6 1.2 1.4-1 3.4-1.4 5.6-1.2V3c-2.2-.2-4.2.2-5.6 1.2zM8 4.2v9.6M4.3 6.1h2.2M4.3 8.4h2.2M9.5 6.1h2.2M9.5 8.4h2.2"/></svg>Ledger</button>
+      </div>
+      <label class="sortctl" for="sort"><span class="sortlbl" id="sortLbl">Shelved by</span>
+        <select id="sort">
+          <option value="author">Author</option>
+          <option value="title">Title</option>
+          <option value="recent">Date read</option>
+          <option value="rating">Rating</option>
+          <option value="accession">Acc. no.</option>
+        </select>
+      </label>
+      <button type="button" class="brass" id="addBtn" data-act="add" aria-label="Shelve a book" hidden><span class="add-short" aria-hidden="true">+</span>Shelve<span class="add-long">a book</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+  <div class="notice" id="notice" hidden></div>
+  <div class="case" id="case">
+    <div class="cornice">
+      <div class="crown"></div>
+      <div class="frieze">
+        <div class="plaque">
+          <h1 class="lib-name" id="libName">My Library</h1>
+          <p class="est" id="est">Est. MMXXVI</p>
+        </div>
+      </div>
+    </div>
+    <div class="shelves" id="shelves">
+      <section class="shelf" aria-label="Shelf 1"><div class="row"><div class="notecard"><p class="nc-big">Checking the stacks…</p><p class="nc-small">Your books will be shelved here, each in its proper binding.</p></div></div><div class="board"></div><span class="holder blank"></span></section>
+      <section class="shelf" aria-label="Shelf 2"><div class="row"></div><div class="board"></div><span class="holder blank"></span></section>
+    </div>
+    <div class="plinth"></div>
+  </div>
+
+  <section class="ledger" id="ledgerView" aria-labelledby="lgTitle" hidden>
+    <div class="lg-page">
+      <header class="lg-head">
+        <div>
+          <p class="lg-eyebrow">Accession register</p>
+          <h2 class="lg-title" id="lgTitle">Master Ledger</h2>
+          <p class="lg-sub" id="lgSub">Every volume in My Library, entered in my neatest hand.</p>
+        </div>
+        <dl class="lg-totals" id="lgTotals"></dl>
+      </header>
+      <div class="lg-tools">
+        <label class="lg-search" for="lgSearch"><span class="sr">Find in the ledger</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4L14 14"/></svg><input type="search" id="lgSearch" placeholder="Find a title or author…" autocomplete="off" spellcheck="false" enterkeyhint="search"></label>
+        <div class="lg-chips" role="group" aria-label="Show">
+          <button type="button" class="chip" data-filter="all" aria-pressed="true">All <span id="cAll">0</span></button>
+          <button type="button" class="chip" data-filter="reading" aria-pressed="false">In progress <span id="cReading">0</span></button>
+          <button type="button" class="chip" data-filter="finished" aria-pressed="false">Finished <span id="cFinished">0</span></button>
+          <button type="button" class="chip" data-filter="print" aria-pressed="false">Print <span id="cPrint">0</span></button>
+          <button type="button" class="chip" data-filter="audio" aria-pressed="false">Audio <span id="cAudio">0</span></button>
+        </div>
+      </div>
+      <div class="lg-list">
+        <div class="lg-cols" aria-hidden="true"><span class="c-no">No.</span><span></span><span>Title</span><span>Author</span><span>Format</span><span>Length</span><span class="c-call">Call no.</span><span class="c-start">Started</span><span>Finished</span><span>Rating</span></div>
+        <div id="lgRows"><p class="lg-empty">Opening the ledger…</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="detail" class="dlg" aria-labelledby="dTitle">
+  <div class="detail">
+    <div class="d-cover"><div class="cover-wrap" id="dCover"></div></div>
+    <div class="d-side">
+      <article class="card" id="dCard"></article>
+      <div class="d-actions" id="dActions"></div>
+    </div>
+  </div>
+  <button type="button" class="x" data-act="close-detail" aria-label="Close">×</button>
+</dialog>
+
+<dialog id="form" class="dlg dlg-form" aria-labelledby="formTitle">
+  <form class="slip" id="slip" data-format="print" novalidate>
+    <div class="slip-head">
+      <div>
+        <h2 id="formTitle">New accession</h2>
+        <p class="slip-sub" id="formSub">Show me the cover. I'll handle the cataloguing, as usual.</p>
+      </div>
+      <button type="button" class="x x-ink" data-act="close-form" aria-label="Close">×</button>
+    </div>
+
+    <div class="step" id="stepPhoto" hidden>
+      <label class="drop" id="drop" for="photo">
+        <input type="file" id="photo" accept="image/*">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 15.5a3 3 0 0 1 3-3h6.2l3.1-4.5h11.4l3.1 4.5H39a3 3 0 0 1 3 3V37a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z"/><circle cx="24" cy="25.5" r="7.5"/></svg>
+        <span class="drop-title">Add a photo of the cover</span>
+        <span class="drop-sub">or a screenshot of what you're listening to</span>
+      </label>
+      <p class="drop-err" id="dropErr" role="alert" hidden></p>
+      <button type="button" class="textbtn" data-act="manual">Type it in yourself</button>
+    </div>
+
+    <div class="step look" id="stepLook" hidden>
+      <img id="lookImg" alt="Your photo">
+      <div class="look-copy">
+        <p class="sr" role="status" id="lookSr"></p>
+        <p class="look-status" id="lookStatus" aria-hidden="true">Squinting at the cover…</p>
+        <div class="look-bar" aria-hidden="true"><span></span></div>
+        <button type="button" class="textbtn" data-act="stop">Stop</button>
+      </div>
+    </div>
+
+    <div class="step" id="stepFields" hidden>
+      <div class="found" id="found" hidden>
+        <img id="foundImg" alt="Your photo" hidden>
+        <div class="found-copy">
+          <p class="found-msg" id="foundMsg" role="status"></p>
+          <p class="found-note" id="foundNote" hidden></p>
+          <div class="found-acts">
+            <button type="button" class="textbtn" data-act="relook" id="relookBtn" hidden>Look again, more carefully</button>
+            <button type="button" class="textbtn" data-act="newphoto" id="newPhotoBtn" hidden>Use a different photo</button>
+          </div>
+        </div>
+      </div>
+      <div class="grid" id="fieldsGrid">
+        <div class="f wide"><label for="fTitle">Title</label><input id="fTitle" autocomplete="off" maxlength="160" required><p class="err" id="titleErr" hidden>Every book needs a title. Even the anonymous ones have titles.</p></div>
+        <div class="f wide"><label for="fAuthor">Author</label><input id="fAuthor" autocomplete="off" maxlength="120"></div>
+        <fieldset class="f wide"><legend>Format</legend>
+          <div class="seg-row">
+            <input type="radio" name="format" id="fmtPrint" value="print" checked><label for="fmtPrint">Print</label>
+            <input type="radio" name="format" id="fmtAudio" value="audio"><label for="fmtAudio">Audiobook</label>
+          </div>
+        </fieldset>
+        <div class="f only-audio"><label for="fNarrator">Narrator</label><input id="fNarrator" autocomplete="off" maxlength="120"></div>
+        <div class="f only-audio"><label for="fHours">Length in hours</label><input id="fHours" inputmode="decimal" autocomplete="off" maxlength="6"></div>
+        <div class="f only-print"><label for="fPages">Pages</label><input id="fPages" inputmode="numeric" autocomplete="off" maxlength="5"></div>
+        <div class="f"><label for="fYear">First published</label><input id="fYear" inputmode="numeric" autocomplete="off" maxlength="5"></div>
+        <div class="f"><label for="fCall">Call no.</label><input id="fCall" autocomplete="off" maxlength="18"></div>
+        <div class="f"><label for="fGenre">Subject</label><input id="fGenre" autocomplete="off" maxlength="40"></div>
+        <div class="f"><label for="fStarted">Started</label><input type="date" id="fStarted"></div>
+        <div class="f"><label for="fFinished">Finished</label><input type="date" id="fFinished"><p class="hint">Leave blank while you're still reading.</p></div>
+        <div class="f"><label for="fStatus">Status</label><select id="fStatus"><option value="">Go by the dates</option><option value="reading">In progress</option><option value="finished">Finished, date unknown</option></select><p class="hint">Only needed when a date is missing.</p></div>
+        <p class="err wide" id="dateErr" hidden>The finish date is before the start date. The library does not lend time machines.</p>
+        <fieldset class="f wide"><legend>Rating</legend><div class="rate-in" id="rateIn"></div></fieldset>
+        <div class="f wide"><label for="fReview">Review</label><textarea id="fReview" rows="4" maxlength="4000"></textarea></div>
+        <fieldset class="f wide"><legend>Binding</legend>
+          <div class="bind">
+            <div class="bind-prev" id="bindPrev" aria-hidden="true"></div>
+            <div class="bind-opts">
+              <div class="chips">
+                <span class="ch"><input type="radio" name="bstyle" id="bsAuto" value="" checked><label for="bsAuto">Auto</label></span>
+                <span class="ch"><input type="radio" name="bstyle" id="bsLeather" value="leather"><label for="bsLeather">Leather</label></span>
+                <span class="ch"><input type="radio" name="bstyle" id="bsCloth" value="cloth"><label for="bsCloth">Cloth</label></span>
+                <span class="ch"><input type="radio" name="bstyle" id="bsJacket" value="jacket"><label for="bsJacket">Dust jacket</label></span>
+                <span class="ch"><input type="radio" name="bstyle" id="bsPaper" value="paper"><label for="bsPaper">Paperback</label></span>
+              </div>
+              <div class="swatches" id="swatches"></div>
+              <p class="hint" id="bindHint"></p>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="slip-foot" id="slipFoot" hidden>
+      <p class="save-err" id="saveErr" role="alert" hidden></p>
+      <button type="button" class="ghost-ink" data-act="close-form">Cancel</button>
+      <button type="submit" class="brass" id="saveBtn">Shelve it</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" popover="manual" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+
+/* ---------- constants ---------- */
+const DEFAULT_NAME = "My Library";
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS_FULL = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const LEATHERS = [
+  ["Oxblood", "#5b1d22"], ["Burgundy", "#4d1a2c"], ["Chestnut", "#5a2f1b"], ["Saddle", "#6c4320"],
+  ["Olive", "#3c3e1e"], ["Forest", "#22382a"], ["Teal", "#1d3a3c"], ["Navy", "#1c2a45"],
+  ["Plum", "#3b2036"], ["Ebony", "#1d1816"]
+];
+const LOOK_LINES = [
+  "Squinting at the cover…",
+  "Consulting the card catalog…",
+  "Recalling the Dewey number from memory…",
+  "Choosing a suitable binding…",
+  "Polishing the gold leaf…"
+];
+const FIELDS = ["title","subtitle","author","authorSort","format","narrator","pages","hours","year","callNumber","genre","leather","binding","started","finished","rating","review","note","photo","sample","addedAt","accession","status"];
+const SORTS = ["author","title","recent","rating","accession"];
+const STYLES = ["leather","cloth","jacket","paper"];
+const STYLE_NAMES = { leather: "Leather", cloth: "Cloth", jacket: "Dust jacket", paper: "Paperback" };
+const STYLE_PHRASE = { leather: "leather", cloth: "cloth", jacket: "a dust jacket", paper: "a paperback" };
+/* canvas measuring stacks: these must name the same faces as the CSS tokens */
+const F_SPINE = '"Barlow Condensed", "Arial Narrow", sans-serif';
+const F_ROMAN = '"Cormorant SC", "Cormorant Garamond", Georgia, serif';
+const F_BOOK = '"Libre Caslon Text", Georgia, serif';
+const GOLD = "#e8c56c", CREAM = "#f3e9d2", INKD = "#1c1712";
+const ICON_FLEURON = '<svg viewBox="0 0 24 12" aria-hidden="true"><path d="M12 1.2l3.4 4.8-3.4 4.8L8.6 6z"/><circle cx="4" cy="6" r="1.6"/><circle cx="20" cy="6" r="1.6"/></svg>';
+const ICON_PHONES = '<svg viewBox="0 0 24 20" aria-hidden="true"><path d="M4.2 13.2V11a7.8 7.8 0 0 1 15.6 0v2.2" fill="none" stroke="currentColor" stroke-width="2.1"/><rect x="2.4" y="11.6" width="4.6" height="7.2" rx="1.6"/><rect x="17" y="11.6" width="4.6" height="7.2" rx="1.6"/></svg>';
+const ICON_CORNER = '<path d="M1.5 1.5h11M1.5 1.5v11" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 4.5h5M4.5 4.5v5" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="12.5" cy="12.5" r="1.7"/>';
+const ICON_CENTER = '<svg viewBox="0 0 64 26" aria-hidden="true"><path d="M32 2l6.5 11L32 24l-6.5-11z"/><path d="M3 13c6.5-6 13-6 19.5 0-6.5 6-13 6-19.5 0zM61 13c-6.5-6-13-6-19.5 0 6.5 6 13 6 19.5 0z"/><circle cx="32" cy="13" r="2.4" fill="rgba(0,0,0,.45)"/></svg>';
+const STAR = "M12 2.6l2.83 5.95 6.53.78-4.82 4.49 1.27 6.47L12 17.1l-5.81 3.19 1.27-6.47-4.82-4.49 6.53-.78z";
+const PROMPT = [
+  "You are cataloguing one book for a personal reading log.",
+  "The attached image is either a photo of a physical book (usually its front cover, sometimes the spine or title page) or a screenshot of an audiobook app's player screen (for example Audible, Libby, Apple Books, Spotify or Everand).",
+  "Identify the book. Rely first on the text visible in the image, then use your own knowledge to complete standard bibliographic facts about that book. When you are unsure of a field, leave it empty or null instead of guessing.",
+  "",
+  "Reply with only one JSON object and no other text. Its keys: found, title, subtitle, author, author_sort, format, narrator, year, pages, hours, genre, call_number, cover_color, confidence, librarian_note.",
+  "",
+  "Field rules:",
+  "- found: true.",
+  "- title: the main title only. Put any subtitle in subtitle, or use an empty string.",
+  "- author: as usually credited. author_sort: \"Surname, Forenames\" of the first author.",
+  "- format: \"audio\" if the image is an app or player screenshot, otherwise \"print\".",
+  "- narrator: the audiobook narrator if shown or reliably known, otherwise an empty string.",
+  "- year: first publication year as a number (negative for B.C.), or null.",
+  "- pages: approximate page count of a common print edition, or null.",
+  "- hours: audiobook length in hours as a decimal number such as 11.5 when shown or reliably known, otherwise null.",
+  "- genre: one to three words.",
+  "- call_number: for fiction, FIC plus the first three letters of the author's surname in capitals (\"FIC AUS\"); for nonfiction, the Dewey Decimal number plus those three letters (\"641.815 FOR\").",
+  "- cover_color: the most prominent color of the cover art, as #rrggbb.",
+  "- confidence: \"high\", \"medium\" or \"low\", for how sure you are of the identification.",
+  "- librarian_note: one dry, witty remark of at most 18 words about this book, in the voice of a sarcastic but kind librarian. No spoilers, and never mock the reader.",
+  "",
+  'If the image does not show a book you can identify, reply {"found": false, "reason": "short explanation"}.'
+].join("\n");
+
+/* ---------- state ---------- */
+const state = { phase: "loading", books: [], sig: "", sort: "author", editable: false, name: DEFAULT_NAME, justAdded: null, noticeConfirm: false, clearing: false, view: "shelf" };
+const ledger = { q: "", terms: [], filter: "all" };
+let db = null, user = null, assets = null, sample = null, photoOK = false, samplePromise = Promise.resolve();
+let fontEpoch = 0, detailId = null, renaming = false, lastW = 0, raf = 0;
+try { const s = localStorage.getItem("library-shelf-sort"); if (SORTS.includes(s)) state.sort = s; } catch (e) {}
+
+/* ---------- small helpers ---------- */
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const str = (v, max = 200) => typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, max) : "";
+const txt = (v, max = 4000) => typeof v === "string" ? v.replace(/\r\n?/g, "\n").trim().slice(0, max) : "";
+const num = (v, lo, hi) => { const n = typeof v === "number" ? v : parseFloat(String(v == null ? "" : v).replace(/[^\d.\-]/g, "")); return Number.isFinite(n) && n >= lo && n <= hi ? n : null; };
+const isDate = v => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v);
+const validHex = v => typeof v === "string" && /^#[0-9a-f]{6}$/i.test(v.trim()) ? v.trim().toLowerCase() : null;
+const byId = id => state.books.find(b => b.id === id) || null;
+const art = s => String(s || "").replace(/^(the|a|an)\s+/i, "");
+const fold = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function todayISO() { const t = new Date(); return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`; }
+function ymd(iso) { return iso.split("-").map(Number); }
+function fmtStamp(iso) { const [y, m, d] = ymd(iso); return `${MONTHS[m - 1]} ${String(d).padStart(2, "0")} ${y}`; }
+function fmtLong(iso) { const [y, m, d] = ymd(iso); return `${MONTHS[m - 1]} ${d}, ${y}`; }
+function monthYear(iso) { const [y, m] = ymd(iso); return `${MONTHS_FULL[m - 1]} ${y}`; }
+function fmtHours(h) { const t = Math.round(h * 60), hr = Math.floor(t / 60), mn = t % 60; return hr ? (mn ? `${hr} hr ${mn} min` : `${hr} hr`) : `${mn} min`; }
+function fmtHoursShort(h) { const t = Math.round(h * 60), hr = Math.floor(t / 60), mn = t % 60; return hr ? (mn ? `${hr} h ${String(mn).padStart(2, "0")} m` : `${hr} h`) : `${mn} m`; }
+function fmtYear(y) { return y < 0 ? `${-y} B.C.` : String(y); }
+function roman(n) { const m = [[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]]; let s = ""; for (const [v, r] of m) while (n >= v) { s += r; n -= v; } return s; }
+function sortName(a) {
+  a = str(a, 120); if (!a) return "";
+  if (/^[^,]+,\s*[^,]+$/.test(a) && !/\band\b|&/.test(a)) return a;
+  const first = a.split(/\s*(?:;|&|\band\b|,\s*(?=[A-Z][a-z]+\s+[A-Z]))\s*/)[0].trim();
+  const words = first.split(/\s+/);
+  if (words.length < 2) return first;
+  const last = words.pop();
+  return `${last}, ${words.join(" ")}`;
+}
+function cutter(s) { return (fold(String(s || "").split(",")[0]).replace(/[^a-z]/g, "").slice(0, 3) || "xxx").toUpperCase(); }
+function defaultCall(sortOrTitle) { return `FIC ${cutter(sortOrTitle)}`; }
+function surname(b) { return (b.authorSort.split(",")[0] || "").trim() || (b.author.split(/\s+/).pop() || ""); }
+function callLines(b, full) {
+  const toks = (b.callNumber || defaultCall(b.authorSort || b.title)).split(/\s+/).filter(Boolean).slice(0, 3);
+  if (b.format !== "audio") return toks;
+  return full ? ["AUD", ...toks] : ["AUD", toks[toks.length - 1] || cutter(b.authorSort || b.title)];
+}
+
+/* ---------- color: from cover to binding ---------- */
+function hexToRgb(h) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function rgbToHex(r, g, b) { return "#" + [r, g, b].map(x => Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2, "0")).join(""); }
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2;
+  let h = 0, s = 0;
+  if (mx !== mn) {
+    const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60;
+  }
+  return { h, s, l };
+}
+function hslToHex(h, s, l) {
+  h = ((h % 360) + 360) % 360;
+  const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2;
+  const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  return rgbToHex((r + m) * 255, (g + m) * 255, (b + m) * 255);
+}
+function hexHsl(hex) { const [r, g, b] = hexToRgb(hex); return rgbToHsl(r, g, b); }
+function toLeather(hex) {
+  const { h, s, l } = hexHsl(hex);
+  if (s < .14) return hslToHex(22, .2, Math.max(.1, Math.min(.16, l * .22)));
+  return hslToHex(h, Math.max(.22, Math.min(.56, s * .7)), Math.max(.15, Math.min(.29, l * .5 + .02)));
+}
+function labelFor(hex) {
+  const { h, s, l } = hexHsl(hex);
+  if (l < .14) return "#561a1f";
+  if (h >= 14 && h <= 50 && s > .25) return "#4a1517";
+  return hslToHex(h, Math.min(.6, s * .95), Math.max(.07, l * .55));
+}
+function leatherName(hex) { const f = LEATHERS.find(x => x[1] === hex); return f ? f[0] : ""; }
+function relLum(hex) { const [r, g, b] = hexToRgb(hex).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * r + .7152 * g + .0722 * b; }
+function contrast(a, b) { const x = relLum(a), y = relLum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
+function bestInk(bg, list) { let best = list[0], top = 0; for (const c of list) { const r = contrast(bg, c); if (r > top) { top = r; best = c; } } return best; }
+
+/* ---------- bindings: which kind, which type, which colors ---------- */
+function autoBinding(b) {
+  const r = hash(b.id + "b") % 100;
+  if (b.year !== null && b.year < 1900) return "leather";
+  if (b.year !== null && b.year < 1975) return r < 55 ? "cloth" : r < 82 ? "jacket" : "paper";
+  return r < 50 ? "jacket" : r < 80 ? "paper" : r < 92 ? "cloth" : "leather";
+}
+function bindingOf(b) { return STYLES.includes(b.binding) ? b.binding : autoBinding(b); }
+function typeOf(b, style) {
+  const v = hash(b.id + "t") % 4;
+  if (style === "leather") return { t: { w: 700, f: F_ROMAN, c: "f-roman", tr: .03 }, a: { w: 600, f: F_ROMAN, c: "f-roman", tr: .05 }, caps: false, acaps: false };
+  if (style === "cloth") return { t: { w: 700, f: F_BOOK, c: "f-book", tr: v < 2 ? .05 : .01 }, a: { w: 400, f: F_BOOK, c: "f-book", tr: .08 }, caps: v < 2, acaps: true };
+  if (style === "jacket") return v === 1
+    ? { t: { w: 700, f: F_SPINE, c: "f-spine", tr: .01 }, a: { w: 400, f: F_BOOK, c: "f-book", tr: 0, it: true }, caps: false, acaps: false }
+    : { t: { w: v === 3 ? 600 : 700, f: F_SPINE, c: "f-spine", tr: v === 2 ? .07 : .03 }, a: { w: 500, f: F_SPINE, c: "f-spine", tr: .1 }, caps: true, acaps: true };
+  return { t: { w: 700, f: F_SPINE, c: "f-spine", tr: .02 }, a: { w: 600, f: F_SPINE, c: "f-spine", tr: .06 }, caps: v < 2, acaps: true };
+}
+function paletteOf(b, style) {
+  const base = b.leather, { h, s, l } = hexHsl(base);
+  const v = hash(b.id + "p") % 6;
+  const gilt = bg => contrast(bg, GOLD) >= 3.2 ? GOLD : bestInk(bg, [CREAM, INKD]);
+  const p = { bg: base, ink: GOLD, ink2: GOLD, lab: labelFor(base), labInk: "", acc: "", accInk: "", band: false, stripe: false, paste: false, dark: false };
+  if (style === "leather") {
+    p.ink = p.ink2 = gilt(base);
+  } else if (style === "cloth") {
+    p.bg = hslToHex(h, s * .8, clamp(l * 1.12 + .03, .12, .36));
+    p.ink = p.ink2 = gilt(p.bg);
+    p.paste = v === 0 || v === 3;
+    if (p.paste) { p.lab = "#e4d8bb"; p.labInk = "#2b2219"; }
+  } else if (style === "jacket") {
+    p.bg = hslToHex(h, clamp(s * 1.1 + .04, 0, .62), clamp(l * 1.5 + .05, .2, .46));
+    p.ink = bestInk(p.bg, [CREAM, INKD]);
+    if (v === 4 && contrast(p.bg, "#f2d88a") >= 4.5) p.ink = "#f2d88a";
+    p.ink2 = p.ink === INKD ? "#3a3027" : "#e2d5b9";
+    p.band = v === 1 || v === 5;
+    if (p.band) {
+      p.acc = relLum(p.bg) > .1 ? hslToHex(h, clamp(s * .9, 0, .5), clamp(l * .5, .06, .17)) : "#e7dcc3";
+      p.accInk = bestInk(p.acc, [CREAM, INKD]);
+    }
+  } else {
+    const light = v < 2;
+    p.bg = light ? "#e7ddc6" : hslToHex(h, clamp(s * 1.05 + .03, 0, .6), clamp(l * 1.7 + .08, .28, .56));
+    p.ink = light ? hslToHex(h, clamp(s * 1.25, .25, .7), clamp(l * 1.15, .15, .28)) : bestInk(p.bg, [CREAM, INKD]);
+    p.ink2 = light ? "#4a3f33" : (p.ink === INKD ? "#3a3027" : "#e4d7bb");
+    p.stripe = v % 2 === 0;
+    p.acc = light ? base : hslToHex(h, clamp(s, 0, .5), clamp(l * .6, .08, .2));
+  }
+  p.dark = relLum(p.ink) < relLum(p.bg);
+  return p;
+}
+
+/* ---------- records ---------- */
+function normalize(id, d) {
+  d = d && typeof d === "object" ? d : {};
+  const format = d.format === "audio" ? "audio" : "print";
+  const author = str(d.author, 120);
+  const title = str(d.title, 160) || "Untitled";
+  const authorSort = str(d.authorSort, 120) || sortName(author);
+  const year = num(d.year, -3000, 2100);
+  return {
+    id, title, subtitle: str(d.subtitle, 160), author, authorSort, format,
+    narrator: format === "audio" ? str(d.narrator, 120) : "",
+    pages: num(d.pages, 1, 9999), hours: num(d.hours, 0.1, 300),
+    year: year === null ? null : Math.round(year),
+    callNumber: str(d.callNumber, 18).toUpperCase() || defaultCall(authorSort || title),
+    genre: str(d.genre, 40),
+    leather: validHex(d.leather) || LEATHERS[hash(id) % LEATHERS.length][1],
+    /* "" means Auto: the binding is chosen from the book's age */
+    binding: STYLES.includes(d.binding) ? d.binding : "",
+    started: isDate(d.started) ? d.started : "", finished: isDate(d.finished) ? d.finished : "",
+    rating: Math.max(0, Math.min(5, Math.round(num(d.rating, 0, 5) || 0))),
+    review: txt(d.review, 4000), note: str(d.note, 220),
+    photo: typeof d.photo === "string" && /^[A-Za-z0-9_-]{8,80}$/.test(d.photo) ? d.photo : "",
+    sample: d.sample === true,
+    addedAt: typeof d.addedAt === "string" ? d.addedAt.slice(0, 40) : "",
+    accession: Math.max(0, Math.round(num(d.accession, 0, 999999) || 0)),
+    /* set only when the dates can't say it: "reading" with no start date, "finished" with no finish date */
+    status: d.status === "reading" || d.status === "finished" ? d.status : ""
+  };
+}
+function toRecord(b) { const o = {}; for (const k of FIELDS) o[k] = b[k] === undefined ? null : b[k]; return o; }
+const isReading = b => !b.finished && (b.status === "reading" || (!!b.started && b.status !== "finished"));
+const isDoneUndated = b => !b.finished && b.status === "finished";
+const isDone = b => !!b.finished || isDoneUndated(b);
+
+function sortBooks(list) {
+  const L = list.slice();
+  const byTitle = (a, b) => fold(art(a.title)).localeCompare(fold(art(b.title)));
+  const recentKey = b => isReading(b) ? "9" + (b.started || "") : b.finished ? "5" + b.finished : isDoneUndated(b) ? "3" + (b.started || "") : "1" + (b.addedAt || "");
+  if (state.sort === "recent") return L.sort((a, b) => recentKey(b).localeCompare(recentKey(a)) || byTitle(a, b));
+  if (state.sort === "rating") return L.sort((a, b) => (b.rating - a.rating) || byTitle(a, b));
+  if (state.sort === "title") return L.sort(byTitle);
+  if (state.sort === "accession") return L.sort((a, b) => (a.accession - b.accession) || (a.addedAt || "").localeCompare(b.addedAt || "") || byTitle(a, b));
+  return L.sort((a, b) => fold(a.authorSort || a.author || "~").localeCompare(fold(b.authorSort || b.author || "~")) || ((a.year || 0) - (b.year || 0)) || byTitle(a, b));
+}
+function shelfLabel(list) {
+  if (!list.length) return "";
+  const a = list[0], z = list[list.length - 1];
+  const range = (x, y) => x === y ? x : `${x} – ${y}`;
+  if (state.sort === "title") { const f = b => (art(b.title).charAt(0) || "?").toUpperCase(); return range(f(a), f(z)); }
+  if (state.sort === "rating") { const r = b => b.rating ? `${b.rating}★` : "Unrated"; return range(r(a), r(z)); }
+  if (state.sort === "accession") return `No. ${range(String(a.accession), String(z.accession))}`;
+  if (state.sort === "recent") {
+    const fin = list.filter(b => b.finished).map(b => b.finished).sort();
+    const reading = list.some(isReading);
+    if (!fin.length) return reading ? "Reading now" : "Undated";
+    const [y1, m1] = ymd(fin[0]), [y2, m2] = ymd(fin[fin.length - 1]);
+    const t = (y1 === y2 && m1 === m2) ? `${MONTHS[m1 - 1]} ${y1}` : y1 === y2 ? `${MONTHS[m1 - 1]}–${MONTHS[m2 - 1]} ${y1}` : `${y1}–${y2}`;
+    return reading ? `Reading · ${t}` : t;
+  }
+  return range(cutter(a.authorSort || a.title), cutter(z.authorSort || z.title));
+}
+/* spine thickness follows the page count (or, for audio, the running time); paperbacks run thinner and shorter */
+function spineWidth(b, style) {
+  let p = b.format === "audio" ? (b.hours ? b.hours * 22 : 0) : (b.pages || 0);
+  if (!p) p = 200 + (hash(b.id + "w") % 220);
+  const k = style === "paper" ? .9 : style === "leather" ? 1.06 : 1;
+  return clamp((18 + p / 13) * k, 26, 64);
+}
+const HEIGHTS = { leather: [.9, .93, .95, .98], cloth: [.86, .89, .92, .95], jacket: [.87, .9, .93, .96, .98], paper: [.74, .77, .8, .83] };
+function heightFrac(b, style) { const a = HEIGHTS[style] || HEIGHTS.jacket; return a[hash(b.id) % a.length]; }
+function ariaFor(b) {
+  const parts = [`${b.title}${b.author ? ` by ${b.author}` : ""}`, b.format === "audio" ? "Audiobook" : "Print"];
+  if (isReading(b)) parts.push(b.format === "audio" ? "Still listening" : "Still reading");
+  else if (b.finished) parts.push(`Finished ${fmtLong(b.finished)}`);
+  else if (isDoneUndated(b)) parts.push("Finished, date not recorded");
+  if (b.rating) parts.push(`Rated ${b.rating} of 5`);
+  if (b.sample) parts.push("Sample book");
+  return parts.join(". ") + ".";
+}
+
+/* ---------- setting type on a spine ----------
+   Text is measured on a canvas once at 20px; widths scale with size, so each candidate
+   (one, two or three lines) gets the largest size that fits the spine's length and thickness. */
+const mctx = document.createElement("canvas").getContext("2d");
+const fitCache = new Map();
+const LINE_PEN = [1, .86, .74];
+function mw(text, spec, f) {
+  mctx.font = `${spec.it ? "italic " : ""}${spec.w} ${f}px ${spec.f}`;
+  return mctx.measureText(text).width + (spec.tr || 0) * f * text.length;
+}
+function bestSplit(words, k, spec) {
+  const W = s => mw(s, spec, 20);
+  if (k <= 1 || words.length < 2) { const s = words.join(" "); return { lines: [s], m: W(s) }; }
+  const n = words.length;
+  let best = null;
+  if (k === 2 || n < 3) {
+    for (let i = 1; i < n; i++) {
+      const a = words.slice(0, i).join(" "), c = words.slice(i).join(" ");
+      const m = Math.max(W(a), W(c));
+      if (!best || m < best.m) best = { lines: [a, c], m };
+    }
+    return best;
+  }
+  for (let i = 1; i < n - 1; i++) for (let j = i + 1; j < n; j++) {
+    const a = words.slice(0, i).join(" "), c = words.slice(i, j).join(" "), d = words.slice(j).join(" ");
+    const m = Math.max(W(a), W(c), W(d));
+    if (!best || m < best.m) best = { lines: [a, c, d], m };
+  }
+  return best;
+}
+function truncSpec(text, spec, f, len, maxLines) {
+  const lines = []; let rest = text;
+  while (rest && lines.length < maxLines) {
+    let n = rest.length;
+    while (n > 1 && mw(rest.slice(0, n), spec, f) > len) n--;
+    let cut = n;
+    if (n < rest.length) { const sp = rest.lastIndexOf(" ", n); if (sp > 0) cut = sp; }
+    lines.push(rest.slice(0, cut).trim()); rest = rest.slice(cut).trim();
+  }
+  if (rest && lines.length) {
+    let last = lines[lines.length - 1];
+    while (last.length > 1 && mw(last + "…", spec, f) > len) last = last.slice(0, -1);
+    lines[lines.length - 1] = last.trimEnd() + "…";
+  }
+  return lines;
+}
+function fitText(text, spec, len, block, fmax, fmin, maxLines, lh) {
+  const key = [text, Math.round(len), Math.round(block), fmax.toFixed(2), fmin, maxLines, lh, spec.w, spec.f, spec.tr, spec.it ? 1 : 0, fontEpoch].join("|");
+  if (fitCache.has(key)) return fitCache.get(key);
+  const words = String(text || "").split(/\s+/).filter(Boolean);
+  let out = null;
+  if (words.length && len >= 10 && block >= 5) {
+    for (let k = 1; k <= Math.min(maxLines, words.length, 3); k++) {
+      const sp = bestSplit(words, k, spec);
+      const per = sp.m / 20 * 1.04;
+      const f = Math.floor(Math.min(fmax, len / per, block / (k * lh)) * 4) / 4;
+      if (f < fmin) continue;
+      const score = f * LINE_PEN[k - 1];
+      if (!out || score > out.score) out = { f, lines: sp.lines, k, len: per * f, thick: k * lh * f, score, cut: false };
+    }
+    if (!out) {
+      const k = Math.max(1, Math.min(maxLines, 3, Math.floor(block / (fmin * lh))));
+      const lines = truncSpec(words.join(" "), spec, fmin, len / 1.04, k);
+      out = { f: fmin, lines, k: lines.length, len, thick: lines.length * lh * fmin, score: fmin * LINE_PEN[lines.length - 1] - 3, cut: true };
+    }
+  }
+  if (fitCache.size > 6000) fitCache.clear();
+  fitCache.set(key, out);
+  return out;
+}
+function authorCands(b, style) {
+  const a = str(b.author, 120);
+  if (!a) return [];
+  const names = a.split(/\s+(?:and|&)\s+|\s*;\s*/i).map(s => s.trim()).filter(Boolean);
+  const last = n => (n.split(/\s+/).pop() || "").replace(/,$/, "");
+  const sur = names.length > 1 ? names.slice(0, 2).map(last).join(" & ") : (surname(b) || last(a));
+  const out = [];
+  if ((style === "jacket" || style === "paper") && names.length === 1 && a.length <= 22) out.push(a);
+  if (sur && !out.includes(sur)) out.push(sur);
+  return out;
+}
+function spineLayout(b, w, h) {
+  const style = bindingOf(b), ty = typeOf(b, style), pal = paletteOf(b, style);
+  const audio = b.format === "audio";
+  const pad = clamp(Math.round(w * .13), 3, 8), block = Math.max(6, w - pad * 2);
+  const cl = callLines(b, false);
+  const longest = Math.max(1, ...cl.slice(audio ? 1 : 0).map(s => s.length));
+  const cf = clamp((w - 10) / (longest * .62), 5.5, 8.5);
+  const labH = Math.ceil((audio ? cf * 1.4 + 1 + cf * 1.08 * (cl.length - 1) : cl.length * cf * 1.08) + 3);
+  const foot = labH + (style === "leather" || style === "cloth" ? 15 : 11);
+  const band = style === "jacket" && pal.band;
+  const head = band ? 0 : style === "leather" ? clamp(Math.round(h * .075), 12, 18) : style === "cloth" ? 12 : 7;
+  const L = h - head - foot;
+  const raw = b.title.split(/:\s/)[0];
+  const title = ty.caps ? raw.toUpperCase() : raw;
+  const auths = authorCands(b, style).map(s => ty.acaps ? s.toUpperCase() : s);
+  const tMax = clamp(w * .6, 10, 28), tMin = 8.5;
+  const aMax = style === "leather" ? clamp(w * .25, 7.5, 10) : clamp(w * .3, 7.5, 12), aMin = 7;
+  const framed = style === "leather" || (style === "cloth" && pal.paste);
+  const inset = framed ? 12 : 4, tBlock = framed ? block - 2 : block;
+  const gap = { leather: 16, cloth: 12, jacket: 10, paper: 10 }[style];
+  let best = null;
+  const consider = o => { if (o.tf && (!best || o.score > best.score)) best = o; };
+  for (const at of auths) {
+    const af = fitText(at, ty.a, Math.min(L * .38, 140), block, aMax, aMin, 1, 1.08);
+    if (af && !af.cut) {
+      const tf = fitText(title, ty.t, L - af.len - (band ? 14 : gap) - inset, tBlock, tMax, tMin, 3, 1.04);
+      consider({ kind: band ? "band" : "seq", tf, af, score: (tf ? tf.score : 0) + .32 * af.f });
+    }
+    if (!band && !framed && block >= 24) {
+      const ap = fitText(at, ty.a, L * .9, block * .36, aMax, aMin, 1, 1.08);
+      if (ap && !ap.cut) {
+        const tf = fitText(title, ty.t, L - inset, block - ap.thick - 2, tMax, tMin, 2, 1.04);
+        consider({ kind: "par", tf, af: ap, score: (tf ? tf.score : 0) + .32 * ap.f - .4 });
+      }
+    }
+  }
+  const solo = fitText(title, ty.t, L - inset - (band ? 10 : style === "leather" ? 6 : 0), tBlock, tMax, tMin, 3, 1.04);
+  consider({ kind: band ? "bandsolo" : "solo", tf: solo, af: null, score: (solo ? solo.score : 0) - (auths.length ? 2.4 : 0) });
+  if (!best) best = { kind: band ? "bandsolo" : "solo", tf: null, af: null };
+  return { style, ty, pal, audio, kind: best.kind, tf: best.tf, af: best.af, head, foot, cl, cf };
+}
+function vtx(fit, spec, cls, lh) {
+  if (!fit || !fit.lines.length) return "";
+  return `<span class="vtx ${cls} ${spec.c}" style="font-size:${fit.f}px;line-height:${lh};font-weight:${spec.w};${spec.it ? "font-style:italic;" : ""}letter-spacing:${spec.tr || 0}em">${fit.lines.map(esc).join("<br>")}</span>`;
+}
+function callHTML(S) {
+  const lines = S.cl.map(esc);
+  return `<span class="call" style="--cf:${S.cf.toFixed(1)}px">${S.audio ? ICON_PHONES + lines.slice(1).join("<br>") : lines.join("<br>")}</span>`;
+}
+function spineInner(S) {
+  const { style, pal, kind, tf, af } = S;
+  const T = vtx(tf, S.ty.t, "t", 1.04), A = vtx(af, S.ty.a, "a", 1.08);
+  const framed = style === "leather" || (style === "cloth" && pal.paste);
+  const title = kind === "par"
+    ? `<span class="z z-title z-par">${T}${A}</span>`
+    : `<span class="z z-title">${framed ? `<span class="lab">${T}</span>` : T}</span>`;
+  const seq = kind === "seq" && af;
+  const aZone = seq ? `<span class="z z-auth" style="flex-basis:${Math.ceil(af.len) + 4}px">${A}</span>` : "";
+  const foot = `<span class="z z-foot" style="flex-basis:${S.foot}px">${callHTML(S)}</span>`;
+  if (style === "leather") return `<span class="z z-cap" style="flex-basis:${S.head}px">${S.head >= 14 ? ICON_FLEURON : ""}</span>${title}<span class="rb"></span>${seq ? aZone + '<span class="rb"></span>' : ""}${foot}`;
+  if (style === "cloth") return `<span class="z z-cap" style="flex-basis:${S.head}px"></span>${title}${seq ? '<span class="z z-gap" style="flex-basis:8px"><i class="dot"></i></span>' + aZone : ""}${foot}`;
+  if (style === "jacket") {
+    if (kind === "band" || kind === "bandsolo") return `<span class="z z-band" style="flex-basis:${kind === "band" && af ? Math.ceil(af.len) + 14 : 10}px">${kind === "band" ? A : ""}</span>${title}${foot}`;
+    return `<span class="z z-cap" style="flex-basis:${S.head}px"></span>${title}${seq ? '<span class="z z-gap" style="flex-basis:6px"></span>' + aZone : ""}${foot}`;
+  }
+  return `<span class="z z-cap" style="flex-basis:${S.head}px">${pal.stripe ? '<i class="stripe"></i>' : ""}</span>${seq ? aZone + '<span class="z z-gap" style="flex-basis:6px"></span>' : ""}${title}${foot}`;
+}
+
+/* ---------- shelf rendering ---------- */
+function bookHTML(it, preview) {
+  const { b, w, h } = it;
+  const S = spineLayout(b, w, h), p = S.pal;
+  const reading = isReading(b);
+  const bound = S.style === "leather" || S.style === "cloth";
+  const cls = `book s-${S.style}${bound ? " gilt" : ""}${p.paste ? " paste" : ""}${p.dark ? " ink-dark" : ""}${S.audio ? " audio" : ""}${reading ? " reading" : ""}${!preview && state.justAdded === b.id ? " arrive" : ""}${preview ? " preview" : ""}`;
+  const css = `--w:${w}px;--h:${h}px;--g:${it.g || 0}px;--bg:${p.bg};--ink:${p.ink};--ink2:${p.ink2};--lab:${p.lab};--lab-ink:${p.labInk || p.ink};--acc:${p.acc || "transparent"};--acc-ink:${p.accInk || p.ink}`;
+  const mark = reading ? (bound ? '<span class="ribbon" aria-hidden="true"></span>' : `<span class="bmk" style="--bx:${22 + hash(b.id + "m") % 36}%" aria-hidden="true"></span>`) : "";
+  const inner = `<span class="spine">${spineInner(S)}</span>${mark}`;
+  if (preview) return `<span class="${cls}" style="${css}" aria-hidden="true">${inner}</span>`;
+  return `<button type="button" class="${cls}" data-id="${esc(b.id)}" style="${css}" aria-label="${esc(ariaFor(b))}">${inner}</button>`;
+}
+function noteHTML() {
+  if (state.phase === "loading") return `<div class="notecard"><p class="nc-big">Checking the stacks…</p><p class="nc-small">Your books will be shelved here, each in its proper binding.</p></div>`;
+  if (state.phase === "nodb") return `<div class="notecard"><p class="nc-big">The library is closed.</p><p class="nc-small">This shelf opens inside Claude. Sign in, then open it again to see the books.</p></div>`;
+  if (state.phase === "error") return `<div class="notecard"><p class="nc-big">The card catalog isn't answering.</p><p class="nc-small">Reload the page to try again.</p></div>`;
+  return `<div class="notecard"><p class="nc-big">Not a single book.</p><p class="nc-small">The dust is getting comfortable. ${state.editable ? "Snap a cover or screenshot your audiobook app, and I'll bind it for the shelf." : "Check back once some books are shelved."}</p>${state.editable ? '<button type="button" class="brass" data-act="add">Shelve your first book</button>' : ""}</div>`;
+}
+function cssNum(name, fallback) { const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)); return Number.isFinite(v) ? v : fallback; }
+function renderShelves() {
+  if (state.view !== "shelf") return;
+  const wrapEl = $("#shelves");
+  const H = cssNum("--H", 236), pad = cssNum("--pad", 12);
+  const innerW = Math.max(180, wrapEl.clientWidth - pad * 2);
+  const scale = innerW < 520 ? 0.88 : 1;
+  const ready = state.phase === "ready";
+  const items = (ready ? sortBooks(state.books) : []).map(b => {
+    const st = bindingOf(b);
+    return { b, w: Math.round(spineWidth(b, st) * scale), h: Math.round(H * heightFrac(b, st)), gap: 1 + (hash(b.id + "g") % 3), g: 0 };
+  });
+  const rows = []; let row = [], used = 0;
+  for (const it of items) {
+    const need = (row.length ? it.gap : 0) + it.w;
+    if (row.length && used + need > innerW) { rows.push({ items: row, used }); row = []; used = 0; }
+    it.g = row.length ? it.gap : 0;
+    used += it.g + it.w; row.push(it);
+  }
+  if (row.length) rows.push({ items: row, used });
+  let bookendRow = -1, slotRow = -1, noteRow = -1;
+  const SLOT = Math.round(42 * scale), BE = 14;
+  if (rows.length) {
+    const last = rows[rows.length - 1];
+    if (innerW - last.used >= BE + 8) { bookendRow = rows.length - 1; last.used += BE + 8; }
+    if (state.editable) {
+      if (innerW - last.used >= SLOT + 8) slotRow = rows.length - 1;
+      else { rows.push({ items: [], used: 0 }); slotRow = rows.length - 1; }
+    }
+  } else noteRow = 0;
+  const minRows = Math.max(2, rows.length);
+  while (rows.length < minRows) rows.push({ items: [], used: 0 });
+  let html = "";
+  rows.forEach((r, i) => {
+    const label = shelfLabel(r.items.map(x => x.b));
+    html += `<section class="shelf" aria-label="${esc(`Shelf ${i + 1}${label ? ": " + label : ""}`)}"><div class="row">`;
+    for (const it of r.items) html += bookHTML(it, false);
+    if (i === bookendRow) html += `<span class="bookend" aria-hidden="true"></span>`;
+    if (i === slotRow) html += `<button type="button" class="slot" data-act="add" style="--sw:${SLOT}px" aria-label="Shelve a book"><span aria-hidden="true">+</span></button>`;
+    if (i === noteRow) html += noteHTML();
+    html += `</div><div class="board"></div><span class="holder${label ? "" : " blank"}">${esc(label)}</span></section>`;
+  });
+  wrapEl.innerHTML = html;
+  if (state.justAdded) {
+    const id = state.justAdded;
+    const el = wrapEl.querySelector(`.book[data-id="${CSS.escape(id)}"]`);
+    if (el) {
+      const done = () => { if (state.justAdded === id) state.justAdded = null; el.classList.remove("arrive"); };
+      el.addEventListener("animationend", done, { once: true });
+      setTimeout(done, 1400);
+    }
+  }
+}
+function renderTally() {
+  const el = $("#tally");
+  if (state.phase === "loading") { el.textContent = "Checking the stacks…"; return; }
+  if (state.phase !== "ready") { el.textContent = "Shelf unavailable"; return; }
+  const B = state.books, n = B.length;
+  if (!n) { el.textContent = "No volumes yet"; return; }
+  const audio = B.filter(b => b.format === "audio").length, print = n - audio;
+  const reading = B.filter(isReading).length;
+  const rated = B.filter(b => b.rating > 0);
+  const avg = rated.length ? rated.reduce((s, b) => s + b.rating, 0) / rated.length : 0;
+  el.innerHTML = `<b>${n}</b> volume${n === 1 ? "" : "s"}<span class="t-more"> · ${print} print · ${audio} audio${reading ? ` · ${reading} in progress` : ""}${rated.length ? ` · avg ${avg.toFixed(1)}★` : ""}</span>`;
+}
+function renderPlaque() {
+  if (!renaming) {
+    const el = $("#libName");
+    if (state.editable && state.phase === "ready") el.innerHTML = `<button type="button" class="name-btn" data-act="rename" title="Rename your library">${esc(state.name)}</button>`;
+    else el.textContent = state.name;
+  }
+  const years = state.books.filter(b => !b.sample && b.addedAt).map(b => parseInt(b.addedAt.slice(0, 4), 10)).filter(y => y > 1900);
+  $("#est").textContent = `Est. ${roman(years.length ? Math.min(...years) : new Date().getFullYear())}`;
+}
+function renderNotice() {
+  const el = $("#notice");
+  const samples = state.books.filter(b => b.sample);
+  if (!state.editable || state.phase !== "ready" || !samples.length) { el.hidden = true; el.innerHTML = ""; state.noticeConfirm = false; return; }
+  const k = samples.length;
+  el.hidden = false;
+  if (state.clearing) { el.innerHTML = `<p>Clearing the samples…</p>`; return; }
+  el.innerHTML = state.noticeConfirm
+    ? `<p>Remove all ${k} sample book${k === 1 ? "" : "s"}? Your own books stay put.</p><div class="notice-acts"><button type="button" class="brass" data-act="clear-yes">Remove the samples</button><button type="button" class="ghost" data-act="clear-no">Keep them for now</button></div>`
+    : `<p><b>${k === 1 ? "One sample book is" : `${k} sample books are`} on the shelf</b> so you can see how it works. Tap one to read its card.</p><div class="notice-acts"><button type="button" class="ghost" data-act="clear-samples">Clear the samples</button></div>`;
+}
+
+/* ---------- the master ledger ---------- */
+function totals(list) {
+  const yr = String(new Date().getFullYear());
+  const t = { n: list.length, print: 0, audio: 0, reading: 0, done: 0, pages: 0, hours: 0, year: 0, yr };
+  for (const b of list) {
+    const fin = isDone(b);
+    if (b.format === "audio") { t.audio++; if (fin && b.hours) t.hours += b.hours; }
+    else { t.print++; if (fin && b.pages) t.pages += b.pages; }
+    if (isReading(b)) t.reading++;
+    if (fin) t.done++;
+    if (b.finished && b.finished.slice(0, 4) === yr) t.year++;
+  }
+  t.pages = Math.round(t.pages);
+  return t;
+}
+const nf = n => Math.round(n).toLocaleString("en-US");
+function ledgerMatches(b) {
+  const f = ledger.filter;
+  if (f === "reading" && !isReading(b)) return false;
+  if (f === "finished" && !isDone(b)) return false;
+  if ((f === "print" || f === "audio") && b.format !== f) return false;
+  if (ledger.terms.length) {
+    const hay = fold([b.title, b.subtitle, b.author, b.narrator, b.genre, b.callNumber, b.year === null ? "" : String(b.year), String(b.accession)].join(" "));
+    return ledger.terms.every(t => hay.includes(t));
+  }
+  return true;
+}
+function groupOf(b) {
+  switch (state.sort) {
+    case "author": { const c = fold(b.authorSort || b.author).replace(/[^a-z]/g, "").charAt(0); return c ? c.toUpperCase() : "Anonymous"; }
+    case "title": { const c = fold(art(b.title)).replace(/[^a-z0-9]/g, "").charAt(0); return !c ? "Other" : /\d/.test(c) ? "0–9" : c.toUpperCase(); }
+    case "recent": return isReading(b) ? "In progress" : b.finished ? monthYear(b.finished) : isDoneUndated(b) ? "Finished, date not recorded" : "Not dated";
+    case "rating": return b.rating ? `${b.rating} star${b.rating === 1 ? "" : "s"}` : "Unrated";
+    default: return "";
+  }
+}
+function entryHTML(b) {
+  const audio = b.format === "audio";
+  const pal = paletteOf(b, bindingOf(b));
+  const nil = '<span class="e-nil">—</span>';
+  const len = audio ? (b.hours ? fmtHoursShort(b.hours) : "") : (b.pages ? `${Math.round(b.pages)} pp.` : "");
+  const stamp = `<span class="e-stamp">${audio ? "Listening" : "Reading"}</span>`;
+  const reading = isReading(b);
+  const fin = b.finished ? esc(fmtLong(b.finished)) : reading ? stamp : isDoneUndated(b) ? "Finished" : nil;
+  const status = b.finished ? esc(`Finished ${fmtLong(b.finished)}`) : reading ? stamp + (b.started ? esc(` since ${fmtLong(b.started)}`) : "") : isDoneUndated(b) ? "Finished, date unknown" : "Not dated";
+  /* on a phone the length says the format: pages for print, hours for audio */
+  const meta = esc(len || (audio ? "Audio" : "Print")) + " · " + status;
+  return `<button type="button" class="entry" data-id="${esc(b.id)}" aria-label="${esc(ariaFor(b))}">`
+    + `<span class="e-no">${String(b.accession || 0).padStart(3, "0")}</span>`
+    + `<span class="e-chip" style="--bg:${pal.bg}"></span>`
+    + `<span class="e-title"><b>${esc(b.title)}</b>${b.subtitle ? `<i>${esc(b.subtitle)}</i>` : ""}</span>`
+    + `<span class="e-author">${b.author ? esc(b.author) : '<span class="e-nil">Anonymous</span>'}</span>`
+    + `<span class="e-fmt">${audio ? "Audio" : "Print"}</span>`
+    + `<span class="e-len">${len ? esc(len) : nil}</span>`
+    + `<span class="e-call">${esc(b.callNumber)}</span>`
+    + `<span class="e-start">${b.started ? esc(fmtLong(b.started)) : nil}</span>`
+    + `<span class="e-fin">${fin}</span>`
+    + `<span class="e-rate">${b.rating ? starsSVG(b.rating) : nil}</span>`
+    + `<span class="e-meta">${meta}</span>`
+    + `</button>`;
+}
+function renderLedgerHead() {
+  const ready = state.phase === "ready";
+  const t = totals(state.books);
+  $("#lgSub").textContent = `Every volume in ${state.name}, entered in my neatest hand.`;
+  $("#lgTotals").innerHTML = ready && t.n ? [
+    ["Volumes", nf(t.n)], ["Finished", nf(t.done)], ["In progress", nf(t.reading)],
+    ["Pages read", nf(t.pages)], ["Hours listened", nf(t.hours)], [`${t.yr} so far`, nf(t.year)]
+  ].map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("") : "";
+  $("#cAll").textContent = t.n; $("#cReading").textContent = t.reading; $("#cFinished").textContent = t.done;
+  $("#cPrint").textContent = t.print; $("#cAudio").textContent = t.audio;
+}
+function renderLedgerList() {
+  const el = $("#lgRows");
+  if (state.phase === "loading") { el.innerHTML = '<p class="lg-empty">Opening the ledger…</p>'; return; }
+  if (state.phase === "nodb") { el.innerHTML = '<p class="lg-empty">The ledger opens inside Claude. Sign in, then open it again.</p>'; return; }
+  if (state.phase === "error") { el.innerHTML = '<p class="lg-empty">The ledger won\'t open. Reload the page to try again.</p>'; return; }
+  if (!state.books.length) { el.innerHTML = `<p class="lg-empty">The ledger is blank. ${state.editable ? "Shelve a book and I'll write it in." : "Check back once some books are shelved."}</p>`; return; }
+  const list = sortBooks(state.books).filter(ledgerMatches);
+  if (!list.length) { el.innerHTML = '<p class="lg-empty">Nothing in the ledger matches that. I checked twice.</p><p class="lg-empty"><button type="button" class="textbtn" data-act="lg-clear">Show every entry</button></p>'; return; }
+  const groups = [];
+  for (const b of list) {
+    const k = groupOf(b);
+    if (!groups.length || groups[groups.length - 1].k !== k) groups.push({ k, items: [] });
+    groups[groups.length - 1].items.push(b);
+  }
+  let html = "";
+  for (const g of groups) {
+    if (g.k) html += `<h3 class="lg-group">${esc(g.k)}<span>${g.items.length} ${g.items.length === 1 ? "entry" : "entries"}</span></h3>`;
+    html += g.items.map(entryHTML).join("");
+  }
+  const t = totals(list);
+  html += `<div class="lg-foot"><b>${list.length === state.books.length ? "Totals" : "Totals for these entries"}</b><span>${nf(t.n)} volume${t.n === 1 ? "" : "s"} · ${nf(t.pages)} pp. read · ${nf(t.hours)} hr listened</span></div>`;
+  el.innerHTML = html;
+}
+function renderLedger() { if (state.view !== "ledger") return; renderLedgerHead(); renderLedgerList(); }
+
+/* ---------- shelf or ledger ---------- */
+function readHash() { return (location.hash || "").replace(/^#/, "") === "ledger" ? "ledger" : "shelf"; }
+function setView(v, fromUser) {
+  v = v === "ledger" ? "ledger" : "shelf";
+  const changed = state.view !== v;
+  state.view = v;
+  $("#case").hidden = v !== "shelf";
+  $("#ledgerView").hidden = v !== "ledger";
+  document.querySelectorAll(".vbtn").forEach(btn => btn.setAttribute("aria-pressed", String(btn.dataset.view === v)));
+  $("#sortLbl").textContent = v === "ledger" ? "Sorted by" : "Shelved by";
+  if (fromUser) { try { if (location.hash !== "#" + v) location.hash = v; } catch (e) {} }
+  if (v === "ledger") renderLedger(); else { lastW = 0; renderShelves(); }
+  if (changed && fromUser) window.scrollTo(0, 0);
+}
+function render() {
+  renderTally(); renderPlaque(); renderNotice();
+  if (state.view === "ledger") renderLedger(); else renderShelves();
+  $("#addBtn").hidden = !(state.editable && state.phase === "ready");
+}
+
+/* ---------- detail: front board + catalog card ---------- */
+function starsSVG(n) {
+  let s = "";
+  for (let i = 1; i <= 5; i++) s += `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}" fill="${i <= n ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
+  return `<span class="stars" role="img" aria-label="${n ? `${n} of 5 stars` : "Not rated"}">${s}</span>`;
+}
+/* cover type is sized in container units; cap it so the longest word never has to break */
+function coverFs(text, spec, availCqw, wanted) {
+  const longest = text.split(/\s+/).reduce((a, w) => w.length > a.length ? w : a, "");
+  const per = mw(longest || "M", spec, 20) / 20 * 1.06;
+  return Math.max(4.5, Math.min(wanted, availCqw / per));
+}
+function coverHTML(b) {
+  const style = bindingOf(b), pal = paletteOf(b, style), ty = typeOf(b, style);
+  const raw = b.title.split(/:\s/)[0];
+  const vars = `--bg:${pal.bg};--ink:${pal.ink};--ink2:${pal.ink2};--lab:${pal.lab};--lab-ink:${pal.labInk || pal.ink};--acc:${pal.acc || pal.ink}`;
+  const aria = `role="img" aria-label="${esc(`${STYLE_NAMES[style]} cover of ${b.title}`)}"`;
+  const mark = isReading(b) ? (style === "leather" || style === "cloth" ? '<span class="ribbon" aria-hidden="true"></span>' : '<span class="bmk" aria-hidden="true"></span>') : "";
+  if (style === "leather") {
+    const fs = coverFs(raw, { w: 700, f: F_ROMAN, tr: .02 }, 68, clamp(12.6 - raw.length * 0.17, 6.4, 11.5));
+    const corners = [1, 2, 3, 4].map(k => `<svg class="k${k}" viewBox="0 0 20 20" aria-hidden="true">${ICON_CORNER}</svg>`).join("");
+    return `<div class="cover s-leather" style="${vars}" ${aria}>`
+      + `<span class="c-frame">${corners}</span>`
+      + `<span class="c-title gh" style="--fs:${fs.toFixed(2)}">${esc(raw)}</span>`
+      + `<span class="c-orn">${ICON_CENTER}</span>`
+      + (b.author ? `<span class="c-author gh">${esc(b.author)}</span>` : "")
+      + (b.format === "audio" ? `<span class="c-ed gh">audio edition</span>` : "")
+      + mark + `</div>`;
+  }
+  if (style === "cloth") {
+    const tt = ty.caps ? raw.toUpperCase() : raw;
+    const fs = coverFs(tt, { w: 700, f: F_BOOK, tr: ty.caps ? .06 : 0 }, 56, clamp(11.5 - tt.length * (ty.caps ? 0.2 : 0.16), 5.6, 10));
+    return `<div class="cover s-cloth${pal.paste ? " paste" : ""}" style="${vars}" ${aria}><span class="cv-blind"></span>`
+      + `<span class="cv-label"><span class="cv-title${ty.caps ? " caps" : ""}" style="--fs:${fs.toFixed(2)}">${esc(tt)}</span>${b.author ? `<span class="cv-author">${esc(b.author)}</span>` : ""}</span>`
+      + (b.format === "audio" ? '<span class="cv-ed">Audio edition</span>' : "") + mark + `</div>`;
+  }
+  const tt = ty.caps ? raw.toUpperCase() : raw;
+  const fs = coverFs(tt, { w: 700, f: F_SPINE, tr: ty.caps ? .03 : .01 }, 71, clamp((ty.caps ? 19 : 21) - tt.length * (ty.caps ? 0.36 : 0.34), 8.5, 19));
+  const sub = b.subtitle || (b.format === "audio" ? "Audio edition" : "");
+  return `<div class="cover s-${style}${pal.band ? " band" : ""}${pal.stripe ? " stripe" : ""}" style="${vars}" ${aria}><span class="cm">`
+    + `<span class="cm-title${ty.caps ? " caps" : ""}" style="--fs:${fs.toFixed(2)}">${esc(tt)}</span>`
+    + (sub ? `<span class="cm-sub">${esc(sub)}</span>` : "")
+    + `<span class="cm-rule"></span>`
+    + (b.author ? `<span class="cm-author">${esc(b.author)}</span>` : "")
+    + `</span>${mark}</div>`;
+}
+function cardHTML(b) {
+  const audio = b.format === "audio";
+  const phys = audio
+    ? `Audiobook${b.hours ? ` (${fmtHours(b.hours)})` : ""}${b.narrator ? ` / read by ${esc(b.narrator)}` : ""}.`
+    : `${b.pages ? `${Math.round(b.pages)} p. ` : ""}Print.`;
+  const titleLine = `${esc(b.title)}${b.subtitle ? ` : ${esc(b.subtitle)}` : ""}${b.author ? ` / ${esc(b.author)}` : ""}.${b.year !== null ? ` &mdash; ${esc(fmtYear(b.year))}.` : ""}`;
+  const started = b.started ? `<span class="stamp">${fmtStamp(b.started)}</span>` : `<span class="stamp nil">Not dated</span>`;
+  const finished = b.finished ? `<span class="stamp">${fmtStamp(b.finished)}</span>`
+    : isReading(b) ? `<span class="stamp red">${audio ? "Still listening" : "Still reading"}</span>`
+    : isDoneUndated(b) ? `<span class="stamp">Date unknown</span>` : `<span class="stamp nil">Not dated</span>`;
+  return `<div class="c-head">`
+      + `<div class="c-call"><span class="pre">Call no.</span><span class="ty">${callLines(b, true).map(esc).join("<br>")}</span></div>`
+      + `<div class="c-entry"><span class="pre">Main entry</span>`
+        + `<p class="ty c-main">${esc(b.authorSort || b.author || "Anonymous")}.</p>`
+        + `<p class="ty c-ind" id="dTitle">${titleLine}</p>`
+        + `<p class="ty c-ind">${phys}</p>`
+        + (b.genre ? `<p class="ty c-ind">1. ${esc(b.genre)}.</p>` : "")
+      + `</div>`
+    + `</div>`
+    + `<hr class="c-rule">`
+    + `<div class="c-body">`
+      + `<div class="c-stamps"><div><span class="pre">Started</span>${started}</div><div><span class="pre">Finished</span>${finished}</div></div>`
+      + `<div><span class="pre">Rating</span>${starsSVG(b.rating)}</div>`
+      + `<div class="c-review"><span class="pre">Review</span><p class="ty">${b.review ? esc(b.review).replace(/\n/g, "<br>") : '<span class="nil-text">No review on file.</span>'}</p></div>`
+      + (b.note ? `<p class="c-note"><span class="pre">Librarian's note</span>${esc(b.note)}</p>` : "")
+    + `</div>`
+    + `<p class="ty c-acc">Acc. no. ${String(b.accession || 0).padStart(4, "0")}</p>`
+    + (b.sample ? `<span class="c-sample" aria-hidden="true">Sample copy</span>` : "")
+    + (b.photo ? `<button type="button" class="c-photo" data-act="photo-zoom" aria-label="Enlarge your photo"><img src="/_blob/${esc(b.photo)}" alt="Your photo of the book"></button>` : "")
+    + `<span class="c-hole" aria-hidden="true"></span>`;
+}
+function fillDetailActions() {
+  const b = byId(detailId), el = $("#dActions");
+  if (!b) { el.innerHTML = ""; return; }
+  let h = "";
+  if (state.editable) {
+    if (isReading(b)) h += `<button type="button" class="brass" data-act="finish">Mark finished today</button>`;
+    h += `<button type="button" class="ghost" data-act="edit">Edit card</button>`;
+    h += `<button type="button" class="ghost ghost-danger" data-act="withdraw">Withdraw</button>`;
+  }
+  h += `<button type="button" class="ghost" data-act="close-detail">Back to the ${state.view === "ledger" ? "ledger" : "shelf"}</button>`;
+  el.innerHTML = h;
+}
+function fillDetail(b) {
+  $("#dCover").innerHTML = coverHTML(b);
+  const card = $("#dCard");
+  card.className = "card" + (b.photo ? " has-photo" : "");
+  card.innerHTML = cardHTML(b);
+  const img = card.querySelector(".c-photo img");
+  if (img) img.addEventListener("error", () => { const p = img.closest(".c-photo"); if (p) p.hidden = true; card.classList.remove("has-photo"); }, { once: true });
+  fillDetailActions();
+}
+function openDetail(id) {
+  const b = byId(id); if (!b) return;
+  detailId = id; fillDetail(b);
+  const d = $("#detail");
+  if (!d.open) d.showModal();
+  d.scrollTop = 0;
+}
+function closeDetail() { const d = $("#detail"); if (d.open) d.close(); }
+
+/* ---------- the accession slip (add / edit) ---------- */
+let formMode = "add", editId = null, pendingRef = null, photoBlob = null, thumbBlob = null, thumbURL = null, coverLeather = null;
+let formNote = "", formTitleFrom = "", formSubtitle = "", formAuthorFrom = "", formAuthorSort = "";
+let lookCtl = null, cycleTimer = null, saving = false, previewRAF = 0;
+
+function buildRating() {
+  let h = "";
+  for (let i = 1; i <= 5; i++) h += `<input type="radio" name="rating" id="rt${i}" value="${i}"><label for="rt${i}" data-v="${i}"><span class="sr">${i} star${i > 1 ? "s" : ""}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path class="fill" d="${STAR}" fill="currentColor"/><path d="${STAR}" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></label>`;
+  h += `<input type="radio" name="rating" id="rt0" value="0" checked><label for="rt0" class="rate-clear">No rating</label>`;
+  $("#rateIn").innerHTML = h;
+}
+function setRating(n) { const r = $(`#rt${n}`) || $("#rt0"); r.checked = true; paintRating(n); }
+function paintRating(n) { document.querySelectorAll("#rateIn label[data-v]").forEach(l => l.classList.toggle("on", +l.dataset.v <= n)); }
+function setFormat(f) { (f === "audio" ? $("#fmtAudio") : $("#fmtPrint")).checked = true; $("#slip").dataset.format = f === "audio" ? "audio" : "print"; }
+function setBinding(v) { const map = { leather: "#bsLeather", cloth: "#bsCloth", jacket: "#bsJacket", paper: "#bsPaper" }; ($(map[v] || "#bsAuto")).checked = true; }
+function renderSwatches(sel) {
+  const list = [];
+  if (coverLeather) list.push(["From your cover", coverLeather]);
+  for (const L of LEATHERS) if (L[1] !== coverLeather) list.push(L);
+  if (sel && !list.some(x => x[1] === sel)) list.unshift(["Current color", sel]);
+  const chosen = sel || coverLeather || LEATHERS[Math.floor(Math.random() * LEATHERS.length)][1];
+  $("#swatches").innerHTML = list.map(([name, hex], i) => `<span class="sw"><input type="radio" name="leather" id="sw${i}" value="${hex}" data-name="${esc(name)}"${hex === chosen ? " checked" : ""}><label for="sw${i}" style="--c:${hex}" title="${esc(name)}"><span class="sr">${esc(name)}</span></label></span>`).join("")
+    + `<span class="sw-name" id="swName" aria-hidden="true"></span>`;
+  paintSwName();
+  schedulePreview();
+}
+function paintSwName() { const c = document.querySelector("input[name=leather]:checked"); const n = $("#swName"); if (n) n.textContent = c ? c.dataset.name : ""; }
+/* a book made from whatever the slip says right now, for the binding preview */
+function formBook() {
+  const lth = document.querySelector("input[name=leather]:checked");
+  const bs = document.querySelector("input[name=bstyle]:checked");
+  const author = str($("#fAuthor").value, 120);
+  const id = formMode === "edit" && editId ? editId : (pendingRef && pendingRef.id) || "new-accession";
+  return normalize(id, {
+    title: str($("#fTitle").value, 160) || "Untitled", author,
+    authorSort: author && author === formAuthorFrom && formAuthorSort ? formAuthorSort : sortName(author),
+    format: $("#fmtAudio").checked ? "audio" : "print",
+    year: $("#fYear").value, pages: $("#fPages").value, hours: $("#fHours").value,
+    callNumber: $("#fCall").value, leather: lth ? lth.value : "", binding: bs ? bs.value : "",
+    started: $("#fStarted").value, finished: $("#fFinished").value, status: $("#fStatus").value
+  });
+}
+function renderPreview() {
+  const el = $("#bindPrev");
+  if (!el || $("#stepFields").hidden) return;
+  const b = formBook(), st = bindingOf(b);
+  const h = Math.round(156 * heightFrac(b, st));
+  const w = Math.round(spineWidth(b, st) * 0.9);
+  el.innerHTML = bookHTML({ b, w, h, g: 0 }, true);
+  const picked = document.querySelector("input[name=bstyle]:checked");
+  $("#bindHint").textContent = picked && picked.value
+    ? `${STYLE_NAMES[st]}. Your call, entirely.`
+    : b.year !== null ? `Auto picked ${STYLE_PHRASE[st]} for a ${fmtYear(b.year)} book. Overrule me if your copy disagrees.` : `Auto picked ${STYLE_PHRASE[st]}. Overrule me if your copy disagrees.`;
+}
+function schedulePreview() { cancelAnimationFrame(previewRAF); previewRAF = requestAnimationFrame(renderPreview); }
+function show(id, on) { $("#" + id).hidden = !on; }
+function resetForm() {
+  stopLook(true);
+  $("#slip").reset();
+  ["stepPhoto", "stepLook", "stepFields", "slipFoot", "found", "dropErr", "titleErr", "dateErr", "saveErr", "foundNote", "relookBtn", "newPhotoBtn", "foundImg"].forEach(id => show(id, false));
+  $("#found").classList.remove("warn");
+  photoBlob = thumbBlob = null;
+  if (thumbURL) URL.revokeObjectURL(thumbURL);
+  thumbURL = null; coverLeather = null;
+  formNote = formTitleFrom = formSubtitle = formAuthorFrom = formAuthorSort = "";
+  setFormat("print"); setRating(0); setBinding(""); renderSwatches(null);
+  const sb = $("#saveBtn"); sb.disabled = false;
+}
+function showFields(focusTitle) {
+  show("stepPhoto", false); show("stepLook", false); show("stepFields", true); show("slipFoot", true);
+  schedulePreview();
+  if (focusTitle) setTimeout(() => $("#fTitle").focus(), 30);
+}
+function backToPhoto() {
+  show("stepLook", false); show("stepFields", false); show("slipFoot", false); show("stepPhoto", true);
+}
+function fillFields(b) {
+  $("#fTitle").value = b.title; $("#fAuthor").value = b.author; setFormat(b.format);
+  $("#fNarrator").value = b.narrator || "";
+  $("#fHours").value = b.hours ? String(Math.round(b.hours * 10) / 10) : "";
+  $("#fPages").value = b.pages ? String(Math.round(b.pages)) : "";
+  $("#fYear").value = b.year !== null ? String(b.year) : "";
+  $("#fCall").value = b.callNumber; $("#fGenre").value = b.genre;
+  $("#fStarted").value = b.started; $("#fFinished").value = b.finished; $("#fStatus").value = b.status || "";
+  $("#fReview").value = b.review; setRating(b.rating); setBinding(b.binding);
+  formNote = b.note; formTitleFrom = b.title; formSubtitle = b.subtitle; formAuthorFrom = b.author; formAuthorSort = b.authorSort;
+  renderSwatches(b.leather);
+}
+async function openForm(id) {
+  if (!state.editable || !db) return;
+  await Promise.race([samplePromise, new Promise(r => setTimeout(r, 700))]);
+  if ($("#form").open) return;
+  resetForm();
+  const sb = $("#saveBtn");
+  if (id) {
+    const b = byId(id); if (!b) return;
+    formMode = "edit"; editId = id; pendingRef = null;
+    closeDetail();
+    fillFields(b);
+    $("#formTitle").textContent = "Edit catalog card";
+    $("#formSub").textContent = "Corrections are permitted. Grudgingly.";
+    sb.textContent = "Save card";
+    showFields(false);
+  } else {
+    formMode = "add"; editId = null;
+    try { pendingRef = db.collection("books").doc(); } catch (e) { pendingRef = null; }
+    $("#formTitle").textContent = "New accession";
+    sb.textContent = "Shelve it";
+    if (photoOK) { $("#formSub").textContent = "Show me the cover. I'll handle the cataloguing, as usual."; backToPhoto(); }
+    else { $("#formSub").textContent = "Fill in the card. Neatly, please."; showFields(false); }
+  }
+  $("#form").showModal();
+  if (formMode === "add" && !photoOK) setTimeout(() => $("#fTitle").focus(), 30);
+}
+function closeForm() { const f = $("#form"); if (f.open) f.close(); }
+
+/* photo -> image blobs + dominant color */
+function loadImage(url) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => res(img); img.onerror = () => rej(new Error("decode"));
+    img.src = url;
+  });
+}
+function drawTo(img, maxSide, q) {
+  const iw = img.naturalWidth, ih = img.naturalHeight;
+  const s = Math.min(1, maxSide / Math.max(iw, ih));
+  const w = Math.max(1, Math.round(iw * s)), h = Math.max(1, Math.round(ih * s));
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, w, h); x.drawImage(img, 0, 0, w, h);
+  return new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("encode")), "image/jpeg", q));
+}
+function dominantColor(img) {
+  try {
+    const N = 48, c = document.createElement("canvas"); c.width = N; c.height = N;
+    const x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(img, 0, 0, N, N);
+    const d = x.getImageData(0, 0, N, N).data;
+    const bins = Array.from({ length: 24 }, () => ({ w: 0, r: 0, g: 0, b: 0 }));
+    let tr = 0, tg = 0, tb = 0, tn = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      const r = d[i], g = d[i + 1], b = d[i + 2]; tr += r; tg += g; tb += b; tn++;
+      const { h, s, l } = rgbToHsl(r, g, b);
+      if (s < .2 || l < .1 || l > .9) continue;
+      const k = Math.floor(h / 15) % 24, wt = s * (1 - Math.abs(l - .5));
+      bins[k].w += wt; bins[k].r += r * wt; bins[k].g += g * wt; bins[k].b += b * wt;
+    }
+    const best = bins.reduce((a, b) => b.w > a.w ? b : a);
+    if (best.w < 6) return tn ? rgbToHex(tr / tn, tg / tn, tb / tn) : null;
+    return rgbToHex(best.r / best.w, best.g / best.w, best.b / best.w);
+  } catch (e) { return null; }
+}
+async function prepImage(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await loadImage(url);
+    if (!img.naturalWidth) throw new Error("empty");
+    const main = await drawTo(img, 1400, 0.86);
+    const thumb = await drawTo(img, 640, 0.8);
+    return { main, thumb, color: dominantColor(img) };
+  } finally { URL.revokeObjectURL(url); }
+}
+function dropError(msg) { const e = $("#dropErr"); e.textContent = msg; e.hidden = false; backToPhoto(); }
+async function handlePhoto(file) {
+  show("dropErr", false);
+  if (!file || (file.type && !/^image\//.test(file.type))) { dropError("That isn't an image file. Try a photo or a screenshot."); return; }
+  let prep;
+  try { prep = await prepImage(file); }
+  catch (e) { dropError("I couldn't open that image here. Try a JPEG or PNG, or take a screenshot of it."); return; }
+  photoBlob = prep.main; thumbBlob = prep.thumb;
+  if (thumbURL) URL.revokeObjectURL(thumbURL);
+  thumbURL = URL.createObjectURL(prep.thumb);
+  coverLeather = prep.color ? toLeather(prep.color) : null;
+  identify("quick");
+}
+function startCycle() {
+  let i = 0;
+  $("#lookStatus").textContent = LOOK_LINES[0];
+  $("#lookSr").textContent = "Looking up the book.";
+  clearInterval(cycleTimer);
+  cycleTimer = setInterval(() => { i = (i + 1) % LOOK_LINES.length; $("#lookStatus").textContent = LOOK_LINES[i]; }, 2600);
+}
+function stopLook(silent) {
+  if (lookCtl) { const c = lookCtl; lookCtl = null; c.abort(); }
+  if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+  if (!silent) backToPhoto();
+}
+async function identify(tier) {
+  if (!sample || !photoOK || !photoBlob) { showFields(true); return; }
+  stopLook(true);
+  const ctl = new AbortController(); lookCtl = ctl;
+  show("stepPhoto", false); show("stepFields", false); show("slipFoot", false); show("stepLook", true);
+  $("#lookImg").src = thumbURL || "";
+  startCycle();
+  const opts = { images: [photoBlob], modelTier: tier, signal: ctl.signal };
+  if (tier !== "quick") opts.cache = false;
+  try {
+    const r = await sample.json(PROMPT, opts);
+    if (ctl !== lookCtl) return;
+    lookCtl = null; clearInterval(cycleTimer); cycleTimer = null;
+    applyResult(r);
+  } catch (e) {
+    if (ctl !== lookCtl) return;
+    lookCtl = null; clearInterval(cycleTimer); cycleTimer = null;
+    lookFailed(e);
+  }
+}
+function setFound(html, warn, retry) {
+  const f = $("#found"); f.hidden = false; f.classList.toggle("warn", !!warn);
+  $("#foundMsg").innerHTML = html;
+  $("#foundImg").src = thumbURL || ""; $("#foundImg").hidden = !thumbURL;
+  $("#relookBtn").hidden = !(retry && photoOK && photoBlob);
+  $("#newPhotoBtn").hidden = !(photoOK && formMode === "add");
+}
+function applyResult(r) {
+  showFields(false);
+  if (!r || typeof r !== "object" || Array.isArray(r) || r.found === false || !str(r.title)) {
+    const why = r && typeof r === "object" && !Array.isArray(r) ? str(r.reason, 100).replace(/\.$/, "") : "";
+    setFound(`I couldn't find a book in that picture${why ? ` (${esc(why)})` : ""}. Try a clearer shot of the cover, or type it in below.`, true, true);
+    show("foundNote", false);
+    setTimeout(() => $("#fTitle").focus(), 30);
+    return;
+  }
+  const title = str(r.title, 160), author = str(r.author, 120);
+  $("#fTitle").value = title; $("#fAuthor").value = author;
+  setFormat(r.format === "audio" ? "audio" : "print");
+  $("#fNarrator").value = str(r.narrator, 120);
+  const y = num(r.year, -3000, 2100); $("#fYear").value = y === null || y === 0 ? "" : String(Math.round(y));
+  const p = num(r.pages, 1, 9999); $("#fPages").value = p === null ? "" : String(Math.round(p));
+  const hr = num(r.hours, 0.1, 300); $("#fHours").value = hr === null ? "" : String(Math.round(hr * 10) / 10);
+  $("#fGenre").value = str(r.genre, 40);
+  formAuthorFrom = author; formAuthorSort = str(r.author_sort, 120) || sortName(author);
+  formTitleFrom = title; formSubtitle = str(r.subtitle, 160);
+  $("#fCall").value = (str(r.call_number, 18) || defaultCall(formAuthorSort || title)).toUpperCase();
+  formNote = str(r.librarian_note, 220);
+  const hex = validHex(r.cover_color);
+  if (hex) coverLeather = toLeather(hex);
+  renderSwatches(coverLeather);
+  const low = r.confidence === "low";
+  setFound(`<b>Catalogued:</b> <i>${esc(title)}</i>${author ? ` by ${esc(author)}` : ""}. ${low ? "That's my best guess, so check it over." : "Check my work below. I'm rarely wrong, but it has happened."}`, low, true);
+  const n = $("#foundNote");
+  n.hidden = !formNote;
+  n.innerHTML = formNote ? `<span class="pre">Librarian's note</span>${esc(formNote)}` : "";
+  const g = $("#fieldsGrid"); g.classList.remove("flash"); void g.offsetWidth; g.classList.add("flash");
+}
+function lookFailed(e) {
+  const code = e && e.code;
+  if (code === "cancelled") { backToPhoto(); return; }
+  if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed", "images_unavailable"].includes(code)) {
+    photoOK = false; showFields(true);
+    setFound("Photo lookup isn't available on this page right now, so the card is yours to fill in.", true, false);
+    return;
+  }
+  if (code === "image_rejected") { dropError("That image was too large or in a format I can't read. Try a JPEG or PNG."); return; }
+  showFields(true);
+  const msg = code === "rate_limited" ? "Too many lookups in a row. Give it a minute, then look again, or type it in."
+    : code === "refused" ? "I can't catalog that image. Try a different photo, or type it in."
+    : code === "session_expired" ? "Your Claude session expired. Sign in again, then look again."
+    : "The lookup came back garbled. Look again, or type the details in yourself.";
+  setFound(msg, true, code !== "refused");
+}
+
+function collect() {
+  const title = str($("#fTitle").value, 160);
+  show("titleErr", !title);
+  const started = $("#fStarted").value, finished = $("#fFinished").value;
+  const badDates = isDate(started) && isDate(finished) && finished < started;
+  show("dateErr", badDates);
+  if (!title) { $("#fTitle").focus(); return null; }
+  if (badDates) { $("#fFinished").focus(); return null; }
+  const author = str($("#fAuthor").value, 120);
+  const format = $("#fmtAudio").checked ? "audio" : "print";
+  const authorSort = author && author === formAuthorFrom && formAuthorSort ? formAuthorSort : sortName(author);
+  const y = num($("#fYear").value, -3000, 2100);
+  const pg = num($("#fPages").value, 1, 9999), hr = num($("#fHours").value, 0.1, 300);
+  const rate = document.querySelector("input[name=rating]:checked");
+  const lth = document.querySelector("input[name=leather]:checked");
+  const bs = document.querySelector("input[name=bstyle]:checked");
+  return {
+    title, subtitle: title === formTitleFrom ? formSubtitle : "",
+    author, authorSort, format,
+    narrator: format === "audio" ? str($("#fNarrator").value, 120) : "",
+    pages: format === "print" && pg !== null ? Math.round(pg) : null,
+    hours: format === "audio" && hr !== null ? Math.round(hr * 10) / 10 : null,
+    year: y === null ? null : Math.round(y),
+    callNumber: str($("#fCall").value, 18).toUpperCase() || defaultCall(authorSort || title),
+    genre: str($("#fGenre").value, 40),
+    leather: validHex(lth && lth.value) || LEATHERS[0][1],
+    binding: bs && STYLES.includes(bs.value) ? bs.value : "",
+    started: isDate(started) ? started : "", finished: isDate(finished) ? finished : "",
+    status: isDate(finished) ? "" : ["reading", "finished"].includes($("#fStatus").value) ? $("#fStatus").value : "",
+    rating: Math.max(0, Math.min(5, +(rate ? rate.value : 0) || 0)),
+    review: txt($("#fReview").value, 4000),
+    note: formNote
+  };
+}
+async function withRetry(fn) {
+  try { return await fn(); }
+  catch (e) {
+    if (e && e.code === "unavailable") { await new Promise(r => setTimeout(r, 400 + Math.random() * 600)); return await fn(); }
+    throw e;
+  }
+}
+function writeErrorText(e) {
+  const c = e && e.code;
+  if (c === "invalid_argument") return "This shelf is read-only for you, so nothing was saved.";
+  if (c === "quota_exceeded") return "The shelf has hit its storage limit. Withdraw a few books, then try again.";
+  if (c === "resource_exhausted") return "Too many changes at once. Wait a moment, then try again.";
+  if (c === "revoked" || c === "not_granted") return "Access to this shelf changed. Reload the page to continue.";
+  return "That didn't save. Check your connection, then try again.";
+}
+function handleWriteError(e) {
+  const c = e && e.code;
+  if (c === "invalid_argument" || c === "revoked" || c === "not_granted") { state.editable = false; render(); if (detailId) fillDetailActions(); }
+  toast(writeErrorText(e));
+}
+function saveError(msg) { const e = $("#saveErr"); e.textContent = msg; e.hidden = false; }
+async function save(ev) {
+  ev.preventDefault();
+  if (saving || !db) return;
+  show("saveErr", false);
+  const rec = collect(); if (!rec) return;
+  saving = true;
+  const sb = $("#saveBtn"), label = sb.textContent;
+  sb.disabled = true; sb.textContent = formMode === "add" ? "Shelving…" : "Saving…";
+  try {
+    if (formMode === "edit") {
+      const old = byId(editId);
+      if (!old) { closeForm(); return; }
+      await withRetry(() => db.doc("books/" + editId).set(toRecord({ ...old, ...rec })));
+      closeForm();
+      toast("Card updated.");
+    } else {
+      const ref = pendingRef || db.collection("books").doc();
+      const full = { ...rec, photo: "", sample: false, addedAt: new Date().toISOString(), accession: Math.max(0, ...state.books.map(b => b.accession || 0)) + 1 };
+      if (thumbBlob && assets) {
+        try { const up = await assets.upload(thumbBlob, { type: "image/jpeg" }); if (up && up.id) full.photo = up.id; }
+        catch (e) { /* the photo is a nicety; the book still gets shelved */ }
+      }
+      closeForm();
+      state.justAdded = ref.id;
+      try {
+        await withRetry(() => ref.set(toRecord(full)));
+      } catch (e) {
+        state.justAdded = null;
+        if (full.photo && assets) assets.delete(full.photo).catch(() => {});
+        const c = e && e.code;
+        if (c === "invalid_argument" || c === "revoked" || c === "not_granted") { handleWriteError(e); return; }
+        $("#form").showModal();
+        saveError(writeErrorText(e));
+        return;
+      }
+      pendingRef = null;
+      toast(`Shelved: ${full.title}. It looks very distinguished.`);
+      setTimeout(() => {
+        const sel = state.view === "ledger" ? `.entry[data-id="${CSS.escape(ref.id)}"]` : `.book[data-id="${CSS.escape(ref.id)}"]`;
+        const el = document.querySelector(sel);
+        if (el) {
+          el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+          el.focus({ preventScroll: true });
+          if (state.view === "ledger") el.classList.add("flash");
+        }
+      }, 60);
+    }
+  } catch (e) {
+    const c = e && e.code;
+    if (c === "invalid_argument" || c === "revoked" || c === "not_granted") { closeForm(); handleWriteError(e); }
+    else saveError(writeErrorText(e));
+  } finally {
+    saving = false; sb.disabled = false; sb.textContent = label;
+  }
+}
+
+/* ---------- other actions ---------- */
+async function markFinished() {
+  const b = byId(detailId); if (!b) return;
+  try { await withRetry(() => db.doc("books/" + b.id).set(toRecord({ ...b, finished: todayISO(), status: "" }))); toast("Stamped finished. Rate it with Edit card, if you're feeling generous."); }
+  catch (e) { handleWriteError(e); }
+}
+function confirmWithdraw() {
+  const b = byId(detailId); if (!b) return;
+  $("#dActions").innerHTML = `<p class="confirm" role="alert">Withdraw <i>${esc(b.title)}</i> from the shelf? There's no undo.</p><button type="button" class="brass brass-danger" data-act="withdraw-yes">Withdraw it</button><button type="button" class="ghost" data-act="withdraw-no">Keep it</button>`;
+  const k = $("#dActions [data-act=withdraw-no]"); if (k) k.focus();
+}
+async function doWithdraw() {
+  const b = byId(detailId); if (!b) return;
+  try {
+    await withRetry(() => db.doc("books/" + b.id).delete());
+    if (b.photo && assets) assets.delete(b.photo).catch(() => {});
+    closeDetail();
+    toast(`Withdrawn: ${b.title}.`);
+  } catch (e) { handleWriteError(e); }
+}
+async function clearSamples() {
+  const list = state.books.filter(b => b.sample);
+  state.noticeConfirm = false; state.clearing = true; renderNotice();
+  try {
+    for (const b of list) {
+      await withRetry(() => db.doc("books/" + b.id).delete());
+      if (b.photo && assets) assets.delete(b.photo).catch(() => {});
+    }
+    toast("Samples cleared. The shelf is all yours.");
+  } catch (e) { handleWriteError(e); }
+  finally { state.clearing = false; renderNotice(); }
+}
+function startRename() {
+  if (!state.editable || renaming) return;
+  renaming = true;
+  const el = $("#libName");
+  el.innerHTML = `<input id="nameInput" class="name-input" maxlength="48" aria-label="Library name" value="${esc(state.name)}">`;
+  const inp = $("#nameInput"); inp.focus(); inp.select();
+  let done = false;
+  const finish = async keep => {
+    if (done) return; done = true; renaming = false;
+    const v = str(inp.value, 48);
+    if (!keep || !v || v === state.name) { renderPlaque(); return; }
+    const old = state.name; state.name = v; renderPlaque();
+    try { await withRetry(() => db.doc("meta/library").set({ name: v })); toast("Renamed. Very distinguished."); }
+    catch (e) { state.name = old; renderPlaque(); handleWriteError(e); }
+  };
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); finish(true); } else if (e.key === "Escape") { e.preventDefault(); finish(false); } });
+  inp.addEventListener("blur", () => finish(true));
+}
+let toastTimer = 0;
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  /* as a popover the toast sits in the top layer, above any open dialog */
+  if (typeof t.showPopover === "function") { try { if (t.matches(":popover-open")) t.hidePopover(); t.showPopover(); } catch (e) {} }
+  requestAnimationFrame(() => t.classList.add("show"));
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    t.classList.remove("show");
+    setTimeout(() => { if (!t.classList.contains("show") && typeof t.hidePopover === "function") { try { t.hidePopover(); } catch (e) {} } }, 300);
+  }, 3600);
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const book = e.target.closest("button.book");
+  if (book && book.dataset.id) { openDetail(book.dataset.id); return; }
+  const entry = e.target.closest(".entry");
+  if (entry && entry.dataset.id) { openDetail(entry.dataset.id); return; }
+  const vb = e.target.closest(".vbtn");
+  if (vb) { setView(vb.dataset.view, true); return; }
+  const chip = e.target.closest(".chip");
+  if (chip) {
+    ledger.filter = chip.dataset.filter || "all";
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c === chip)));
+    renderLedgerList();
+    return;
+  }
+  const a = e.target.closest("[data-act]"); if (!a) return;
+  switch (a.dataset.act) {
+    case "add": openForm(); break;
+    case "close-detail": closeDetail(); break;
+    case "close-form": closeForm(); break;
+    case "edit": if (detailId) openForm(detailId); break;
+    case "withdraw": confirmWithdraw(); break;
+    case "withdraw-yes": doWithdraw(); break;
+    case "withdraw-no": fillDetailActions(); break;
+    case "finish": markFinished(); break;
+    case "manual": showFields(true); break;
+    case "stop": stopLook(false); break;
+    case "relook": identify("default"); break;
+    case "newphoto": backToPhoto(); break;
+    case "clear-samples": state.noticeConfirm = true; renderNotice(); break;
+    case "clear-yes": clearSamples(); break;
+    case "clear-no": state.noticeConfirm = false; renderNotice(); break;
+    case "rename": startRename(); break;
+    case "photo-zoom": a.classList.toggle("big"); break;
+    case "lg-clear":
+      ledger.q = ""; ledger.terms = []; ledger.filter = "all"; $("#lgSearch").value = "";
+      document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.filter === "all")));
+      renderLedgerList();
+      break;
+  }
+});
+$("#sort").value = state.sort;
+$("#sort").addEventListener("change", e => {
+  state.sort = SORTS.includes(e.target.value) ? e.target.value : "author";
+  try { localStorage.setItem("library-shelf-sort", state.sort); } catch (err) {}
+  if (state.view === "ledger") renderLedgerList(); else renderShelves();
+});
+$("#lgSearch").addEventListener("input", e => {
+  ledger.q = e.target.value;
+  ledger.terms = fold(ledger.q).split(/\s+/).filter(Boolean);
+  renderLedgerList();
+});
+$("#photo").addEventListener("change", e => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (f) handlePhoto(f); });
+const drop = $("#drop");
+drop.addEventListener("dragenter", () => drop.classList.add("over"));
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", () => drop.classList.remove("over"));
+$("#form").addEventListener("paste", e => {
+  if (formMode !== "add" || !photoOK || $("#stepPhoto").hidden) return;
+  const files = e.clipboardData && e.clipboardData.files ? Array.from(e.clipboardData.files) : [];
+  const f = files.find(x => /^image\//.test(x.type));
+  if (f) { e.preventDefault(); handlePhoto(f); }
+});
+$("#slip").addEventListener("submit", save);
+$("#slip").addEventListener("change", e => {
+  if (e.target.name === "format") setFormat(e.target.value);
+  if (e.target.name === "rating") paintRating(+e.target.value);
+  if (e.target.name === "leather") paintSwName();
+  schedulePreview();
+});
+$("#slip").addEventListener("input", schedulePreview);
+$("#form").addEventListener("close", () => {
+  stopLook(true);
+  if (formMode === "edit" && editId && byId(editId)) openDetail(editId);
+});
+$("#detail").addEventListener("close", () => { detailId = null; });
+$("#detail").addEventListener("click", e => { if (e.target === e.currentTarget) closeDetail(); });
+window.addEventListener("hashchange", () => { const v = readHash(); if (v !== state.view) setView(v, false); });
+
+new ResizeObserver(entries => {
+  const w = Math.round(entries[0].contentRect.width);
+  if (w === lastW) return; lastW = w;
+  cancelAnimationFrame(raf); raf = requestAnimationFrame(renderShelves);
+}).observe($("#shelves"));
+const barEl = $(".bar");
+new ResizeObserver(() => document.documentElement.style.setProperty("--barH", barEl.offsetHeight + "px")).observe(barEl);
+if (document.fonts) {
+  /* spine type is measured on a canvas, so measure again once the real faces arrive */
+  const refit = () => { fontEpoch++; fitCache.clear(); renderShelves(); if ($("#form").open) schedulePreview(); };
+  if (document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", refit);
+  if (document.fonts.ready) document.fonts.ready.then(refit).catch(() => {});
+  const want = ['700 20px "Barlow Condensed"', '600 20px "Barlow Condensed"', '500 20px "Barlow Condensed"', '700 20px "Cormorant SC"', '600 20px "Cormorant SC"', '700 20px "Libre Caslon Text"', '400 20px "Libre Caslon Text"', 'italic 400 20px "Libre Caslon Text"'];
+  const kick = () => { if (document.fonts.load) Promise.all(want.map(f => document.fonts.load(f).catch(() => []))).then(refit); };
+  if (document.readyState === "complete") kick(); else window.addEventListener("load", kick, { once: true });
+}
+
+/* ---------- Shared hub: live links between your home apps ----------
+   One Google Sheet in your Drive is a running log of changes: when, which app, what kind, which item, and the new value.
+   Each app adds a line when you change something it shares, and reads the log every 20 seconds (and when you come
+   back to it). The newest line for an item wins, so every app ends up showing the same thing. */
+var HUB={id:'YOUR_GOOGLE_SHEET_ID',srv:'Google Sheets',app:'',mcp:null,apply:null,pend:[],busy:false,flushing:false,applying:false,
+  rows:0,last:0,err:null,on:false,first:true};
+function hubKeyOf(r){return r[2]+'|'+r[3];}
+function hubSave(){try{localStorage.setItem('hub.pend.'+HUB.app,JSON.stringify(HUB.pend));}catch(e){}}
+function hubStart(mcp,app,apply){
+  if(HUB.on||!mcp)return;HUB.on=true;HUB.mcp=mcp;HUB.app=app;HUB.apply=apply;
+  try{const p=JSON.parse(localStorage.getItem('hub.pend.'+app)||'[]');if(Array.isArray(p))HUB.pend=p.concat(HUB.pend);}catch(e){}
+  hubPull();setInterval(()=>{if(!document.hidden)hubPull();},20000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)hubPull();});
+  window.addEventListener('focus',()=>hubPull());
+}
+/* Queue a change for the log. Changes the hub itself is applying are not sent back. */
+function hubPush(kind,key,val){
+  if(HUB.applying||!(HUB.on||HUB.want))return;
+  HUB.pend.push([new Date().toISOString(),HUB.app||'?',kind,String(key),val==null?'':JSON.stringify(val)]);hubSave();
+  if(HUB.mcp)hubFlush();
+}
+async function hubFlush(){
+  if(!HUB.mcp||HUB.flushing||!HUB.pend.length)return;HUB.flushing=true;const batch=HUB.pend.slice(0,200);
+  try{await HUB.mcp.callTool(HUB.srv,'append_values',{spreadsheetId:HUB.id,range:'A1',values:batch.map(r=>r.slice(0,4).concat([r[4]]))});
+    HUB.pend=HUB.pend.slice(batch.length);hubSave();HUB.err=null;}
+  catch(e){HUB.err=e;}
+  finally{HUB.flushing=false;}
+  if(HUB.pend.length&&!HUB.err)hubFlush();
+}
+async function hubPull(){
+  if(!HUB.mcp||HUB.busy)return;HUB.busy=true;
+  try{
+    await hubFlush();
+    const r=await HUB.mcp.callTool(HUB.srv,'get_values',{spreadsheetId:HUB.id,range:'A:E'},{cache:false});
+    const p=r&&r.payload;const vals=(p&&Array.isArray(p.values))?p.values:[];
+    const latest=new Map();
+    for(let i=1;i<vals.length;i++){const v=vals[i];if(!v||!v[2]||v[3]==null)continue;latest.set(hubKeyOf(v),v);}
+    const waiting=new Set(HUB.pend.map(hubKeyOf));const out=[];
+    latest.forEach((v,k)=>{if(waiting.has(k))return;let val=null;if(v[4]){try{val=JSON.parse(v[4]);}catch(e){return;}}
+      out.push({kind:v[2],key:String(v[3]),val,app:v[1],when:v[0]});});
+    HUB.rows=vals.length;HUB.last=Date.now();HUB.err=null;
+    if(HUB.apply)await HUB.apply(out,HUB.first);
+    HUB.first=false;
+  }catch(e){HUB.err=e;}
+  finally{HUB.busy=false;}
+}
+/* Run a local save without sending it back to the log (the hook that sends runs synchronously inside fn) */
+function hubQuiet(fn){HUB.applying=true;let p;try{p=fn();}finally{HUB.applying=false;}return p;}
+/* Compare two values with keys in a fixed order */
+function hubSame(a,b){const n=x=>x&&typeof x==='object'&&!Array.isArray(x)?Object.keys(x).sort().reduce((o,k)=>{if(x[k]!==undefined&&x[k]!==null&&x[k]!==''&&x[k]!==false)o[k]=n(x[k]);return o;},{}):Array.isArray(x)?x.map(n):x;
+  return JSON.stringify(n(a==null?null:a))===JSON.stringify(n(b==null?null:b));}
+function hubAgo(){if(!HUB.last)return '';const m=Math.round((Date.now()-HUB.last)/60000);return m<1?'just now':m+' min ago';}
+/* ---------- Shared hub: records (pantry, recipes, meals, books, review cards) ----------
+   Each app registers the kinds it shares: how to turn its own item into the shared shape (canon), how to take the
+   shared shape back (from), and how to read, list and save its items. A change goes to the log only when the shared
+   shape of an item really changed, and a change from the log is saved only when it would change something here. */
+var HUBR={kinds:{},seen:{},fresh:{},ready:false};
+function hubNorm(x){return x&&typeof x==='object'&&!Array.isArray(x)?Object.keys(x).sort().reduce((o,k)=>{const v=x[k];if(v!==undefined&&v!==null&&v!==''&&v!==false)o[k]=hubNorm(v);return o;},{}):Array.isArray(x)?x.map(hubNorm):x;}
+function hubStr(v){return v==null?'':JSON.stringify(hubNorm(v));}
+/* Photos and other files live in each app's own storage, so they stay out of the shared log */
+function hubStrip(o){const r={};Object.keys(o||{}).forEach(k=>{if(k==='id'||k==='photo'||k==='photos'||k==='sample')return;const v=o[k];
+  if(typeof v==='string'&&/^(data:|blob:|\/_blob\/)/.test(v))return;if(v!==undefined)r[k]=v;});return r;}
+function hubRecKind(kind,spec){HUBR.kinds[kind]=spec;}
+function hubRecOut(kind,id,doc){
+  if(HUB.applying||!HUBR.ready)return;const K=HUBR.kinds[kind];if(!K||K.noPush)return;id=String(id);
+  const k=kind+'|'+id;const f=HUBR.fresh[k];if(f&&Date.now()-f<6000)return;
+  const c=doc?K.canon(doc):null;const s=hubStr(c);
+  if(HUBR.seen[k]===s)return;if(HUBR.seen[k]===undefined&&!c)return;
+  HUBR.seen[k]=s;if(c&&JSON.stringify(c).length>45000)return;hubPush(kind,id,c);
+}
+/* Compare everything this app has of one kind with what it last shared, and send what changed or went away */
+function hubRecScan(kind){
+  if(!HUBR.ready||HUB.applying)return;const K=HUBR.kinds[kind];if(!K||K.noPush)return;
+  const docs=K.all()||[];const ids=new Set();
+  docs.forEach(d=>{if(!d||d.id==null)return;ids.add(String(d.id));hubRecOut(kind,d.id,d);});
+  Object.keys(HUBR.seen).forEach(k=>{if(k.indexOf(kind+'|')===0){const id=k.slice(kind.length+1);if(!ids.has(id))hubRecOut(kind,id,null);}});
+}
+async function hubRecApply(list,first){
+  let n=0;const jobs=[];const by={};
+  for(const x of list){const K=HUBR.kinds[x.kind];if(!K||!/^[A-Za-z0-9_-]{1,80}$/.test(x.key))continue;
+    const k=x.kind+'|'+x.key;if(K.noApply){HUBR.seen[k]=hubStr(x.val);continue;}const local=K.get(x.key);const lc=local?K.canon(local):null;
+    const newer=()=>first&&local&&K.time&&String(K.time(local)||'')>String(x.when||'');
+    if(x.val==null){
+      if(!local){HUBR.seen[k]='';continue;}
+      if(K.noDelete||newer())continue;
+      HUBR.seen[k]='';HUBR.fresh[k]=Date.now();jobs.push(Promise.resolve().then(()=>hubQuiet(()=>K.write(x.key,null,local))));n++;by[x.kind]=(by[x.kind]||0)+1;continue;}
+    if(typeof x.val!=='object')continue;
+    let merged=Object.assign({},local||{},K.from(x.val,local));if(K.fix)merged=K.fix(x.key,merged,x)||merged;
+    const mc=K.canon(merged);
+    if(local&&hubSame(mc,lc)){if(HUBR.seen[k]===undefined)HUBR.seen[k]=hubStr(lc);continue;}
+    if(newer())continue;
+    HUBR.seen[k]=hubStr(mc);HUBR.fresh[k]=Date.now();
+    jobs.push(Promise.resolve().then(()=>hubQuiet(()=>K.write(x.key,merged,local))));n++;by[x.kind]=(by[x.kind]||0)+1;
+  }
+  const res=await Promise.allSettled(jobs);
+  /* Also catches anything changed here that was not sent yet (for example while the log was being read) */
+  HUBR.ready=true;Object.keys(HUBR.kinds).forEach(hubRecScan);
+  return {n,by,failed:res.filter(r=>r.status==='rejected').length};
+}
+/* Library Shelf's side: books stay in step with Home Base */
+let libMcp=null;
+function libRecSetup(){hubRecKind('book',{canon:b=>hubStrip(b),from:v=>Object.assign({},v),
+  get:id=>byId(id),all:()=>state.books,time:b=>b.addedAt||'',
+  fix:(id,m)=>{if(!m.accession)m.accession=Math.max(0,...state.books.map(b=>b.accession||0))+1;if(!m.addedAt)m.addedAt=new Date().toISOString();return normalize(id,m);},
+  write:(id,m)=>m?withRetry(()=>db.doc("books/"+id).set(toRecord(m))):withRetry(()=>db.doc("books/"+id).delete())});}
+function libHubGo(){if(HUB.on||!libMcp||!db||!state.editable||state.phase!=="ready")return;HUB.want=true;libRecSetup();hubStart(libMcp,'lib',libHubApply);}
+async function libHubApply(list,first){const r=await hubRecApply(list,first);
+  if(r.n&&!first)toast("Home Base changed "+r.n+" card"+(r.n===1?"":"s")+" in the catalog.");}
+
+/* ---------- start up ---------- */
+function onBooks(snap) {
+  const list = snap.docs.filter(d => d.exists !== false).map(d => normalize(d.id, d.data()));
+  const sig = JSON.stringify(list);
+  const first = state.phase !== "ready";
+  state.phase = "ready";
+  if (!first && sig === state.sig) return;
+  state.sig = sig; state.books = list;
+  hubRecScan("book"); libHubGo();
+  render();
+  if (detailId) { const b = byId(detailId); if (b) fillDetail(b); else closeDetail(); }
+}
+function onBooksError(e) {
+  if (e && (e.code === "revoked" || e.code === "not_granted")) state.editable = false;
+  if (state.phase !== "ready") state.phase = "error";
+  render();
+  if (state.phase === "ready") toast("Lost touch with the card catalog. Reload to see the latest.");
+}
+async function init() {
+  buildRating();
+  setView(readHash(), false);
+  render();
+  const api = window.claude;
+  if (!api || typeof api.use !== "function") { state.phase = "nodb"; render(); return; }
+  let u = null;
+  try { [db, u] = await Promise.all([api.use("db"), api.use("user")]); } catch (e) { db = null; }
+  user = u;
+  if (!db) { state.phase = "nodb"; render(); return; }
+  let w = null;
+  if (user) { try { w = await user.can("data.write"); } catch (e) { w = null; } }
+  if (w === null && user) { try { w = await user.canEdit(); } catch (e) { w = null; } }
+  state.editable = w === null ? true : !!w;
+  if (state.editable) {
+    api.use("mcp").then(m => { libMcp = m; libHubGo(); }).catch(() => {});
+    api.use("assets").then(a => { assets = a; }).catch(() => {});
+    samplePromise = api.use("sample").then(async s => {
+      sample = s;
+      if (s) { try { const lim = await s.limits(); photoOK = !!(lim && lim.images); } catch (e) { photoOK = false; } }
+    }).catch(() => {});
+  }
+  try { db.collection("books").onSnapshot(onBooks, onBooksError); }
+  catch (e) { state.phase = "error"; render(); }
+  try {
+    db.doc("meta/library").onSnapshot(s => {
+      const d = s && s.exists ? s.data() : null;
+      const n = d && typeof d.name === "string" && d.name.trim() ? str(d.name, 48) : DEFAULT_NAME;
+      if (n !== state.name) { state.name = n; renderPlaque(); if (state.view === "ledger") renderLedgerHead(); }
+    }, () => {});
+  } catch (e) {}
+}
+init();
+})();
+</script>
+
+</body></html>
