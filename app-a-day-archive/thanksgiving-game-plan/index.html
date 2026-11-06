@@ -1,0 +1,737 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Thanksgiving Game Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Geist+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: butter-yellow hero band with a giant kinetic countdown, a sticky pill nav, then stacked working sections on Cloud Dancer paper with sticker accents and a light grain. */
+:root{
+  --paper:#F1EFEA;      /* Cloud Dancer, Pantone 2026 */
+  --card:#FBFAF7;
+  --band:#F4DC74;       /* butter yellow */
+  --ink:#14302E;
+  --teal:#1F5E5A;       /* Transformative Teal, WGSN 2026 */
+  --eggplant:#53284A;
+  --wasabi:#B4C437;
+  --muted:#5B6B68;
+  --line:#D9D5CB;
+  --chip:#E6E2D7;
+  --warn:#9A3B1E;
+  --warnbg:#F7E2D6;
+  --good:#2F6B3A;
+  --display:"Fraunces", "Iowan Old Style", Georgia, serif;
+  --body:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --mono:"Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1A19;--card:#152423;--band:#1C3330;--ink:#EEEADF;--teal:#7CC2BA;--eggplant:#D3A6CA;--wasabi:#C9D85A;--muted:#9DB0AC;--line:#2A3E3C;--chip:#203431;--warn:#F2A07E;--warnbg:#3A2219;--good:#8FD19B;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E1A19;--card:#152423;--band:#1C3330;--ink:#EEEADF;--teal:#7CC2BA;--eggplant:#D3A6CA;--wasabi:#C9D85A;--muted:#9DB0AC;--line:#2A3E3C;--chip:#203431;--warn:#F2A07E;--warnbg:#3A2219;--good:#8FD19B;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;font-optical-sizing:auto}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .grain{mix-blend-mode:screen;opacity:.05}}
+:root[data-theme="dark"] .grain{mix-blend-mode:screen;opacity:.05}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(28px,4.4vw,40px);font-variation-settings:"SOFT" 100,"WONK" 1;line-height:1.05}
+h3{font-size:20px;font-variation-settings:"SOFT" 60}
+p{margin:0}
+a{color:var(--teal)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:6px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* hero */
+.band{background:var(--band);border-bottom:2px solid var(--ink)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;padding-block:28px 36px;align-items:end}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;grid-column:1/-1}
+.brand svg{flex:none}
+.count{min-width:0}
+.big{font-family:var(--display);font-size:clamp(96px,19vw,220px);line-height:.82;font-weight:800;letter-spacing:-.04em;font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144;animation:breathe 2.4s ease-out 1 both}
+.big small{font-size:.32em;font-weight:500;letter-spacing:-.01em;font-style:italic;margin-left:.08em}
+@keyframes breathe{0%{font-variation-settings:"SOFT" 0,"WONK" 0,"opsz" 144;font-weight:300;opacity:.2}60%{opacity:1}100%{font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144;font-weight:800}}
+.until{font-family:var(--display);font-size:clamp(20px,2.6vw,28px);font-style:italic;margin-top:10px;font-variation-settings:"SOFT" 50}
+.stickers{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.sticker{display:inline-block;padding:6px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--card);font-weight:700;font-size:14px;transform:rotate(-2deg);box-shadow:3px 3px 0 var(--ink)}
+.sticker.alt{background:var(--eggplant);color:var(--card);transform:rotate(2.5deg)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sticker.alt{color:#1b1019}}
+:root[data-theme="dark"] .sticker.alt{color:#1b1019}
+
+.setup{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:18px;display:grid;gap:14px;box-shadow:6px 6px 0 var(--ink);min-width:0}
+.setup h3{font-size:22px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.row3 .stepper button{width:34px}
+.hint{font-size:12px;color:var(--muted);margin-top:-6px}
+label.f{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+.stepper{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);overflow:hidden}
+.stepper button{border:0;background:transparent;width:40px;height:42px;font-size:20px;cursor:pointer;color:var(--ink)}
+.stepper button:hover{background:var(--chip)}
+.stepper input{width:100%;min-width:0;border:0;background:transparent;text-align:center;font-family:var(--mono);font-size:18px;font-weight:600;height:42px;-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+select{height:44px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);padding:0 10px;font-family:var(--mono);font-size:16px;font-weight:600;width:100%}
+.seg{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:block;padding:9px 10px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;font-weight:600;font-size:14px;line-height:1.2;background:var(--paper)}
+.seg label span{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.seg input:checked+label{border-color:var(--teal);background:var(--teal);color:var(--card)}
+.seg input:checked+label span{color:inherit;opacity:.85}
+.seg input:focus-visible+label{outline:3px solid var(--teal);outline-offset:2px}
+.toggle{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;cursor:pointer}
+.toggle input{width:20px;height:20px;accent-color:var(--teal)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;padding:7px 14px;border-radius:999px;border:1.5px solid var(--line)}
+.nav a:hover{border-color:var(--ink)}
+
+section{padding-block:44px;border-bottom:1px solid var(--line)}
+.shead{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:22px}
+.shead p{color:var(--muted);max-width:60ch}
+
+/* bird stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:16px;min-width:0}
+.stat .k{font-size:13px;color:var(--muted);font-weight:600}
+.stat .v{font-family:var(--display);font-size:clamp(28px,3.4vw,38px);font-weight:700;line-height:1.05;margin-top:6px;font-variation-settings:"SOFT" 100}
+.stat .s{font-size:13px;color:var(--muted);margin-top:6px}
+.stat.hot{background:var(--teal);border-color:var(--teal);color:var(--card)}
+.stat.hot .k,.stat.hot .s{color:inherit;opacity:.85}
+.note{margin-top:16px;display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:var(--chip);font-size:14px}
+.note.warn{background:var(--warnbg);color:var(--warn)}
+.note b{white-space:nowrap}
+
+/* menu */
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.dish{position:relative;display:block;cursor:pointer}
+.dish input{position:absolute;opacity:0}
+.dish .box{height:100%;display:grid;gap:6px;align-content:start;padding:14px;border:1.5px solid var(--line);border-radius:16px;background:var(--card);transition:transform .15s,border-color .15s}
+.dish:hover .box{transform:translateY(-2px)}
+.dish input:checked+.box{border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.dish input:focus-visible+.box{outline:3px solid var(--teal);outline-offset:2px}
+.dish .name{font-weight:700;font-size:16px;display:flex;justify-content:space-between;gap:8px}
+.dish .tick{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px}
+.dish input:checked+.box .tick{background:var(--teal);border-color:var(--teal);color:var(--card)}
+.dish .meta{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.dish .why{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--chip);justify-self:start}
+.tag.trend{background:var(--eggplant);color:var(--card)}
+.tag.baker{background:var(--wasabi);color:#1d2205}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.trend{color:#1b1019}}
+:root[data-theme="dark"] .tag.trend{color:#1b1019}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:13px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* timeline */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.col{min-width:0}
+.col h3{margin-bottom:12px}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.tl li{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:10px 0;border-top:1px dashed var(--line);align-items:start}
+.tl li:first-child{border-top:0}
+.tl .when{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--teal);font-variant-numeric:tabular-nums;padding-top:2px}
+.tl label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;min-width:0}
+.tl input{margin-top:3px;width:18px;height:18px;accent-color:var(--teal);flex:none}
+.tl .txt{min-width:0}
+.tl .sub{display:block;font-size:12px;color:var(--muted)}
+.tl li.done .txt{text-decoration:line-through;color:var(--muted)}
+.tl li.past .when{color:var(--muted)}
+.tl li.today{background:linear-gradient(90deg,var(--chip),transparent);border-radius:10px;padding-left:8px;margin-left:-8px}
+.kind{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px;background:var(--muted)}
+.kind.turkey{background:var(--eggplant)}.kind.oven{background:var(--warn)}.kind.stove{background:var(--teal)}.kind.serve{background:var(--wasabi)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin:-4px 0 10px}
+
+/* shopping */
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.aisle{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}
+.aisle h3{font-size:18px;margin-bottom:6px}
+.aisle ul{list-style:none;margin:0;padding:0}
+.aisle li{border-top:1px dashed var(--line)}
+.aisle li:first-child{border-top:0}
+.aisle label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer;font-size:15px}
+.aisle input{margin-top:3px;width:18px;height:18px;accent-color:var(--teal);flex:none}
+.aisle .q{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--teal);white-space:nowrap}
+.aisle li.done span{text-decoration:line-through;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:14px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:active{transform:translateY(1px)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.toast{font-size:13px;color:var(--good);font-weight:600}
+textarea.fallback{width:100%;min-height:140px;margin-top:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);padding:10px;font-family:var(--mono);font-size:13px;color:var(--ink)}
+
+/* bring */
+.bring{display:grid;gap:8px;max-width:720px}
+.bring .r{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.bring .r:first-child{border-top:0}
+.bring input{height:42px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);padding:0 12px;width:100%;min-width:0}
+.bring .dn{font-weight:600;min-width:0}
+
+/* budget */
+.kits{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.kit{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:6px;align-content:start;min-width:0}
+.kit .store{font-weight:700}
+.kit .price{font-family:var(--display);font-size:30px;font-weight:700;font-variation-settings:"SOFT" 100;font-variant-numeric:tabular-nums}
+.kit .per{font-family:var(--mono);font-size:13px;color:var(--teal);font-weight:600}
+.kit .d{font-size:13px;color:var(--muted)}
+.kit.best{border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.kit.best .store::after{content:"Lowest per guest";margin-left:8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--wasabi);color:#1d2205;padding:2px 7px;border-radius:999px;vertical-align:2px}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tip{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.tip h3{margin-bottom:10px}
+.tip ol,.tip ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
+.tip.feature{background:var(--eggplant);border-color:var(--eggplant);color:var(--card)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tip.feature{color:#1b1019}}
+:root[data-theme="dark"] .tip.feature{color:#1b1019}
+
+footer{padding-block:32px 48px;font-size:13px;color:var(--muted)}
+footer ul{padding-left:18px;margin:8px 0 0;display:grid;gap:4px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:22px;padding-block:20px 28px}
+  .stats{grid-template-columns:1fr 1fr}
+  .cols{grid-template-columns:1fr}
+  .tips{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  .row2{grid-template-columns:1fr 1fr;gap:8px}
+  .row3{grid-template-columns:1fr 1fr;gap:8px}
+  .row3 label:last-child{grid-column:1/-1}
+  .stats{grid-template-columns:1fr 1fr;gap:10px}
+  .stat{padding:12px}
+  .tl li{grid-template-columns:76px 1fr;gap:8px}
+  .bring .r{grid-template-columns:1fr}
+}
+</style>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="band">
+  <div class="wrap hero">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 15c2-6 10-6 12 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="9" r="2" fill="currentColor"/></svg>
+      Thanksgiving Game Plan · 2026
+    </div>
+    <div class="count">
+      <div class="big" id="bigCount">23<small>days</small></div>
+      <p class="until" id="until">until Thursday, November 26</p>
+      <div class="stickers">
+        <span class="sticker" id="thawSticker">Thaw starts Thu, Nov 19</span>
+        <span class="sticker alt" id="xmasSticker">52 days to Christmas, too</span>
+      </div>
+    </div>
+    <form class="setup" id="setup" autocomplete="off">
+      <h3>Tell me about your table</h3>
+      <div class="row3">
+        <label class="f">Adults &amp; big kids
+          <div class="stepper"><button type="button" data-step="guests:-1" aria-label="Fewer adults">−</button><input id="guests" type="number" inputmode="numeric" min="1" max="60" value="6"><button type="button" data-step="guests:1" aria-label="More adults">+</button></div>
+        </label>
+        <label class="f">Kids under 4
+          <div class="stepper"><button type="button" data-step="kids:-1" aria-label="Fewer little kids">−</button><input id="kids" type="number" inputmode="numeric" min="0" max="30" value="3"><button type="button" data-step="kids:1" aria-label="More little kids">+</button></div>
+        </label>
+        <label class="f">Vegetarian adults
+          <div class="stepper"><button type="button" data-step="veg:-1" aria-label="Fewer vegetarians">−</button><input id="veg" type="number" inputmode="numeric" min="0" max="60" value="0"><button type="button" data-step="veg:1" aria-label="More vegetarians">+</button></div>
+        </label>
+      </div>
+      <p class="hint" id="eatHint">Little kids count as about a third of an adult portion.</p>
+      <label class="f">Dinner time
+        <select id="dinner"></select>
+      </label>
+      <div class="f" role="radiogroup" aria-label="How you're cooking the turkey">
+        <span class="f" style="font-size:13px;font-weight:600;color:var(--muted)">How you're cooking the bird</span>
+        <div class="seg">
+          <input type="radio" name="method" id="m-roast" value="roast" checked><label for="m-roast">Classic roast<span>325°F oven</span></label>
+          <input type="radio" name="method" id="m-spatch" value="spatch"><label for="m-spatch">Spatchcock<span>425°F, fastest</span></label>
+          <input type="radio" name="method" id="m-smoke" value="smoke"><label for="m-smoke">Smoked<span>275°F, oven stays free</span></label>
+          <input type="radio" name="method" id="m-breast" value="breast"><label for="m-breast">Breast only<span>Small crowd</span></label>
+        </div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="leftovers" checked> Plan for leftovers</label>
+    </form>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a href="#bird">The bird</a><a href="#menu">Menu</a><a href="#timeline">Timeline</a><a href="#shopping">Shopping</a><a href="#bring">Who brings what</a><a href="#budget">Store meals</a><a href="#tips">Tips</a>
+  </div>
+</nav>
+
+<main>
+  <section id="bird"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Step 1</p><h2>Your turkey, by the numbers</h2></div><p>Sized from your guest count. Change anything up top and every number on the page updates.</p></div>
+    <div class="stats" id="stats"></div>
+    <div id="birdNotes"></div>
+  </div></section>
+
+  <section id="menu"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Step 2</p><h2>Build the menu</h2></div>
+      <div class="filters" role="group" aria-label="Filter dishes"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="classic" aria-pressed="false">Classics</button><button type="button" data-f="trend" aria-pressed="false">2026 trends</button></div>
+    </div>
+    <div class="menu" id="menuGrid"></div>
+  </div></section>
+
+  <section id="timeline"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Step 3</p><h2>The game plan</h2></div><p>Tick things off as you go. Your checks stay saved on this device.</p></div>
+    <div class="cols">
+      <div class="col"><h3>Countdown to the big day</h3><ul class="tl" id="weeks"></ul></div>
+      <div class="col"><h3 id="dayTitle">Thanksgiving Day, hour by hour</h3>
+        <div class="legend"><span><i class="kind turkey"></i>Turkey</span><span><i class="kind oven"></i>Oven</span><span><i class="kind stove"></i>Stove</span><span><i class="kind serve"></i>Serve</span></div>
+        <div id="ovenNote"></div>
+        <ul class="tl" id="dayof"></ul>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="shopping"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Step 4</p><h2>Shopping list</h2></div>
+      <div class="actions"><button type="button" class="btn" id="copyShop">Copy list</button><button type="button" class="btn ghost" id="clearShop">Uncheck all</button><span class="toast" id="shopToast" aria-live="polite"></span></div>
+    </div>
+    <div class="shop" id="shopGrid"></div>
+    <textarea class="fallback" id="shopFallback" hidden readonly aria-label="Shopping list text"></textarea>
+  </div></section>
+
+  <section id="bring"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Step 5</p><h2>Who's bringing what</h2></div><p>Hand dishes off to guests, then copy a ready-to-paste group text.</p></div>
+    <div class="bring" id="bringList"></div>
+    <div class="actions" style="margin-top:16px"><button type="button" class="btn" id="copyBring">Copy group text</button><span class="toast" id="bringToast" aria-live="polite"></span></div>
+    <textarea class="fallback" id="bringFallback" hidden readonly aria-label="Group text"></textarea>
+  </div></section>
+
+  <section id="budget"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Short on time?</p><h2>2026 store meal deals, sized for your crowd</h2></div><p>Prices as each store announced them, reported Nov 2, 2026. Packs are rounded up to feed everyone; check your local store before you count on one.</p></div>
+    <div class="kits" id="kits"></div>
+    <div class="note" style="margin-top:16px"><b>Price check:</b><span>USDA's latest forecast has retail eggs down about 29% this year, so egg-heavy pies and casseroles cost less. Wholesale turkey is running higher than last year, which is one more reason to size the bird right.</span></div>
+  </div></section>
+
+  <section id="tips"><div class="wrap">
+    <div class="shead"><div><p class="eyebrow">Good to know</p><h2>Tricks for this year's table</h2></div></div>
+    <div class="tips">
+      <div class="tip feature">
+        <h3>The vinegar move</h3>
+        <ul>
+          <li>Whole Foods named vinegar a top food trend for 2026. A small splash wakes up rich, heavy dishes.</li>
+          <li>Whisk a teaspoon of cider or red wine vinegar into gravy to cut the grease.</li>
+          <li>Add a splash of cider vinegar to the stock before it hits the stuffing.</li>
+          <li>Taste rich dishes at the end and add acid before more salt.</li>
+        </ul>
+      </div>
+      <div class="tip">
+        <h3>Carve it in six moves</h3>
+        <ol>
+          <li>Rest the bird at least 30 minutes so the juices settle.</li>
+          <li>Slice through the skin between leg and body, then pop the thigh joint out.</li>
+          <li>Split each leg into drumstick and thigh at the joint.</li>
+          <li>Cut along the breastbone and pull each breast off whole.</li>
+          <li>Slice the breasts crosswise, about half an inch thick.</li>
+          <li>Twist off the wings and save the frame for stock.</li>
+        </ol>
+      </div>
+      <div class="tip">
+        <h3>Food safety basics</h3>
+        <ul>
+          <li>Thaw in the fridge, about one day for every 4 to 5 pounds.</li>
+          <li>The turkey is done at 165°F in the thickest part of the breast and thigh.</li>
+          <li>Get leftovers into the fridge within 2 hours and eat them within 3 to 4 days.</li>
+          <li>Smoking? Smaller birds, about 14 pounds or less, get through the danger zone faster.</li>
+        </ul>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>Planning numbers are estimates: about 1¼ lb of turkey per adult (1½ with leftovers), a third of that for kids under 4, standard roasting times, and common serving sizes. Always go by a thermometer.</p>
+  <p style="margin-top:10px">Sources, read Nov 3, 2026:</p>
+  <ul>
+    <li><a href="https://www.wyomingnewsnow.tv/news/national/cooks-turn-to-vinegar-to-balance-rich-thanksgiving-dishes/article_debc8f8a-259d-59a6-84b6-dd14bfce8112.html" target="_blank" rel="noopener">Cooks turn to vinegar to balance rich Thanksgiving dishes</a> (Nov 2, 2026)</li>
+    <li><a href="https://www.stocktitan.net/articles/thanksgiving-meal-deals-2026-amazon-target-walmart-more-guests" target="_blank" rel="noopener">Thanksgiving meal deals 2026, StockTitan</a> (Nov 2, 2026)</li>
+    <li><a href="https://www.foodworldnews.com/articles/81651/20261014/planning-thanksgiving-budget-usdas-new-forecast-points-pricier-turkey-cheaper-eggs-this-fall.htm" target="_blank" rel="noopener">USDA forecast: pricier turkey, cheaper eggs, Food World News</a> (Oct 14, 2026)</li>
+    <li><a href="https://www.trendhunter.com/slideshow/november-2026-food" target="_blank" rel="noopener">Top 100 food trends in November, Trend Hunter</a></li>
+  </ul>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+var TG = new Date(2026,10,26);
+var XMAS = new Date(2026,11,25);
+var DAY = 864e5;
+var KEY = "tgp-2026-v2";
+
+function ceil(n){return Math.ceil(n - 1e-9)}
+function startOfToday(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function daysBetween(a,b){return Math.round((b-a)/DAY)}
+function tgDay(off){return new Date(2026,10,26+off)}
+function fmtDate(d){return d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})}
+function fmtClock(m){m=((Math.round(m/5)*5)%1440+1440)%1440;var h=Math.floor(m/60),mm=m%60,ap=h>=12?"PM":"AM";var h12=h%12===0?12:h%12;return h12+":"+(mm<10?"0":"")+mm+" "+ap}
+function fmtDur(min){var h=Math.floor(min/60),m=Math.round(min%60/5)*5;if(m===60){h++;m=0}return (h?h+" hr ":"")+(m?m+" min":"").trim()}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+/* ---------- saved state ---------- */
+var KID = 1/3; /* a child under 4 eats about a third of an adult portion */
+var state = {guests:6,kids:3,veg:0,dinner:960,method:"roast",leftovers:true,
+  dishes:["mash","stuffing","greenbean","cranberry","gravy","rolls_sd","pumpkin","mac","brussels"],
+  checks:{},bring:{}};
+try{var saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved&&typeof saved==="object"){for(var k in state){if(k in saved)state[k]=saved[k]}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+/* ---------- dishes ---------- */
+function piesEach(){var n=0;["pumpkin","pecan"].forEach(function(id){if(has(id))n++});var total=ceil(eaters()/7);return Math.max(1,ceil(total/Math.max(1,n)))}
+function has(id){return state.dishes.indexOf(id)>-1}
+function heads(){return state.guests+state.kids}
+function eaters(){return state.guests+state.kids*KID}
+function meat(){return Math.max(0,state.guests-state.veg)+state.kids*KID}
+function crowd(){var a=state.guests+" adult"+(state.guests===1?"":"s");return state.kids?a+" and "+state.kids+" little kid"+(state.kids===1?"":"s"):a}
+
+var DISHES=[
+ {id:"mash",name:"Mashed potatoes",tag:"classic",meta:"Stovetop · day of",
+  dayOf:[{at:75,k:"stove",t:"Peel and boil the potatoes in salted water"},{at:40,k:"stove",t:"Mash with warm butter and milk, then hold covered on low"}],
+  shop:function(g){return[["Produce","Yukon Gold potatoes",ceil(g*.5),"lb"],["Dairy","Butter",ceil(g/8),"sticks"],["Dairy","Whole milk or half-and-half",ceil(g/8),"cups"]]}},
+ {id:"stuffing",name:"Stuffing",tag:"classic",meta:"Oven 350°F · 40 min",oven:{temp:350,min:40},
+  ahead:[{d:-3,t:"Cube the bread for stuffing and leave it out to dry"},{d:-1,t:"Assemble the stuffing in its pan, cover and chill"}],
+  shop:function(g){return[["Bakery & dry","Sturdy bread for stuffing (sourdough is perfect)",ceil(g/6),"1-lb loaves"],["Produce","Celery",ceil(g/12),"bunches"],["Produce","Yellow onions",ceil(g/8),""],["Produce","Fresh sage",1,"bunch"],["Pantry","Chicken or vegetable stock",ceil(g/8),"quarts"],["Pantry","Apple cider vinegar",null]]}},
+ {id:"greenbean",name:"Green bean casserole",tag:"classic",meta:"Oven 375°F · 25 min",oven:{temp:375,min:25},
+  ahead:[{d:-1,t:"Blanch the green beans, make the mushroom sauce, assemble and chill"}],
+  shop:function(g){return[["Produce","Green beans",ceil(g*.25),"lb"],["Produce","Cremini mushrooms",ceil(g/8)*8,"oz"],["Pantry","Crispy fried onions",ceil(g/8),"6-oz cans"],["Dairy","Heavy cream",ceil(g/12),"pints"]]}},
+ {id:"cranberry",name:"Cranberry sauce",tag:"classic",meta:"Stovetop · make ahead",
+  ahead:[{d:-3,t:"Make the cranberry sauce (it keeps about a week in the fridge)"}],
+  dayOf:[{at:60,k:"serve",t:"Take the cranberry sauce out of the fridge"}],
+  shop:function(g){return[["Produce","Fresh cranberries",ceil(g/8),"12-oz bags"],["Produce","Orange",1,""],["Pantry","Sugar",null]]}},
+ {id:"gravy",name:"Gravy",tag:"classic",meta:"Stovetop · base made ahead",
+  ahead:[{d:-1,t:"Make a gravy base with stock, butter and flour"}],
+  dayOf:[{at:30,k:"stove",t:"Whisk pan drippings into the gravy base, then add a splash of cider vinegar"}],
+  shop:function(g){return[["Pantry","Chicken or vegetable stock",ceil(g/8),"quarts"],["Pantry","All-purpose flour",null],["Pantry","Apple cider vinegar",null]]}},
+ {id:"corn",name:"Corn casserole",tag:"classic",meta:"Oven 350°F · 45 min",oven:{temp:350,min:45},
+  ahead:[{d:-1,t:"Mix the corn casserole, cover and chill"}],
+  shop:function(g){var p=ceil(g/10);return[["Pantry","Creamed corn",p,"15-oz cans"],["Pantry","Whole kernel corn",p,"15-oz cans"],["Pantry","Corn muffin mix",p,"8.5-oz boxes"],["Dairy","Sour cream",p,"8-oz tubs"],["Dairy","Eggs",2*p,""]]}},
+ {id:"sweet",name:"Roasted sweet potatoes",tag:"classic",meta:"Oven 400°F · 35 min",oven:{temp:400,min:35},
+  ahead:[{d:-1,t:"Peel and cube the sweet potatoes; keep them in water in the fridge"}],
+  shop:function(g){return[["Produce","Sweet potatoes",ceil(g*.4),"lb"],["Pantry","Maple syrup",null]]}},
+ {id:"pumpkin",name:"Pumpkin pie",tag:"classic",meta:"Bake the day before",
+  ahead:[{d:-1,t:"Bake the pumpkin pie"}],
+  shop:function(){var n=piesEach();return[["Bakery & dry","Pie crusts",n,""],["Pantry","Pumpkin purée",n,"15-oz cans"],["Pantry","Evaporated milk",n,"12-oz cans"],["Dairy","Eggs",2*n,""],["Pantry","Pumpkin pie spice",null],["Dairy","Heavy cream",ceil(n/2),"pints"]]}},
+ {id:"pecan",name:"Pecan pie",tag:"classic",meta:"Bake the day before",
+  ahead:[{d:-1,t:"Bake the pecan pie"}],
+  shop:function(){var n=piesEach();return[["Bakery & dry","Pie crusts",n,""],["Pantry","Pecan halves",n*6,"oz"],["Pantry","Corn syrup",n,"cups"],["Dairy","Eggs",3*n,""],["Pantry","Brown sugar",null]]}},
+ {id:"rolls_sd",name:"Sourdough dinner rolls",tag:"baker",meta:"Bake morning of · 425°F",
+  why:"Two-day schedule built in: feed, mix, cold-proof, bake before the turkey goes in.",
+  ahead:[{d:-2,t:"Feed your starter tonight for the rolls"},{d:-1,t:"Mix the roll dough in the morning; shape and cold-proof overnight"}],
+  shop:function(g){var r=ceil(g*1.5);return[["Bakery & dry","Bread flour (about 45 g per roll)",Math.ceil(r*45/454*4)/4,"lb"],["Dairy","Butter",ceil(r/24),"sticks"],["Pantry","Flaky salt",null]]}},
+ {id:"rolls_store",name:"Store-bought rolls",tag:"classic",meta:"Rewarm 5 min",
+  dayOf:[{at:8,k:"oven",t:"Rewarm the rolls in the warm oven for 5 minutes"}],
+  shop:function(g){return[["Bakery & dry","Dinner rolls",ceil(g*1.5/12),"12-count packs"]]}},
+ {id:"mac",name:"Baked mac and cheese",tag:"classic",meta:"Oven 350°F · 30 min",oven:{temp:350,min:30},
+  why:"The side little kids actually eat. Soft, easy to cut small.",
+  ahead:[{d:-1,t:"Make the mac and cheese, cover and chill"}],
+  shop:function(g){var p=ceil(g/10);return[["Pantry","Elbow macaroni",p,"1-lb boxes"],["Dairy","Shredded sharp cheddar",p*2,"8-oz bags"],["Dairy","Whole milk or half-and-half",p*2,"cups"],["Dairy","Butter",p,"sticks"]]}},
+ {id:"brussels",name:"Cider-maple Brussels sprouts",tag:"trend",meta:"Oven 425°F · 25 min",oven:{temp:425,min:25},
+  why:"Vinegar is a top 2026 food trend. Roast, then toss in cider vinegar, Dijon and maple.",
+  ahead:[{d:-1,t:"Trim and halve the Brussels sprouts"}],
+  shop:function(g){return[["Produce","Brussels sprouts",ceil(g*.25),"lb"],["Pantry","Apple cider vinegar",null],["Pantry","Dijon mustard",null],["Pantry","Maple syrup",null]]}},
+ {id:"carrots",name:"Gochujang-maple carrots",tag:"trend",meta:"Oven 425°F · 25 min",oven:{temp:425,min:25},
+  why:"Korean and fermented flavors are rising on holiday menus. Sweet heat that goes with everything.",
+  ahead:[{d:-1,t:"Peel and cut the carrots"}],
+  shop:function(g){return[["Produce","Carrots",ceil(g*.25),"lb"],["Pantry","Gochujang",null],["Pantry","Sesame seeds",null],["Pantry","Maple syrup",null]]}},
+ {id:"ham",name:"Brown sugar glazed ham",tag:"trend",meta:"Oven 325°F · 90 min",
+  why:"A second protein is a big hosting move this year, and it lets you buy a smaller turkey.",
+  shop:function(){return[["Meat","Spiral-cut ham",Math.max(6,ceil(meat()*.33)),"lb"],["Pantry","Brown sugar",null]]}},
+ {id:"plant",name:"Plant-based holiday roast",tag:"trend",meta:"Oven 350°F · 60 min",oven:{temp:350,min:60},
+  why:"Plant-based mains are going mainstream. One roast feeds about four.",
+  shop:function(){return[["Meat","Plant-based holiday roast",ceil(Math.max(state.veg,2)/4),"roasts"]]}},
+ {id:"muffins",name:"Hot cocoa mini muffins",tag:"trend",meta:"Bake the day before",
+  why:"Number one on Trend Hunter's November food list. Set them out Thanksgiving morning.",
+  ahead:[{d:-1,t:"Bake hot cocoa mini muffins for Thanksgiving morning"}],
+  shop:function(g){var b=ceil(g*2/24);return[["Pantry","Cocoa powder",null],["Pantry","Chocolate chips",b,"cups"],["Pantry","Mini marshmallows",ceil(b/3),"10-oz bags"],["Pantry","All-purpose flour",null],["Dairy","Eggs",2*b,""],["Dairy","Whole milk or half-and-half",b,"cups"]]}}
+];
+function dish(id){for(var i=0;i<DISHES.length;i++)if(DISHES[i].id===id)return DISHES[i];return null}
+
+/* ---------- turkey math ---------- */
+var METHODS={
+ roast:{label:"Classic roast",temp:325,max:24,heat:"oven"},
+ spatch:{label:"Spatchcock",temp:425,max:16,heat:"oven"},
+ smoke:{label:"Smoked",temp:275,max:14,heat:"smoker"},
+ breast:{label:"Breast only",temp:325,max:7,heat:"oven"}
+};
+function bird(){
+  var m=METHODS[state.method]||METHODS.roast, M=meat(), per, lb, birds, each, rt, rest;
+  if(state.method==="breast"){
+    per=state.leftovers?1:.75; if(has("ham"))per-=.25;
+    lb=Math.max(3,ceil(M*per)); birds=ceil(lb/7); each=ceil(lb/birds);
+    rt=Math.round(each*20); rest=20;
+  } else {
+    per=state.leftovers?1.5:1.25; if(has("ham"))per-=.35;
+    lb=Math.max(10,ceil(M*per)); birds=ceil(lb/m.max); each=ceil(lb/birds);
+    if(state.method==="roast"){rt=each<=12?165:each<=14?200:each<=18?240:each<=20?262:285}
+    else if(state.method==="spatch"){rt=Math.max(70,each*7)}
+    else {rt=each*15}
+    rest=each<14?30:40;
+  }
+  if(M===0){lb=0;birds=0;each=0}
+  var thaw=ceil(each/4);
+  return {m:m,lb:lb,birds:birds,each:each,rt:rt,rest:rest,thaw:thaw,
+    out:15+rest, inAt:15+rest+rt, fridgeDay:-2-thaw};
+}
+
+/* ---------- render: hero ---------- */
+function renderHero(b){
+  var t=startOfToday(), d=daysBetween(t,TG), big=document.getElementById("bigCount"), until=document.getElementById("until");
+  if(d>1){big.innerHTML=d+"<small>days</small>";until.textContent="until Thursday, November 26"}
+  else if(d===1){big.innerHTML="1<small>day</small>";until.textContent="Thanksgiving is tomorrow"}
+  else if(d===0){big.innerHTML="Today<small>!</small>";until.textContent="Happy Thanksgiving. Follow the hour-by-hour plan."}
+  else {big.innerHTML="Done<small>.</small>";until.textContent="Thanksgiving 2026 has passed. Leftover sandwiches, anyone?"}
+  var x=daysBetween(t,XMAS);
+  document.getElementById("xmasSticker").textContent=x>0?(x+" days to Christmas, too"):"Merry Christmas";
+  var ts=document.getElementById("thawSticker");
+  if(b.birds===0){ts.textContent="No turkey needed"}
+  else ts.textContent="Thaw starts "+fmtDate(tgDay(b.fridgeDay));
+}
+
+/* ---------- render: bird ---------- */
+function renderBird(b){
+  var dinner=state.dinner, el=document.getElementById("stats"), notes=document.getElementById("birdNotes");
+  if(b.birds===0){
+    el.innerHTML='<div class="stat hot"><div class="k">Turkey</div><div class="v">None</div><div class="s">Everyone is vegetarian. Add the plant-based roast from the menu.</div></div>';
+    notes.innerHTML="";return;
+  }
+  var what=state.method==="breast"?"bone-in breast":"turkey";
+  var size=b.birds>1?(b.birds+" × "+b.each+" lb"):(b.each+" lb");
+  var heat=b.m.heat==="smoker"?"Smoker on":"Bird in";
+  el.innerHTML=
+   '<div class="stat hot"><div class="k">Buy</div><div class="v">'+size+'</div><div class="s">'+(b.birds>1?b.birds+" "+what+"s, "+b.lb+" lb total":what+" for "+crowd()+(state.veg?" ("+state.veg+" vegetarian)":""))+'</div></div>'+
+   '<div class="stat"><div class="k">Move to the fridge</div><div class="v">'+fmtDate(tgDay(b.fridgeDay)).replace(",",",<br>")+'</div><div class="s">If frozen. About '+b.thaw+' day'+(b.thaw>1?"s":"")+' to thaw.</div></div>'+
+   '<div class="stat"><div class="k">'+heat+'</div><div class="v">'+fmtClock(dinner-b.inAt)+'</div><div class="s">'+b.m.temp+'°F for about '+fmtDur(b.rt)+'</div></div>'+
+   '<div class="stat"><div class="k">Carve</div><div class="v">'+fmtClock(dinner-15)+'</div><div class="s">After a '+b.rest+'-minute rest</div></div>';
+  var n=[];
+  n.push('<div class="note"><b>Done at 165°F</b><span>in the thickest part of the breast. Times are estimates, so start checking about 45 minutes early.</span></div>');
+  if(b.each===10&&b.lb===10&&state.method!=="breast")n.push('<div class="note"><b>Smallest bird</b><span>10 lb is about as small as whole turkeys come, so you will have leftovers either way. For a lighter load, switch to Breast only.</span></div>');
+  if(state.kids>0)n.push('<div class="note"><b>Little kids</b><span>Each child under 4 is counted as about a third of an adult plate. Cut their turkey into small, soft pieces and skip whole nuts like pecans for them.</span></div>');
+  if(b.birds>1)n.push('<div class="note"><b>Two birds?</b><span>'+b.m.label+' works best at '+b.m.max+' lb or less per bird, so the plan splits it up. Both can cook at the same time.</span></div>');
+  if(has("ham"))n.push('<div class="note"><b>Ham on the menu</b><span>so the turkey is sized a bit smaller than usual.</span></div>');
+  if(state.veg>0&&!has("plant"))n.push('<div class="note"><b>'+state.veg+' vegetarian'+(state.veg>1?"s":"")+'</b><span>Consider adding the plant-based roast in the menu, and make the stuffing and gravy with vegetable stock.</span></div>');
+  if(dinner-b.inAt<360)n.push('<div class="note warn"><b>Early start</b><span>The bird goes in before 6 AM. A later dinner or spatchcocking would buy you sleep.</span></div>');
+  notes.innerHTML=n.join("");
+}
+
+/* ---------- render: menu ---------- */
+var filter="all";
+function renderMenu(){
+  var g=document.getElementById("menuGrid");
+  g.innerHTML=DISHES.filter(function(d){return filter==="all"||(filter==="trend"?d.tag==="trend":d.tag!=="trend")}).map(function(d){
+    var tagTxt=d.tag==="trend"?"2026 trend":d.tag==="baker"?"Baker's pick":"Classic";
+    return '<label class="dish"><input type="checkbox" id="dish-'+d.id+'" data-dish="'+d.id+'"'+(has(d.id)?" checked":"")+'>'+
+      '<span class="box"><span class="tag '+d.tag+'">'+tagTxt+'</span><span class="name">'+esc(d.name)+'<span class="tick" aria-hidden="true">✓</span></span>'+
+      '<span class="meta">'+esc(d.meta)+'</span>'+(d.why?'<span class="why">'+esc(d.why)+'</span>':"")+'</span></label>';
+  }).join("");
+}
+
+/* ---------- schedule ---------- */
+function weeksPlan(b){
+  var items=[];
+  items.push({d:null,t:"Lock in your guest count and menu",key:"w-lock"});
+  items.push({d:-18,t:"Order a fresh turkey, or buy a frozen one",sub:"Target's meal basket goes on sale today",key:"w-order"});
+  items.push({d:-12,t:"Shop the pantry list: cans, flour, sugar, spices and stock",key:"w-pantry"});
+  if(b.birds>0)items.push({d:b.fridgeDay,t:"Move the frozen "+(state.method==="breast"?"breast":"turkey")+" to the fridge",sub:"Buying fresh instead? Pick it up "+fmtDate(tgDay(-3))+" or "+fmtDate(tgDay(-2)),key:"w-thaw"});
+  items.push({d:-5,t:"Big shop: produce, dairy and meat",key:"w-big"});
+  if(b.birds>0)items.push({d:-2,t:"Dry brine: salt the bird all over and leave it uncovered in the fridge",key:"w-brine"});
+  items.push({d:-1,t:"Clear fridge space and set the table",key:"w-table"});
+  state.dishes.forEach(function(id){var d=dish(id);if(d&&d.ahead)d.ahead.forEach(function(a,i){items.push({d:a.d,t:a.t,key:"w-"+id+i})})});
+  items.push({d:0,t:"Thanksgiving! Follow the hour-by-hour plan",key:"w-day"});
+  var t=startOfToday(), tOff=daysBetween(TG,t);
+  items.forEach(function(it){if(it.d===null)it.d=Math.min(tOff,0)});
+  items.sort(function(a,b){return a.d-b.d});
+  return {items:items,tOff:tOff};
+}
+function dayPlan(b){
+  var ev=[], ovenTurkey=b.birds>0&&b.m.heat==="oven", crunch=[], heatLbl=b.m.heat==="smoker"?"smoker":"oven";
+  if(b.birds>0){
+    ev.push({at:b.inAt+60,k:"turkey",t:"Take the turkey out of the fridge and pat it dry"});
+    ev.push({at:b.inAt+30,k:"turkey",t:b.m.heat==="smoker"?"Light the smoker and bring it to 275°F":"Preheat the oven to "+b.m.temp+"°F"});
+    ev.push({at:b.inAt,k:"turkey",t:(state.method==="breast"?"Breast":"Turkey")+" into the "+heatLbl,sub:(b.birds>1?b.birds+" × ":"")+b.each+" lb · about "+fmtDur(b.rt)});
+    ev.push({at:b.out+45,k:"turkey",t:"Start checking the temperature",sub:"Pull it at 165°F in the thickest part of the breast"});
+    ev.push({at:b.out,k:"turkey",t:"Turkey out. Tent with foil and rest "+b.rest+" minutes"});
+    ev.push({at:15,k:"turkey",t:"Carve the turkey"});
+  }
+  if(has("rolls_sd")){
+    var rAt=ovenTurkey?b.inAt+80:150;
+    ev.push({at:rAt,k:"oven",t:"Bake the sourdough rolls at 425°F, about 22 minutes",sub:ovenTurkey?"Before the oven drops for the turkey":"Straight from the cold proof"});
+    ev.push({at:8,k:"oven",t:"Rewarm the rolls in the warm oven for 5 minutes"});
+  }
+  if(has("ham")){
+    if(state.method==="spatch"){ev.push({at:b.inAt+30+95,k:"oven",t:"Glazed ham in at 325°F, before the turkey",sub:"Keep it wrapped in foil once it's out; it holds heat for hours"})}
+    else {var hEnd=b.birds>0?b.out:20;ev.push({at:hEnd+90,k:"oven",t:"Glazed ham into the oven at 325°F",sub:ovenTurkey?"It shares the oven with the turkey and comes out with it":"About 90 minutes"})}
+  }
+  state.dishes.forEach(function(id){var d=dish(id);if(d&&d.dayOf)d.dayOf.forEach(function(x){ev.push({at:x.at,k:x.k,t:x.t,sub:x.sub})})});
+  var od=state.dishes.map(dish).filter(function(d){return d&&d.oven}).sort(function(a,b){return b.oven.temp-a.oven.temp});
+  var batches=[];for(var i=0;i<od.length;i+=3)batches.push(od.slice(i,i+3));
+  var end=5;
+  batches.forEach(function(bt){
+    var temp=Math.round(bt.reduce(function(t,d){return t+d.oven.temp},0)/bt.length/25)*25, dur=Math.max.apply(null,bt.map(function(d){return d.oven.min}));
+    var names=bt.map(function(d){return d.name}).join(", ");
+    var start=end+dur;
+    if(ovenTurkey&&start>b.out+5){
+      var sd=dur+(temp>b.m.temp?15:0);
+      crunch.push(names);
+      ev.push({at:b.out+sd,k:"oven",t:"Slide in beside the turkey: "+names,sub:"Bake at "+b.m.temp+"°F for about "+fmtDur(sd)+", then keep covered"});
+    } else {
+      ev.push({at:start,k:"oven",t:(ovenTurkey&&end===5?"Set the oven to "+temp+"°F. In go: ":"Oven at "+temp+"°F. In go: ")+names,sub:"About "+dur+" minutes"+(bt.length>1?"; pull each dish as it browns":"")});
+      end=start+3;
+    }
+  });
+  if(state.kids>0)ev.push({at:10,k:"serve",t:"Make the little kids' plates first",sub:"Small soft bites; cut grapes and skip whole nuts for under 4s"});
+  ev.push({at:0,k:"serve",t:"Dinner is served"});
+  ev.push({at:-120,k:"serve",t:"Leftovers into the fridge",sub:"Within 2 hours of serving"});
+  ev.sort(function(a,b){return b.at-a.at});
+  return {ev:ev,crunch:crunch};
+}
+function keyOf(s){var h=0;for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}return "k"+h}
+function renderTimeline(b){
+  var w=weeksPlan(b), ul=document.getElementById("weeks");
+  ul.innerHTML=w.items.map(function(it){
+    var k="w:"+it.key, done=!!state.checks[k], past=it.d<w.tOff, today=it.d===w.tOff;
+    var when=today?"Today":fmtDate(tgDay(it.d)).replace(/^(\w+), /,"$1 ");
+    return '<li class="'+(done?"done ":"")+(past?"past ":"")+(today?"today":"")+'"><span class="when">'+when+'</span><label><input type="checkbox" data-check="'+k+'"'+(done?" checked":"")+'><span class="txt">'+esc(it.t)+(it.sub?'<span class="sub">'+esc(it.sub)+'</span>':"")+'</span></label></li>';
+  }).join("");
+  var p=dayPlan(b), dl=document.getElementById("dayof");
+  dl.innerHTML=p.ev.map(function(e){
+    var k="d:"+keyOf(e.t), done=!!state.checks[k];
+    return '<li class="'+(done?"done":"")+'"><span class="when">'+fmtClock(state.dinner-e.at)+'</span><label><input type="checkbox" data-check="'+k+'"'+(done?" checked":"")+'><span class="txt"><i class="kind '+e.k+'"></i>'+esc(e.t)+(e.sub?'<span class="sub">'+esc(e.sub)+'</span>':"")+'</span></label></li>';
+  }).join("");
+  var on=document.getElementById("ovenNote");
+  if(p.crunch.length){on.innerHTML='<div class="note warn" style="margin:0 0 10px"><b>Oven crunch</b><span>Not everything fits while the turkey rests, so some sides share the oven with the bird. Making a casserole the day before and rewarming it, or switching to the smoker, frees things up.</span></div>'}
+  else if(b.m.heat==="smoker"&&b.birds>0){on.innerHTML='<div class="note" style="margin:0 0 10px"><b>Oven is all yours</b><span>The turkey is on the smoker, so sides bake whenever you like.</span></div>'}
+  else on.innerHTML="";
+}
+
+/* ---------- shopping ---------- */
+var AISLES=["Meat","Produce","Dairy","Bakery & dry","Pantry"];
+function shopList(b){
+  var g=eaters(), map={}, order=[];
+  function add(sec,name,n,unit){var k=sec+"|"+name+"|"+(unit||"");if(!map[k]){map[k]={sec:sec,name:name,n:n,unit:unit||""};order.push(k)}else if(n!=null&&map[k].n!=null){map[k].n+=n}}
+  if(b.birds>0){
+    add("Meat",state.method==="breast"?"Bone-in turkey breast":"Whole turkey",null);
+    map["Meat|"+(state.method==="breast"?"Bone-in turkey breast":"Whole turkey")+"|"].label=(b.birds>1?b.birds+" × ":"")+b.each+" lb";
+    add("Pantry","Kosher salt for the dry brine",null);
+    add("Dairy","Butter",1,"sticks");
+    add("Produce","Yellow onions",1,"");
+    add("Produce","Lemon",1,"");
+    add("Produce","Fresh thyme",1,"bunch");
+  }
+  state.dishes.forEach(function(id){var d=dish(id);if(d&&d.shop)d.shop(g).forEach(function(r){add(r[0],r[1],r[2],r[3])})});
+  var by={};AISLES.forEach(function(a){by[a]=[]});
+  order.forEach(function(k){var it=map[k];var q=it.label||(it.n==null?"have on hand":(fmtN(it.n)+(it.unit?" "+unitFor(it.unit,it.n):"")));by[it.sec].push({name:it.name,q:q,k:"s:"+keyOf(it.name+"|"+it.unit)})});
+  return by;
+}
+function fmtN(n){return Math.abs(n-Math.round(n))<1e-6?String(Math.round(n)):n.toFixed(2).replace(/0+$/,"").replace(/\.$/,"")}
+function unitFor(u,n){if(n===1){if(u==="sticks")return"stick";if(u==="bunches")return"bunch";if(u==="quarts")return"quart";if(u==="cups")return"cup";if(u==="pints")return"pint";if(/s$/.test(u)&&/(cans|bags|boxes|tubs|loaves|packs|roasts)$/.test(u))return u.replace(/loaves$/,"loaf").replace(/boxes$/,"box").replace(/s$/,"")}return u}
+function renderShop(b){
+  var by=shopList(b), g=document.getElementById("shopGrid");
+  g.innerHTML=AISLES.filter(function(a){return by[a].length}).map(function(a){
+    return '<div class="aisle"><h3>'+a+'</h3><ul>'+by[a].map(function(it){var done=!!state.checks[it.k];return '<li class="'+(done?"done":"")+'"><label><input type="checkbox" data-check="'+it.k+'"'+(done?" checked":"")+'><span>'+esc(it.name)+' <span class="q">'+esc(it.q)+'</span></span></label></li>'}).join("")+'</ul></div>';
+  }).join("");
+}
+function shopText(b){
+  var by=shopList(b), out=["Thanksgiving shopping list ("+crowd()+")"];
+  AISLES.forEach(function(a){if(!by[a].length)return;out.push("",a.toUpperCase());by[a].forEach(function(it){out.push((state.checks[it.k]?"[x] ":"[ ] ")+it.name+" - "+it.q)})});
+  return out.join("\n");
+}
+
+/* ---------- bring ---------- */
+function renderBring(){
+  var el=document.getElementById("bringList");
+  var rows=state.dishes.map(dish).filter(Boolean);
+  if(!rows.length){el.innerHTML='<p style="color:var(--muted)">Pick some dishes in the menu first.</p>';return}
+  el.innerHTML=rows.map(function(d){return '<div class="r"><span class="dn">'+esc(d.name)+'</span><input id="bring-'+d.id+'" data-bring="'+d.id+'" placeholder="Host (you)" value="'+esc(state.bring[d.id]||"")+'" aria-label="Who brings '+esc(d.name)+'"></div>'}).join("");
+}
+function bringText(){
+  var lines=["Thanksgiving is Thursday, Nov 26. Dinner at "+fmtClock(state.dinner)+".","Here's who's bringing what:"];
+  var mine=[];
+  state.dishes.map(dish).filter(Boolean).forEach(function(d){var who=(state.bring[d.id]||"").trim();if(who)lines.push("- "+d.name+": "+who);else mine.push(d.name)});
+  if(mine.length)lines.push("- I've got: "+mine.join(", "));
+  lines.push("","Bring it ready to serve or ready to bake. Let me know if you need oven time!");
+  return lines.join("\n");
+}
+
+/* ---------- budget ---------- */
+function renderKits(){
+  var g=eaters(), h=heads();
+  var kits=[
+    {store:"Walmart",price:35,serves:10,d:"Butterball turkey (about 13.5 lb), sweet potatoes, marshmallows and pumpkin pie. On sale through Dec 24."},
+    {store:"Target",price:30,serves:6,d:"Butterball turkey up to 10 lb, potatoes, two baguettes and green bean casserole fixings. On sale Nov 8 to 29."},
+    {store:"Sam's Club",price:160,serves:16,d:"Smoked turkey and a ham, gravy, a charcuterie tray, sides and two pumpkin pies. About two hours of prep. Listed as under $160."},
+    {store:"Amazon",price:25,serves:6,est:true,d:"Box with an 8 lb frozen Butterball, classic sides and pie fixings. Servings not stated; estimated here from the turkey size."},
+    {store:"Cracker Barrel",price:189.99,serves:10,d:"Heat-and-serve feast with two roasted turkey breasts plus pumpkin and pecan pie. Serves 8 to 10. Pickup Nov 21 to 29."}
+  ];
+  kits.forEach(function(k){k.packs=ceil(g/k.serves);k.total=k.packs*k.price;k.per=k.total/h});
+  var best=kits.reduce(function(a,b){return b.per<a.per?b:a});
+  document.getElementById("kits").innerHTML=kits.map(function(k){
+    return '<div class="kit'+(k===best?" best":"")+'"><span class="store">'+k.store+'</span><span class="price">$'+(k.total%1?k.total.toFixed(2):k.total)+'</span><span class="per">'+k.packs+' pack'+(k.packs>1?"s":"")+' · $'+k.per.toFixed(2)+' per guest</span><span class="d">'+esc(k.d)+'</span></div>';
+  }).join("");
+}
+
+/* ---------- wiring ---------- */
+function renderAll(){var b=bird();renderHero(b);renderBird(b);renderTimeline(b);renderShop(b);renderBring();renderKits()}
+var sel=document.getElementById("dinner");
+for(var m=11*60;m<=19*60;m+=30){var o=document.createElement("option");o.value=m;o.textContent=fmtClock(m);sel.appendChild(o)}
+function syncForm(){
+  document.getElementById("guests").value=state.guests;
+  document.getElementById("kids").value=state.kids;
+  document.getElementById("veg").value=state.veg;
+  sel.value=String(state.dinner);
+  var r=document.getElementById("m-"+state.method);if(r)r.checked=true;
+  document.getElementById("leftovers").checked=!!state.leftovers;
+}
+function clampState(){
+  state.guests=Math.min(60,Math.max(1,parseInt(state.guests,10)||1));
+  state.kids=Math.min(30,Math.max(0,parseInt(state.kids,10)||0));
+  state.veg=Math.min(state.guests,Math.max(0,parseInt(state.veg,10)||0));
+}
+document.getElementById("setup").addEventListener("submit",function(e){e.preventDefault()});
+document.getElementById("setup").addEventListener("input",function(e){
+  var t=e.target;
+  if(t.id==="guests"||t.id==="veg"||t.id==="kids"){if(t.value==="")return;state[t.id]=parseInt(t.value,10);clampState();if(t.id==="guests"&&state.veg!==parseInt(document.getElementById("veg").value,10))document.getElementById("veg").value=state.veg}
+  else if(t.id==="dinner")state.dinner=parseInt(t.value,10);
+  else if(t.name==="method")state.method=t.value;
+  else if(t.id==="leftovers")state.leftovers=t.checked;
+  save();renderAll();
+});
+document.getElementById("setup").addEventListener("change",function(e){if(e.target.type==="number"){clampState();syncForm();save();renderAll()}});
+document.querySelectorAll("[data-step]").forEach(function(btn){btn.addEventListener("click",function(){var p=btn.getAttribute("data-step").split(":");state[p[0]]=(parseInt(state[p[0]],10)||0)+parseInt(p[1],10);clampState();syncForm();save();renderAll()})});
+document.getElementById("menuGrid").addEventListener("change",function(e){
+  var id=e.target.getAttribute("data-dish");if(!id)return;
+  if(e.target.checked){if(!has(id))state.dishes.push(id);if(id==="rolls_sd")state.dishes=state.dishes.filter(function(x){return x!=="rolls_store"});if(id==="rolls_store")state.dishes=state.dishes.filter(function(x){return x!=="rolls_sd"})}
+  else state.dishes=state.dishes.filter(function(x){return x!==id});
+  save();renderMenu();renderAll();
+});
+document.querySelectorAll(".filters button").forEach(function(btn){btn.addEventListener("click",function(){filter=btn.getAttribute("data-f");document.querySelectorAll(".filters button").forEach(function(x){x.setAttribute("aria-pressed",String(x===btn))});renderMenu()})});
+document.addEventListener("change",function(e){
+  var k=e.target.getAttribute&&e.target.getAttribute("data-check");if(!k)return;
+  if(e.target.checked)state.checks[k]=1;else delete state.checks[k];
+  var li=e.target.closest("li");if(li)li.classList.toggle("done",e.target.checked);
+  save();
+});
+document.getElementById("bringList").addEventListener("input",function(e){var id=e.target.getAttribute("data-bring");if(!id)return;state.bring[id]=e.target.value;save()});
+function copy(text,toastId,fbId){
+  var toast=document.getElementById(toastId), fb=document.getElementById(fbId);
+  function fallback(){fb.hidden=false;fb.value=text;fb.focus();fb.select();toast.textContent="Copy didn't go through here. The text is selected below."}
+  try{navigator.clipboard.writeText(text).then(function(){fb.hidden=true;toast.textContent="Copied";setTimeout(function(){toast.textContent=""},2200)},fallback)}catch(e){fallback()}
+}
+document.getElementById("copyShop").addEventListener("click",function(){copy(shopText(bird()),"shopToast","shopFallback")});
+document.getElementById("copyBring").addEventListener("click",function(){copy(bringText(),"bringToast","bringFallback")});
+document.getElementById("clearShop").addEventListener("click",function(){Object.keys(state.checks).forEach(function(k){if(k.indexOf("s:")===0)delete state.checks[k]});save();renderShop(bird())});
+
+clampState();syncForm();renderMenu();renderAll();
+})();
+</script>
+
+</body></html>

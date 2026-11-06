@@ -1,0 +1,442 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Morning After '26</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: civic-poster app shell. Sticky ticker + top bar, one job per tab, bottom tab bar, giant condensed numerals, thick ink borders, color-block panels. */
+:root{
+  --paper:#E9E1CF;      /* khaki ivory */
+  --card:#F7F2E6;
+  --ink:#1A1420;        /* plum black */
+  --muted:#5E5463;
+  --dem:#2747E8;        /* cobalt */
+  --gop:#D3263A;        /* carmine */
+  --close:#C9D93B;      /* citron: too close to call */
+  --plum:#5B2A6E;
+  --on-color:#FFFFFF;
+  --line:#1A1420;
+  --soft:#D9CFB9;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#15111A;--card:#221C29;--ink:#F1EADB;--muted:#B3A8B8;--dem:#7086FF;--gop:#FF5A6A;--close:#D8E85A;--plum:#C79BDD;--on-color:#0E0B12;--line:#F1EADB;--soft:#3A3142;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#15111A;--card:#221C29;--ink:#F1EADB;--muted:#B3A8B8;--dem:#7086FF;--gop:#FF5A6A;--close:#D8E85A;--plum:#C79BDD;--on-color:#0E0B12;--line:#F1EADB;--soft:#3A3142;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--plum);outline-offset:2px}
+
+/* top */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper)}
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;padding-block:7px}
+.ticker .track{display:inline-flex;gap:36px;padding-left:100%;animation:tick 55s linear infinite}
+.ticker b{color:var(--close);font-weight:600}
+@keyframes tick{to{transform:translateX(-100%)}}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:3px solid var(--line)}
+.brand{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:.01em;text-transform:uppercase;line-height:1}
+.brand span{color:var(--dem)}
+.stamp{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:right;line-height:1.3}
+
+main{padding-block:18px 120px}
+.view{display:grid;gap:18px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(46px,13vw,92px);line-height:.88;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(30px,8vw,44px);line-height:.95}
+h3{font-size:18px;font-weight:800;line-height:1.25}
+p{margin:0;max-width:65ch}
+.lede{font-size:18px;font-weight:500}
+.panel{background:var(--card);border:3px solid var(--line);padding:18px;display:grid;gap:12px;min-width:0}
+.panel.flat{border-width:2px}
+.small{font-size:14px;color:var(--muted)}
+
+/* scoreboard */
+.score{display:grid;grid-template-columns:1fr 1fr;gap:0;border:3px solid var(--line)}
+.score > div{padding:14px 16px;display:grid;gap:2px}
+.score .d{background:var(--dem);color:var(--on-color)}
+.score .r{background:var(--gop);color:var(--on-color)}
+.big{font-family:var(--display);font-weight:900;font-size:clamp(84px,24vw,150px);line-height:.82;font-variant-numeric:tabular-nums}
+.score .lbl{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:13px}
+.score .sub{font-size:13px;opacity:.92}
+.closebar{grid-column:1/-1;background:var(--close);color:#1A1420;font-weight:700;font-size:14px;padding:9px 16px;border-top:3px solid var(--line)}
+.seg{display:inline-flex;border:2px solid var(--line)}
+.seg button{background:transparent;border:0;padding:9px 16px;font-weight:700;cursor:pointer;min-height:44px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.hemi{width:100%;max-width:560px;height:auto;display:block;margin:0 auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;font-weight:600}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px;border:1.5px solid var(--line)}
+.house{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.house .big{font-size:clamp(64px,18vw,110px);color:var(--dem)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fact{border:2px solid var(--line);padding:12px;background:var(--card)}
+.fact .n{font-family:var(--display);font-weight:900;font-size:44px;line-height:.9;font-variant-numeric:tabular-nums}
+.fact p{font-size:14px}
+
+/* chips + cards */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:var(--card);padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer;min-height:42px;border-radius:999px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.races{display:grid;gap:12px}
+.race{border:3px solid var(--line);background:var(--card);display:grid;grid-template-columns:72px 1fr;min-width:0}
+.race .st{display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:34px;color:var(--on-color);border-right:3px solid var(--line)}
+.race .st.d{background:var(--dem)} .race .st.r{background:var(--gop)} .race .st.c{background:var(--close);color:#1A1420}
+.race .body{padding:12px 14px;display:grid;gap:6px;min-width:0}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border:1.5px solid var(--line)}
+.tag.flip{background:var(--ink);color:var(--paper)}
+.tag.hold{background:transparent}
+.tag.close{background:var(--close);color:#1A1420}
+.vs{font-weight:800;font-size:17px}
+.vs .loser{font-weight:500;color:var(--muted)}
+.shares{display:flex;height:10px;border:1.5px solid var(--line)}
+.shares span{display:block;height:100%}
+.meta{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.star{justify-self:start;border:2px solid var(--line);background:transparent;padding:6px 12px;font-weight:700;font-size:13px;cursor:pointer;min-height:38px}
+.star[aria-pressed="true"]{background:var(--close);color:#1A1420}
+
+/* power check */
+.powers{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.pbtn{border:2px solid var(--line);background:var(--card);padding:12px;text-align:left;font-weight:700;cursor:pointer;min-height:56px}
+.pbtn[aria-pressed="true"]{background:var(--plum);color:var(--on-color);border-color:var(--plum)}
+.verdict{border:3px solid var(--line);display:grid;gap:12px;padding:18px;background:var(--card)}
+.vword{font-family:var(--display);font-weight:900;font-size:clamp(56px,16vw,96px);line-height:.85;text-transform:uppercase}
+.vword.yes{color:var(--dem)} .vword.no{color:var(--gop)} .vword.maybe{color:var(--plum)}
+.meter{display:grid;gap:6px}
+.mrow{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center;font-size:13px;font-weight:700}
+.mtrack{position:relative;height:22px;border:2px solid var(--line);background:var(--soft)}
+.mfill{position:absolute;inset:0 auto 0 0;background:var(--dem);transition:width .6s ease}
+.mneed{position:absolute;top:-6px;bottom:-6px;width:3px;background:var(--ink)}
+.mlab{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* missouri */
+.mo{display:grid;gap:12px}
+.mocard{border:3px solid var(--line);background:var(--card);padding:14px;display:grid;gap:8px}
+.res{font-family:var(--display);font-weight:900;font-size:32px;text-transform:uppercase;line-height:.9}
+.res.no{color:var(--gop)} .res.yes{color:var(--dem)} .res.wait{color:var(--plum)}
+
+/* timeline */
+.count{background:var(--ink);color:var(--paper);padding:18px;display:grid;gap:6px;border:3px solid var(--line)}
+.cd{display:flex;gap:14px;flex-wrap:wrap}
+.cd div{display:grid}
+.cd b{font-family:var(--display);font-weight:900;font-size:clamp(48px,14vw,76px);line-height:.9;font-variant-numeric:tabular-nums}
+.cd span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.tl{display:grid;gap:0;border-left:4px solid var(--line);margin-left:8px}
+.ev{position:relative;padding:0 0 18px 20px;display:grid;gap:4px}
+.ev::before{content:"";position:absolute;left:-12px;top:4px;width:20px;height:20px;border-radius:50%;background:var(--card);border:3px solid var(--line)}
+.ev.now::before{background:var(--close)}
+.ev .when{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--plum);letter-spacing:.04em}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:4px}
+
+/* actions */
+.next{justify-self:start;display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border:0;padding:14px 20px;font-weight:800;font-size:16px;cursor:pointer;min-height:52px}
+.copy{border:2px solid var(--line);background:var(--close);color:#1A1420;padding:12px 16px;font-weight:800;cursor:pointer;min-height:48px;justify-self:start}
+textarea{width:100%;min-height:150px;font:14px/1.45 var(--mono);border:2px solid var(--line);background:var(--paper);color:var(--ink);padding:10px}
+.toast{font-size:14px;font-weight:700;color:var(--plum);min-height:1.4em}
+
+/* tabbar */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--ink);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+nav.tabs .in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{background:transparent;border:0;color:var(--paper);opacity:.72;padding:10px 4px 12px;cursor:pointer;display:grid;justify-items:center;gap:3px;min-height:60px;font-size:12px;font-weight:700;letter-spacing:.02em}
+nav.tabs button .ix{font-family:var(--display);font-weight:900;font-size:22px;line-height:1}
+nav.tabs button[aria-selected="true"]{opacity:1;background:var(--plum);color:#fff}
+.src{font-size:13px;color:var(--muted);display:grid;gap:4px}
+.src a{color:inherit;word-break:break-word}
+@media (prefers-reduced-motion: reduce){.ticker .track{animation:none;padding-left:0}.mfill{transition:none}}
+@media (max-width:420px){.race{grid-template-columns:58px 1fr}.race .st{font-size:28px}}
+</style>
+
+<div class="top">
+  <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
+  <div class="wrap bar">
+    <div class="brand">Morning <span>After</span> '26</div>
+    <div class="stamp">Results as reported by<br>about 3:30 AM CT, Wed Nov 4</div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- 1 SCOREBOARD -->
+<section class="view" id="v-score" data-view="score">
+  <div class="eyebrow">2026 midterms · the morning after</div>
+  <h1>Democrats take both houses</h1>
+  <p class="lede">The AP called the Senate late Tuesday and the House early Wednesday. Republicans controlled both before the vote. Here's the new map, in five quick screens.</p>
+
+  <div class="score" role="group" aria-label="Senate seats">
+    <div class="d"><div class="lbl">Democrats</div><div class="big" id="dCount">54</div><div class="sub" id="dSub">7 seats flipped</div></div>
+    <div class="r"><div class="lbl">Republicans</div><div class="big" id="rCount">44</div><div class="sub" id="rSub">down from 53</div></div>
+    <div class="closebar" id="closeBar">2 still too close: Alaska and Mississippi (both Republican seats)</div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <h3>The Senate, 100 seats</h3>
+      <div class="seg" role="group" aria-label="Show Senate before or after">
+        <button id="bBefore" aria-pressed="false">Before</button>
+        <button id="bAfter" aria-pressed="true">After</button>
+      </div>
+    </div>
+    <svg class="hemi" id="hemi" viewBox="0 0 400 214" role="img" aria-label="Senate seat chart"></svg>
+    <div class="legend"><span><i style="background:var(--dem)"></i>Democrats + 2 independents</span><span><i style="background:var(--gop)"></i>Republicans</span><span><i style="background:var(--close)"></i>Too close to call</span></div>
+    <p class="small">51 seats is a majority. Before the vote it was 53 Republicans and 47 on the Democratic side (45 Democrats plus Bernie Sanders and Angus King).</p>
+  </div>
+
+  <div class="panel house">
+    <div class="big">218</div>
+    <div style="display:grid;gap:6px;min-width:0">
+      <h3>House: called for Democrats</h3>
+      <p>218 seats is a majority. Democrats needed a net gain of four. Reports say they picked up more than two dozen. Many states are still counting, so the final size isn't known yet.</p>
+      <p class="small">Hakeem Jeffries is set to become the first Black Speaker in U.S. history when the new House votes in January.</p>
+    </div>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><div class="n">38%</div><p>Trump approval in Nate Silver's tracker on Election Day</p></div>
+    <div class="fact"><div class="n">~90%</div><p>of voters called cost of living a crucial or major factor (CNN exit poll)</p></div>
+    <div class="fact"><div class="n">54M+</div><p>early ballots cast before Election Day (AP)</p></div>
+  </div>
+
+  <button class="next" data-go="senate">Next: the Senate races →</button>
+</section>
+
+<!-- 2 SENATE -->
+<section class="view" id="v-senate" data-view="senate" hidden>
+  <div class="eyebrow">Senate · race by race</div>
+  <h2>Where it flipped</h2>
+  <p>Tap a filter. Star the two uncalled races to keep an eye on them; your stars stay on this device.</p>
+  <div class="chips" role="group" aria-label="Filter races">
+    <button class="chip" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-f="flip" aria-pressed="false">Flipped (7)</button>
+    <button class="chip" data-f="hold" aria-pressed="false">Held</button>
+    <button class="chip" data-f="close" aria-pressed="false">Too close (2)</button>
+    <button class="chip" data-f="star" aria-pressed="false">My stars</button>
+  </div>
+  <div class="races" id="races"></div>
+  <p class="small">Vote shares are the latest reported, with the share of votes counted at that time. Numbers can move as counting finishes.</p>
+  <button class="next" data-go="power">Next: what they can actually do →</button>
+</section>
+
+<!-- 3 POWER CHECK -->
+<section class="view" id="v-power" data-view="power" hidden>
+  <div class="eyebrow">Power check · tap a move</div>
+  <h2>Can the new Congress do it?</h2>
+  <p>Winning a majority isn't the same as getting everything. Pick a move to see the vote math.</p>
+  <div class="powers" id="powers"></div>
+  <div class="verdict" id="verdict" aria-live="polite"></div>
+  <button class="next" data-go="mo">Next: Missouri →</button>
+</section>
+
+<!-- 4 MISSOURI -->
+<section class="view" id="v-mo" data-view="mo" hidden>
+  <div class="eyebrow">Close to home · Missouri</div>
+  <h2>What Missouri voted on</h2>
+  <div class="mo" id="mo"></div>
+  <p class="small">For final statewide numbers, check the Missouri Secretary of State's results site (enr.sos.mo.gov).</p>
+  <button class="next" data-go="next">Next: what happens now →</button>
+</section>
+
+<!-- 5 WHAT'S NEXT -->
+<section class="view" id="v-next" data-view="next" hidden>
+  <div class="eyebrow">What happens now</div>
+  <h2>The road to January 3</h2>
+  <div class="count" aria-live="off">
+    <div class="eyebrow" style="color:inherit;opacity:.8">New Congress sworn in · Jan 3, 2027, noon ET</div>
+    <div class="cd" id="cd"></div>
+  </div>
+  <div class="tl" id="tl"></div>
+  <div class="panel">
+    <h3>Your 30-second recap</h3>
+    <p class="small">Copy this for a group chat. Edit it first if you like.</p>
+    <textarea id="recap" aria-label="Recap text"></textarea>
+    <button class="copy" id="copyBtn">Copy recap</button>
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+  <div class="src">
+    <strong>Sources (read Nov 4, 2026)</strong>
+    <span>Forbes live updates, Nov 4: <a href="https://www.forbes.com/sites/saradorn/2026/11/04/midterm-election-results-live-updates-democrats-sweep-house-and-senate-in-stunning-rout/" target="_blank" rel="noopener">forbes.com</a></span>
+    <span>TIME, Nov 4: <a href="https://time.com/article/2026/11/04/democrats-win-control-of-senate-in-blue-wave-election/" target="_blank" rel="noopener">time.com</a></span>
+    <span>Newsweek Senate map, Nov 4: <a href="https://www.newsweek.com/midterms-map-shows-senate-before-and-after-abdul-el-sayed-troy-jackson-12656795" target="_blank" rel="noopener">newsweek.com</a></span>
+    <span>ABC News (Australia), what Democrats can do, Nov 4: <a href="https://www.abc.net.au/news/2026-11-04/us-midterms-democrats-win-majority-what-happens-next/107335330" target="_blank" rel="noopener">abc.net.au</a></span>
+    <span>Spectrum News, House Democrats' 100-day plan, Oct 14: <a href="https://spectrumlocalnews.com/nc/triad/politics/2026/10/14/house-democrats-100-days-agenda-if-they-win-midterms" target="_blank" rel="noopener">spectrumlocalnews.com</a></span>
+    <span>The Beacon, Missouri Prop A, Nov 3: <a href="https://thebeaconnews.org/stories/2026/11/03/missouri-primary-election-2026-results/" target="_blank" rel="noopener">thebeaconnews.org</a></span>
+    <span>KOMU 8 Missouri live blog, Nov 3: <a href="https://www.komu.com/news/elections/missouri-november-2026-election-live-updates/article_23b44924-23cc-44c6-9fa2-eb6c81c0747c.html" target="_blank" rel="noopener">komu.com</a></span>
+    <span>Houston Public Media, Texas Senate, Nov 3: <a href="https://www.houstonpublicmedia.org/articles/news/politics/election-2026/2026/11/03/565938/talarico-paxton-senate-race-texas-results/" target="_blank" rel="noopener">houstonpublicmedia.org</a></span>
+    <span>PBS NewsHour, Georgia governor: <a href="https://www.pbs.org/newshour/politics/live-results-georgia-governor-midterm-election" target="_blank" rel="noopener">pbs.org</a></span>
+  </div>
+  <button class="next" data-go="score">Back to the scoreboard ↺</button>
+</section>
+</main>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="in" role="tablist">
+    <button role="tab" data-go="score" aria-selected="true"><span class="ix">1</span>Score</button>
+    <button role="tab" data-go="senate" aria-selected="false"><span class="ix">2</span>Senate</button>
+    <button role="tab" data-go="power" aria-selected="false"><span class="ix">3</span>Power</button>
+    <button role="tab" data-go="mo" aria-selected="false"><span class="ix">4</span>Missouri</button>
+    <button role="tab" data-go="next" aria-selected="false"><span class="ix">5</span>Next</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- data ---------- */
+const RACES=[
+ {st:"TX",name:"Texas",kind:"flip",party:"d",w:"James Talarico (D)",l:"Ken Paxton (R)",ws:55.0,ls:43.1,cnt:"89.8% counted",note:"First Democratic statewide win in Texas in more than 30 years."},
+ {st:"ME",name:"Maine",kind:"flip",party:"d",w:"Troy Jackson (D)",l:"Sen. Susan Collins (R)",ws:53.8,ls:46.1,cnt:"86% counted",note:"Unseats a five-term senator. This was the call that clinched the Senate."},
+ {st:"OH",name:"Ohio",kind:"flip",party:"d",w:"Sherrod Brown (D)",l:"Sen. Jon Husted (R)",ws:49.7,ls:45.5,cnt:"97% counted",note:"Brown returns two years after losing his old seat."},
+ {st:"IA",name:"Iowa",kind:"flip",party:"d",w:"Josh Turek (D)",l:"Ashley Hinson (R)",ws:50.5,ls:46.4,cnt:"98% counted",note:"Open Republican seat goes blue."},
+ {st:"KS",name:"Kansas",kind:"flip",party:"d",w:"Adam Hamilton (D)",l:"Sen. Roger Marshall (R)",ws:50.9,ls:46.1,cnt:"95% counted",note:"First Democrat elected to the Senate from Kansas since 1932."},
+ {st:"NC",name:"North Carolina",kind:"flip",party:"d",w:"Roy Cooper (D)",l:"Michael Whatley (R)",ws:null,ls:null,cnt:"Called",note:"First Democratic Senate win in North Carolina since 2008."},
+ {st:"SC",name:"South Carolina",kind:"flip",party:"d",w:"Annie Andrews (D)",l:"Sen. Graham (R)",ws:null,ls:null,cnt:"Called",note:"Graham led narrowly in most fall polls."},
+ {st:"MI",name:"Michigan",kind:"hold",party:"d",w:"Abdul El-Sayed (D)",l:"Mike Rogers (R)",ws:52.2,ls:45.8,cnt:"92% counted",note:"Open seat many called the tipping point. Democrats keep it."},
+ {st:"GA",name:"Georgia",kind:"hold",party:"d",w:"Sen. Jon Ossoff (D)",l:"Mike Collins (R)",ws:null,ls:null,cnt:"Called",note:"Democrats' most-targeted seat holds."},
+ {st:"NH",name:"New Hampshire",kind:"hold",party:"d",w:"Chris Pappas (D)",l:"John Sununu (R)",ws:null,ls:null,cnt:"Called",note:"Reported as the first openly gay man elected to the Senate."},
+ {st:"MN",name:"Minnesota",kind:"hold",party:"d",w:"Peggy Flanagan (D)",l:"Michele Tafoya (R)",ws:null,ls:null,cnt:"Called",note:"Open seat stays Democratic."},
+ {st:"FL",name:"Florida",kind:"hold",party:"r",w:"Sen. Ashley Moody (R)",l:"Angie Nixon (D)",ws:51,ls:48,cnt:"96% counted",note:"One of the night's few bright spots for Republicans."},
+ {st:"AK",name:"Alaska",kind:"close",party:"c",w:"Sen. Dan Sullivan (R)",l:"Mary Peltola (D)",ws:null,ls:null,cnt:"Too close to call",note:"Alaska counts slowly. A judge tossed a federal lawsuit over certifying this race the Sunday before the vote."},
+ {st:"MS",name:"Mississippi",kind:"close",party:"c",w:"Scott Colom (D) 48.95%",l:"Sen. Cindy Hyde-Smith (R) 48.94%",ws:48.95,ls:48.94,cnt:"96% counted",note:"Separated by about one hundredth of a point. A Democratic win would make it 55."}
+];
+const SEN={before:{d:47,r:53,c:0},after:{d:54,r:44,c:2}};
+const POWERS=[
+ {id:"house",label:"Pass a bill in the House",v:"yes",chamber:"House",need:218,have:"218+",why:"A simple majority passes a bill in the House. Democrats plan to start with votes on health insurance costs, Medicaid cuts, tariffs and the Iran war in the first 100 hours."},
+ {id:"senate",label:"Pass most bills in the Senate",v:"no",chamber:"Senate",need:60,have:54,why:"Most bills need 60 votes to get past a filibuster. Democrats have 54 now and 56 at most if they win both uncalled races."},
+ {id:"veto",label:"Override a Trump veto",v:"no",chamber:"Senate",need:67,have:54,why:"An override takes two-thirds of both chambers: 67 senators and 290 House members. Democrats are well short of both."},
+ {id:"subpoena",label:"Investigate and subpoena",v:"yes",chamber:"House",need:218,have:"218+",why:"Committee chairs run investigations and can subpoena documents and witnesses. Jeffries says accountability starts on day one."},
+ {id:"nominee",label:"Block a Supreme Court or cabinet pick",v:"yes",chamber:"Senate",need:51,have:54,why:"Confirmations need a simple Senate majority, and Democrats now hold it. That's why there's pressure on older justices to retire before January."},
+ {id:"impeach",label:"Impeach an official",v:"maybe",chamber:"House",need:218,have:"218+",why:"The House can impeach with a simple majority. Party leaders are split, and Jeffries says it's neither on nor off the table."},
+ {id:"remove",label:"Remove someone from office",v:"no",chamber:"Senate",need:67,have:54,why:"Conviction after impeachment takes 67 senators. Democrats would need at least 11 Republicans to join them."},
+ {id:"budget",label:"Pass a budget bill (reconciliation)",v:"maybe",chamber:"Senate",need:51,have:54,why:"Budget reconciliation skips the 60-vote rule, so 51 is enough. The president can still veto it."},
+ {id:"fire",label:"Stop Trump firing cabinet members",v:"no",chamber:"Senate",need:null,have:54,why:"The president can fire cabinet members without Senate approval. Congress can only push back through hearings, budgets and confirmations of replacements."}
+];
+const MO=[
+ {t:"Amendment 3",what:"Would have banned most abortions, undoing the abortion-rights amendment voters passed in 2024. It also would have banned gender-transition procedures for minors.",res:"Rejected",cls:"no",after:"Abortion rights stay in the Missouri constitution."},
+ {t:"Proposition A",what:"A new U.S. House map that would have split Kansas City among three districts, likely making the delegation 7 Republicans and 1 Democrat instead of 6 and 2.",res:"Rejected · about 62%",cls:"no",after:"Missouri keeps the district lines lawmakers drew in 2022. These are preliminary results."},
+ {t:"Amendments 6, 7 and 8",what:"6 would limit lawmakers' power to undo voter-approved measures. 7 would create an investment fund meant to replace state taxes someday. 8 would define the sheriff's role and let the attorney general remove one.",res:"Results not confirmed yet",cls:"wait",after:"Our sources hadn't posted these totals. Check the Secretary of State's site."},
+ {t:"U.S. House in Missouri",what:"Mark Alford (R) kept the 4th District. Chris Stigall (R) won the open 6th District seat Sam Graves held. The 2nd District (Ann Wagner vs. the Democratic challenger Wellman) was rated a toss-up.",res:"2nd District: check results",cls:"wait",after:"The 1st District (St. Louis) and 2nd District final numbers weren't in our sources yet."}
+];
+const TIMELINE=[
+ {when:"Now · Wed Nov 4",t:"Counting continues",d:"Alaska and Mississippi Senate races and many House seats are still being counted. Alaska is usually one of the slowest states.",now:true},
+ {when:"Mon Nov 9",t:"The current Congress returns",d:"Republicans still hold both chambers until January. This lame-duck session has a lot of unfinished work."},
+ {when:"Fri Dec 11",t:"Government funding runs out",d:"If no funding bill passes, there's another shutdown. That would be the fourth of Trump's second term."},
+ {when:"Sun Jan 3, 2027 · noon ET",t:"New Congress sworn in",d:"The House elects its Speaker, expected to be Hakeem Jeffries. Chuck Schumer is likely to become Senate Majority Leader, replacing John Thune."},
+ {when:"First 100 hours",t:"House Democrats' opening votes",d:"Their stated plan:",list:["Bring back Affordable Care Act tax credits that expired in 2025","Reverse Medicaid cuts and new work requirements","Votes to end the Iran war and new war powers resolutions","Roll back tariffs and return tariff power to Congress"]},
+ {when:"First 100 days",t:"Affordability bills",d:"Five working groups are drafting plans on health care, housing, groceries, gas and utilities, and caregiving."}
+];
+
+/* ---------- ticker ---------- */
+const tk=["<b>CALLED</b> Senate → Democrats","<b>CALLED</b> House → Democrats","TX Talarico (D) beats Paxton","ME Jackson (D) beats Collins","KS first Democratic senator since 1932","MI El-Sayed (D) holds","<b>TOO CLOSE</b> AK · MS","MO Amendment 3 rejected","MO Prop A map rejected","GA Gov: Bottoms (D) wins","FL Gov: Donalds (R) wins"];
+const track=document.getElementById('ticker');
+track.innerHTML=tk.concat(tk).map(s=>"<span>"+s+"</span>").join("");
+
+/* ---------- hemicycle ---------- */
+const hemi=document.getElementById('hemi');
+const NS="http://www.w3.org/2000/svg";
+const seats=[];
+(function build(){
+  const rows=5, inner=70, outer=185, cx=200, cy=200; const pts=[];
+  const radii=[];for(let i=0;i<rows;i++)radii.push(inner+(outer-inner)*i/(rows-1));
+  const tot=radii.reduce((a,b)=>a+b,0); let counts=radii.map(r=>Math.round(100*r/tot));
+  let diff=100-counts.reduce((a,b)=>a+b,0); counts[rows-1]+=diff;
+  radii.forEach((r,i)=>{const n=counts[i];for(let j=0;j<n;j++){const a=Math.PI-(Math.PI*j/(n-1));pts.push({x:cx+r*Math.cos(a),y:cy-r*Math.sin(a),a})}});
+  pts.sort((p,q)=>q.a-p.a||0);
+  pts.forEach(p=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',p.x.toFixed(1));c.setAttribute('cy',p.y.toFixed(1));c.setAttribute('r','7.2');c.setAttribute('stroke','var(--line)');c.setAttribute('stroke-width','1.2');c.setAttribute('fill','var(--soft)');hemi.appendChild(c);seats.push(c)});
+  const t=document.createElementNS(NS,'text');t.setAttribute('x','200');t.setAttribute('y','196');t.setAttribute('text-anchor','middle');t.setAttribute('fill','var(--ink)');t.setAttribute('style','font:900 44px var(--display)');t.id='hemiNum';hemi.appendChild(t);
+  const t2=document.createElementNS(NS,'text');t2.setAttribute('x','200');t2.setAttribute('y','150');t2.setAttribute('text-anchor','middle');t2.setAttribute('fill','var(--muted)');t2.setAttribute('style','font:600 11px var(--mono);letter-spacing:.1em');t2.textContent='51 FOR MAJORITY';hemi.appendChild(t2);
+})();
+function paint(mode){
+  const s=SEN[mode];
+  seats.forEach((c,i)=>{const col=i<s.d?'var(--dem)':(i<s.d+s.c?'var(--close)':'var(--gop)');
+    if(reduce){c.setAttribute('fill',col)}else{setTimeout(()=>c.setAttribute('fill',col),i*9)}});
+  document.getElementById('hemiNum').textContent=(mode==='after'?'D '+s.d+' · R '+s.r:'R '+s.r+' · D '+s.d);
+  document.getElementById('bBefore').setAttribute('aria-pressed',mode==='before');
+  document.getElementById('bAfter').setAttribute('aria-pressed',mode==='after');
+  hemi.setAttribute('aria-label','Senate '+(mode==='after'?'after':'before')+' the election: '+s.d+' Democratic side, '+s.r+' Republican, '+s.c+' too close to call');
+}
+document.getElementById('bBefore').onclick=()=>paint('before');
+document.getElementById('bAfter').onclick=()=>paint('after');
+paint('after');
+
+/* count up */
+function countUp(el,to){if(reduce){el.textContent=to;return}let n=0;const step=()=>{n+=Math.max(1,Math.round((to-n)/6));if(n>=to){el.textContent=to;return}el.textContent=n;requestAnimationFrame(step)};step()}
+countUp(document.getElementById('dCount'),54);countUp(document.getElementById('rCount'),44);
+
+/* ---------- races ---------- */
+let filter='all'; let stars=store.get('ma26-stars',[]);
+function renderRaces(){
+  const box=document.getElementById('races');
+  const list=RACES.filter(r=>filter==='all'||(filter==='star'?stars.includes(r.st):r.kind===filter));
+  if(!list.length){box.innerHTML='<div class="panel flat"><p>No starred races yet. Tap "Star this race" on any card to keep it here.</p></div>';return}
+  box.innerHTML=list.map(r=>{
+    const tag=r.kind==='flip'?'<span class="tag flip">Flipped to D</span>':r.kind==='hold'?'<span class="tag hold">Held · '+(r.party==='d'?'D':'R')+'</span>':'<span class="tag close">Too close</span>';
+    let bar='';
+    if(r.ws!=null){const wc=r.kind==='close'?'var(--dem)':(r.party==='d'?'var(--dem)':'var(--gop)');const lc=r.kind==='close'?'var(--gop)':(r.party==='d'?'var(--gop)':'var(--dem)');const rest=Math.max(0,100-r.ws-r.ls);
+      bar='<div class="shares" aria-label="'+r.ws+'% to '+r.ls+'%"><span style="width:'+r.ws+'%;background:'+wc+'"></span><span style="width:'+rest+'%;background:var(--soft)"></span><span style="width:'+r.ls+'%;background:'+lc+'"></span></div><div class="meta">'+r.ws+'% – '+r.ls+'% · '+r.cnt+'</div>'}
+    else bar='<div class="meta">'+r.cnt+'</div>';
+    const on=stars.includes(r.st);
+    const who=r.kind==='close'?'<div class="vs">'+r.w+' <span class="loser">vs. '+r.l+'</span></div>':'<div class="vs">'+r.w+' <span class="loser">beat '+r.l+'</span></div>';
+    return '<article class="race"><div class="st '+r.party+'">'+r.st+'</div><div class="body"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><h3>'+r.name+'</h3>'+tag+'</div>'+who+bar+'<p style="font-size:14.5px">'+r.note+'</p><button class="star" data-star="'+r.st+'" aria-pressed="'+on+'">'+(on?'★ Starred':'☆ Star this race')+'</button></div></article>'}).join('');
+}
+document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));renderRaces()});
+document.getElementById('races').addEventListener('click',e=>{const b=e.target.closest('[data-star]');if(!b)return;const s=b.dataset.star;stars=stars.includes(s)?stars.filter(x=>x!==s):stars.concat(s);store.set('ma26-stars',stars);renderRaces()});
+renderRaces();
+
+/* ---------- power check ---------- */
+let pSel=store.get('ma26-power','senate');
+function renderPower(){
+  document.getElementById('powers').innerHTML=POWERS.map(p=>'<button class="pbtn" data-p="'+p.id+'" aria-pressed="'+(p.id===pSel)+'">'+p.label+'</button>').join('');
+  const p=POWERS.find(x=>x.id===pSel)||POWERS[0];
+  const word=p.v==='yes'?'Yes':p.v==='no'?'No':'Maybe';
+  let meter='';
+  if(p.need){
+    if(p.chamber==='Senate'){
+      meter='<div class="meter"><div class="mrow"><span>Senate</span><div class="mtrack"><div class="mfill" style="width:'+p.have+'%"></div><div class="mneed" style="left:calc('+p.need+'% - 1px)"></div></div></div><div class="mlab">Democrats have '+p.have+' of 100 (up to 56 if both close races go their way). Needed: '+p.need+'.</div></div>';
+    } else {
+      meter='<div class="meter"><div class="mrow"><span>House</span><div class="mtrack"><div class="mfill" style="width:'+(p.need/435*100).toFixed(1)+'%"></div><div class="mneed" style="left:calc('+(p.need/435*100).toFixed(1)+'% - 1px)"></div></div></div><div class="mlab">A majority is '+p.need+' of 435. Democrats have at least that many. The final count is still coming.</div></div>';
+    }
+  }
+  document.getElementById('verdict').innerHTML='<div class="eyebrow">'+p.label+'</div><div class="vword '+p.v+'">'+word+'</div>'+meter+'<p>'+p.why+'</p>';
+}
+document.getElementById('powers').addEventListener('click',e=>{const b=e.target.closest('[data-p]');if(!b)return;pSel=b.dataset.p;store.set('ma26-power',pSel);renderPower()});
+renderPower();
+
+/* ---------- missouri ---------- */
+document.getElementById('mo').innerHTML=MO.map(m=>'<article class="mocard"><div class="eyebrow">'+m.t+'</div><div class="res '+m.cls+'">'+m.res+'</div><p>'+m.what+'</p><p class="small"><strong style="color:var(--ink)">What it means:</strong> '+m.after+'</p></article>').join('');
+
+/* ---------- timeline + countdown ---------- */
+document.getElementById('tl').innerHTML=TIMELINE.map(e=>'<div class="ev'+(e.now?' now':'')+'"><div class="when">'+e.when+'</div><h3>'+e.t+'</h3><p>'+e.d+'</p>'+(e.list?'<ul class="clean">'+e.list.map(x=>'<li>'+x+'</li>').join('')+'</ul>':'')+'</div>').join('');
+const target=Date.UTC(2027,0,3,17,0,0);
+function tickCd(){let ms=Math.max(0,target-Date.now());const d=Math.floor(ms/864e5);ms-=d*864e5;const h=Math.floor(ms/36e5);ms-=h*36e5;const m=Math.floor(ms/6e4);
+  document.getElementById('cd').innerHTML='<div><b>'+d+'</b><span>days</span></div><div><b>'+h+'</b><span>hours</span></div><div><b>'+String(m).padStart(2,'0')+'</b><span>min</span></div>'}
+tickCd();setInterval(tickCd,30000);
+
+/* ---------- recap ---------- */
+document.getElementById('recap').value="Midterms recap (as of Wed morning, Nov 4):\n• Democrats won the Senate and the House.\n• Senate: 54 D, 44 R, with Alaska and Mississippi still too close. Seven seats flipped, including Texas, Maine, Ohio, Kansas, Iowa and both Carolinas.\n• House: called for Democrats, gains of more than two dozen seats. Jeffries is set to be the first Black Speaker.\n• Missouri: Amendment 3 (abortion ban) and Prop A (new congressional map) both rejected.\n• New Congress is sworn in Jan 3. Funding runs out Dec 11.";
+document.getElementById('copyBtn').onclick=function(){const ta=document.getElementById('recap');const done=()=>{document.getElementById('toast').textContent='Copied. Paste it anywhere.'};
+  const fallback=()=>{ta.focus();ta.select();document.getElementById('toast').textContent='Text selected. Press copy on your keyboard or phone menu.'};
+  try{navigator.clipboard.writeText(ta.value).then(done,fallback)}catch(e){fallback()}};
+
+/* ---------- tabs ---------- */
+const views=['score','senate','power','mo','next'];
+function go(v,scroll){if(!views.includes(v))v='score';
+  document.querySelectorAll('[data-view]').forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll('nav.tabs [data-go]').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===v));
+  if(location.hash!=='#'+v){try{history.replaceState(null,'','#'+v)}catch(e){location.hash=v}}
+  if(scroll)window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  if(v==='score')paint('after');
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){go(b.dataset.go,true)}});
+window.addEventListener('hashchange',()=>go(location.hash.slice(1),false));
+go(location.hash.slice(1)||'score',false);
+})();
+</script>
+
+</body></html>
