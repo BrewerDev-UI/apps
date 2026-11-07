@@ -257,7 +257,7 @@ body.offline .offline-pill{display:block}
       </div>
       <div class="stack" id="people"></div>
       <div class="card" id="photoCard" hidden>
-        <p class="eyebrow">Read a wishlist photo</p>
+        <p class="eyebrow" id="photoEy">Read a wishlist photo</p>
         <h3 id="photoH">Snap a wishlist, a screenshot or a store tag</h3>
         <p class="muted" id="photoP" style="margin:6px 0 10px;font-size:14px">Claude reads the items and prices and adds them as ideas for the person you pick.</p>
         <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
@@ -605,8 +605,9 @@ function renderTimeline(){
   const rows = SALES.filter(s=> f==='All' || s[3]===f || s[3]==='All');
   $('#timeline').innerHTML = rows.map(s=>{
     const st=dOf(s[0],s[1]); const en=s[2]?dOf(s[0],s[2]):st; const a=daysUntil(st), b=daysUntil(en);
-    const past=b<0, now=a<=0&&b>=0;
-    const when = past?'Over': now?(s[2]?'On now':'Today'): a===1?'Tomorrow':'In '+a+' days';
+    const started=b<0 && !s[2] && /starts?$/.test(s[4]);
+    const past=b<0 && !started, now=(a<=0&&b>=0)||started;
+    const when = started?'Started': past?'Over': now?(s[2]?'On now':'Today'): a===1?'Tomorrow':'In '+a+' days';
     return `<li class="tl${past?' past':''}${now?' now':''}${s[5]?' big':''}"><div class="d">${MON[s[0]-1]}<b>${s[1]}</b></div>
       <div style="min-width:0"><b style="font-weight:${s[5]?600:500}">${esc(s[4])}</b><div class="tiny">${s[2]?MON[s[0]-1]+' '+s[1]+' to '+s[2]:'One day'}${s[3]!=='All'?' · '+esc(s[3]):''}</div></div>
       <span class="when">${when}</span></li>`;}).join('');
@@ -864,9 +865,10 @@ function localIdeas(p, out, interests, left){
   if(words.length && !pool.some(o=>o.s>0)){ out.innerHTML='<p class="tiny">Nothing matched those words. Try something broader, like coffee, running, cozy, kids or tech.</p>'; return; }
   const pick=pool.slice(0,4);
   out.innerHTML = pick.map(({x,fit})=>`<div class="spark-item"><div style="min-width:0"><b style="font-weight:600">${esc(x[0])}</b> <span class="num tiny">${money(x[1])}</span><p>${esc(x[3])}${fit?'':' Over what\'s left in the budget.'}</p></div><button class="btn ghost" type="button" data-act="sparkadd" data-n="${esc(x[0])}" data-pr="${x[1]}">Add</button></div>`).join('')
-    + '<p class="tiny" style="margin:2px 0 0">Prices are typical, so check before you buy. Tap Get 4 ideas again for more.</p>';
+    + `<p class="tiny" style="margin:2px 0 0">${p.budget&&left<=0?esc(p.name)+'\'s budget is already used up, so any of these goes over it. ':''}Prices are typical, so check before you buy. Tap Get 4 ideas again for more.</p>`;
 }
 if(IS_WEB){
+  $('#photoEy').textContent='Receipts';
   $('#photoH').textContent='Snap a receipt to mark a gift bought';
   $('#photoP').textContent='Open a person, then tap Snap receipt under any gift. The photo stays on this phone and the gift moves to Bought. Reading a whole wishlist photo for you works in the Claude app version of Bow & Budget.';
   const pw=$('#photoWho'); if(pw) pw.closest('div').hidden=true;
