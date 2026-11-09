@@ -1,5 +1,5 @@
 // Shake Globe offline cache: the app works without a connection; your globes live in this phone's storage.
-const CACHE = 'shake-globe-v3';
+const CACHE = 'shake-globe-v4';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
