@@ -1,5 +1,5 @@
 // Sub Sweep offline cache: the app works without a connection; your list lives in this phone's storage.
-const CACHE = 'sub-sweep-v1';
+const CACHE = 'sub-sweep-v2';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
