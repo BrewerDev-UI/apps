@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sub Sweep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#120F1C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sub Sweep">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Sweep your subscriptions: see what each one costs per use, keep, rotate or cancel, and get reminders before every bill.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one hero screen (a lit, jewel-toned money ring on a velvet tray) with every control tucked into a bottom dock that opens glass sheets. */
+:root{
+  --ink:#120F1C; --velvet:#1E1830; --plum:#2C2142; --brass:#D9A85B; --brass-hi:#F4D79A;
+  --cream:#F2EADB; --muted:#B5AAC4; --faint:#7F7494;
+  --keep:#4FD1A1; --rotate:#F2B84B; --cancel:#F0656F;
+  --glass:rgba(34,27,52,.86); --line:rgba(242,234,219,.12);
+  --display:"Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--cream);font:15px/1.45 var(--body);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:
+ radial-gradient(120% 80% at 50% 38%, #2E2346 0%, #1A1428 55%, #0D0A15 100%)}
+.bg i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;animation:drift 26s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:60vmax;height:60vmax;left:-20vmax;top:-18vmax;background:radial-gradient(circle,#4A2C6E,transparent 65%)}
+.bg i:nth-child(2){width:50vmax;height:50vmax;right:-18vmax;top:20vh;background:radial-gradient(circle,#173F4A,transparent 65%);animation-duration:32s}
+.bg i:nth-child(3){width:45vmax;height:45vmax;left:10vw;bottom:-22vmax;background:radial-gradient(circle,#5A3A1A,transparent 65%);animation-duration:38s}
+.bg::after{content:"";position:absolute;inset:0;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift{to{transform:translate(6vw,4vh) scale(1.08)}}
+.app{position:relative;z-index:1;min-height:100%;display:flex;flex-direction:column;align-items:center;
+ padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px calc(96px + env(safe-area-inset-bottom,0px))}
+header{width:100%;max-width:520px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mark{font:italic 400 30px/1 var(--display);letter-spacing:.2px;margin:0}
+.mark b{font-style:normal;color:var(--brass)}
+.bf{font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:linear-gradient(180deg,var(--brass-hi),var(--brass));padding:8px 10px;border-radius:999px;box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 4px 14px rgba(217,168,91,.25);white-space:nowrap;border:0;cursor:pointer}
+.stage{position:relative;width:min(92vw,440px);aspect-ratio:1;max-width:100%;margin-top:6px}
+#ring{width:100%;height:100%;display:block;touch-action:manipulation;cursor:pointer}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center}
+.eyebrow{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.big{font:400 clamp(46px,14vw,68px)/1 var(--display);font-variant-numeric:tabular-nums;margin:6px 0 2px;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.mo{font:600 13px/1.2 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.save{margin-top:10px;font:700 12.5px/1 var(--body);color:#0F2A20;background:var(--keep);padding:7px 11px;border-radius:999px;font-variant-numeric:tabular-nums;box-shadow:0 6px 18px rgba(79,209,161,.25)}
+.tally{width:100%;max-width:440px;margin-top:4px}
+.bar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--plum);box-shadow:0 1px 0 rgba(255,255,255,.06),inset 0 1px 3px rgba(0,0,0,.5)}
+.bar span{transition:flex-grow .6s cubic-bezier(.2,.8,.2,1)}
+.legend{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font:600 12.5px/1.2 var(--body);font-variant-numeric:tabular-nums}
+.legend div{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%}
+.hint{margin-top:14px;font-size:12.5px;color:var(--faint);text-align:center;max-width:40ch}
+.sample{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--rotate);border:1px solid rgba(242,184,75,.4);padding:4px 7px;border-radius:6px;margin-right:6px;vertical-align:1px}
+/* dock */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;
+ padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));pointer-events:none}
+.dock nav{pointer-events:auto;display:flex;gap:4px;padding:6px;border-radius:22px;background:rgba(30,24,48,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.dock button{appearance:none;border:0;background:transparent;color:var(--muted);font:700 12px/1 var(--body);padding:10px 14px 9px;border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:64px;cursor:pointer}
+.dock button svg{width:20px;height:20px}
+.dock button[aria-pressed="true"]{background:linear-gradient(180deg,rgba(244,215,154,.22),rgba(217,168,91,.12));color:var(--brass-hi)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--brass-hi);outline-offset:2px}
+/* sheet */
+.scrim{position:fixed;inset:0;z-index:30;background:rgba(8,6,12,.45);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:31;margin:0 auto;max-width:560px;max-height:78vh;display:flex;flex-direction:column;
+ background:var(--glass);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
+ border:1px solid var(--line);border-bottom:0;border-radius:26px 26px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.5);
+ transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.9,.2,1)}
+.sheet.on{transform:none}
+.grab{padding:10px 0 4px;display:flex;justify-content:center;cursor:grab;touch-action:none}
+.grab i{width:42px;height:5px;border-radius:9px;background:rgba(242,234,219,.25)}
+.shead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:2px max(18px,env(safe-area-inset-right,0px)) 10px max(18px,env(safe-area-inset-left,0px))}
+.shead h2{margin:0;font:italic 400 28px/1 var(--display)}
+.shead small{color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+.sbody{overflow:auto;padding:0 max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));overscroll-behavior:contain}
+/* rows */
+.row{position:relative;border-radius:16px;margin-bottom:8px;overflow:hidden;background:rgba(0,0,0,.18)}
+.row .under{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.row .under .l{color:var(--keep)} .row .under .r{color:var(--cancel)}
+.row .top{position:relative;display:grid;grid-template-columns:40px 1fr auto;gap:4px 12px;align-items:center;padding:12px;background:linear-gradient(180deg,rgba(52,42,76,.96),rgba(40,32,60,.96));border-radius:16px;touch-action:pan-y;transition:transform .25s}
+.mono{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:800 15px/1 var(--body);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -6px 12px rgba(0,0,0,.25),0 4px 10px rgba(0,0,0,.3)}
+.nm{min-width:0}
+.nm b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nm span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pr{text-align:right;font:600 15px/1.1 var(--body);font-variant-numeric:tabular-nums}
+.chip{display:inline-block;margin-top:4px;font:700 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 7px;border-radius:7px;border:0;cursor:pointer}
+.chip.keep{background:rgba(79,209,161,.16);color:var(--keep)} .chip.rotate{background:rgba(242,184,75,.16);color:var(--rotate)} .chip.cancel{background:rgba(240,101,111,.16);color:var(--cancel)}
+.seg{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:rgba(0,0,0,.25);border-radius:11px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--muted);font:700 11.5px/1 var(--body);padding:8px 2px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:rgba(242,234,219,.14);color:var(--cream)}
+.note{font-size:12.5px;color:var(--muted);margin:4px 0 12px}
+/* rotation */
+.months{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 14px}
+.month{border-radius:16px;padding:12px 10px;text-align:center;background:rgba(0,0,0,.2);position:relative;overflow:hidden}
+.month .m{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.month .s{margin:8px auto 6px}
+.month b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.month span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.kpis{display:flex;gap:18px;flex-wrap:wrap;margin:4px 0 12px}
+.kpi .v{font:400 34px/1 var(--display);font-variant-numeric:tabular-nums}
+.kpi .k{font:600 10.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+/* bills */
+.strip{position:relative;height:74px;margin:10px 0 6px;border-radius:14px;background:rgba(0,0,0,.2)}
+.strip .t{position:absolute;bottom:6px;font:600 9.5px/1 var(--mono);color:var(--faint);transform:translateX(-50%)}
+.strip .p{position:absolute;border-radius:50%;transform:translate(-50%,-50%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 3px 8px rgba(0,0,0,.4)}
+.strip .today{position:absolute;top:8px;bottom:20px;width:2px;background:var(--brass);border-radius:2px}
+.bill{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.bill .d{font:400 26px/1 var(--display);text-align:center;font-variant-numeric:tabular-nums}
+.bill .d small{display:block;font:600 9.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:3px}
+.bill .w{font-size:12px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.btn{appearance:none;border:1px solid var(--line);background:rgba(242,234,219,.08);color:var(--cream);font:700 13px/1 var(--body);padding:12px 14px;border-radius:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.gold{background:linear-gradient(180deg,var(--brass-hi),var(--brass));color:#22180A;border:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 16px rgba(217,168,91,.22)}
+.btn.warn{color:var(--cancel)}
+/* add */
+.cat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 16px}
+.cat button{appearance:none;border:1px solid var(--line);background:rgba(0,0,0,.2);color:var(--cream);border-radius:14px;padding:10px;display:grid;grid-template-columns:30px 1fr;gap:2px 10px;align-items:center;text-align:left;cursor:pointer;min-width:0}
+.cat .mono{width:30px;height:30px;border-radius:9px;font-size:12px;grid-row:span 2}
+.cat b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cat span{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.cat button.on{border-color:rgba(79,209,161,.5)}
+label{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px}
+input,select{width:100%;font:600 16px/1.2 var(--body);color:var(--cream);background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:40;background:var(--cream);color:var(--ink);font:700 13px/1.2 var(--body);padding:10px 14px;border-radius:12px;opacity:0;transition:.3s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.src{font-size:11.5px;color:var(--faint);margin-top:14px;line-height:1.5}
+.src a{color:var(--muted)}
+.step{display:flex;align-items:center;gap:10px}
+.step button{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:var(--cream);font:700 20px/1 var(--body);cursor:pointer}
+.step output{font:400 30px/1 var(--display);min-width:2ch;text-align:center;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i></div>
+<main class="app">
+  <header>
+    <h1 class="mark">Sub <b>Sweep</b></h1>
+    <button class="bf" id="bfPill" type="button">Black Friday in 17 days</button>
+  </header>
+  <div class="stage">
+    <canvas id="ring" aria-label="Ring of your subscriptions, sized by cost. Tap a slice to open it."></canvas>
+    <div class="center">
+      <div class="eyebrow" id="eyeTop">You pay a year</div>
+      <div class="big" id="bigTotal">$0</div>
+      <div class="mo" id="moTotal">$0.00 a month</div>
+      <div class="save" id="savePill">Sweep saves $0 a year</div>
+    </div>
+  </div>
+  <section class="tally" aria-label="Verdicts">
+    <div class="bar"><span id="bKeep" style="background:var(--keep);flex-grow:1"></span><span id="bRot" style="background:var(--rotate);flex-grow:1"></span><span id="bCan" style="background:var(--cancel);flex-grow:1"></span></div>
+    <div class="legend">
+      <div><i class="dot" style="background:var(--keep)"></i><span id="lKeep">Keep</span></div>
+      <div><i class="dot" style="background:var(--rotate)"></i><span id="lRot">Rotate</span></div>
+      <div><i class="dot" style="background:var(--cancel)"></i><span id="lCan">Cancel</span></div>
+    </div>
+  </section>
+  <p class="hint" id="hint"><span class="sample">Sample</span>Tap a slice, or open Subs and set how often you really use each one.</p>
+</main>
+
+<div class="dock"><nav aria-label="Sections">
+  <button type="button" data-open="subs" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Subs</button>
+  <button type="button" data-open="rotate" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg>Rotate</button>
+  <button type="button" data-open="bills" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Bills</button>
+  <button type="button" data-open="add" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add</button>
+</nav></div>
+
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="grab" id="grab"><i></i></div>
+  <div class="shead"><h2 id="sheetTitle">Subs</h2><small id="sheetSub"></small></div>
+  <div class="sbody" id="sheetBody"></div>
+</section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const JEWELS=["#1FA67A","#3D6BE0","#B8324A","#8A55D6","#E3A23A","#1EA3B5","#E06A9A","#6F7FA3","#B9B23A","#C2562E","#4B9E4F","#5C4BD6"];
+// US list prices; source: Yahoo Tech streaming price tracker (Aug 31, 2026) and FOX 5 NY 2026 price hike list (Apr 11, 2026)
+const CATALOG=[
+ {n:"Netflix Standard",p:19.99,k:"video"},{n:"Netflix with ads",p:8.99,k:"video"},
+ {n:"Disney+ Premium",p:18.99,k:"video"},{n:"Disney+ Basic",p:11.99,k:"video"},
+ {n:"Hulu (no ads)",p:18.99,k:"video"},{n:"Hulu with ads",p:9.99,k:"video"},
+ {n:"HBO Max Standard",p:18.49,k:"video"},{n:"HBO Max Basic",p:10.99,k:"video"},
+ {n:"Peacock Premium",p:12.99,k:"video"},{n:"Peacock Premium Plus",p:19.99,k:"video"},
+ {n:"Paramount+ Essential",p:8.99,k:"video"},{n:"Paramount+ Premium",p:13.99,k:"video"},
+ {n:"Apple TV",p:14.99,k:"video"},{n:"Prime Video no-ads add-on",p:4.99,k:"video"},
+ {n:"Crunchyroll Fan",p:9.99,k:"video"},{n:"YouTube Premium",p:15.99,k:"other"},
+ {n:"Spotify Premium",p:12.99,k:"music"},{n:"YouTube Premium Lite",p:8.99,k:"other"}
+];
+const USE={daily:{l:"Most days",n:20},weekly:{l:"Weekly",n:4},monthly:{l:"Monthly",n:1},barely:{l:"Barely",n:.2}};
+const SAMPLE=[
+ {n:"Netflix Standard",p:19.99,k:"video",u:"daily",d:12},
+ {n:"Spotify Premium",p:12.99,k:"music",u:"daily",d:3},
+ {n:"Disney+ Premium",p:18.99,k:"video",u:"weekly",d:21},
+ {n:"YouTube Premium",p:15.99,k:"other",u:"weekly",d:5},
+ {n:"HBO Max Standard",p:18.49,k:"video",u:"monthly",d:15},
+ {n:"Peacock Premium",p:12.99,k:"video",u:"monthly",d:8},
+ {n:"Paramount+ Essential",p:8.99,k:"video",u:"monthly",d:18},
+ {n:"Apple TV",p:14.99,k:"video",u:"barely",d:26}
+];
+const KEY="subsweep.v1";
+let state;
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&Array.isArray(s.subs))return s}catch(e){}
+ return {sample:true,subs:SAMPLE.map((s,i)=>({...s,id:"s"+i,c:JEWELS[i%JEWELS.length],split:1,ov:null}))}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+state=load();
+const money=(v,dp)=>"$"+v.toLocaleString("en-US",{minimumFractionDigits:dp??2,maximumFractionDigits:dp??2});
+const share=s=>s.p/(s.split||1);
+const cpu=s=>share(s)/USE[s.u].n;
+function auto(s){
+ if(s.u==="barely")return "cancel";
+ if(s.k==="video"&&(s.u==="monthly"||(s.u==="weekly"&&cpu(s)>3)))return "rotate";
+ if(cpu(s)>8)return "cancel";
+ return "keep";
+}
+const verdict=s=>s.ov||auto(s);
+function mono(n){const w=n.replace(/[^A-Za-z0-9+ ]/g,"").trim().split(/\s+/);return (w[0][0]+(w[1]&&/^[A-Za-z]/.test(w[1])?w[1][0]:(w[0][1]||""))).toUpperCase()}
+function calc(){
+ const subs=state.subs; let mo=0,keep=0,rot=[],can=0;
+ subs.forEach(s=>{const v=verdict(s),m=share(s);mo+=m;if(v==="keep")keep+=m;else if(v==="rotate")rot.push(s);else can+=m});
+ let rotSum=rot.reduce((a,s)=>a+share(s),0),rotAvg=rot.length?rotSum/rot.length:0;
+ let rotSave=rot.length>1?12*(rotSum-rotAvg):0;
+ if(rot.length===1){keep+=rotSum}
+ return {mo,yr:mo*12,keep,rot,rotSum,rotAvg,can,save:can*12+rotSave,rotSave,after:keep+(rot.length>1?rotAvg:0)};
+}
+// --- tweened numbers (update in place) ---
+const tw={};
+function tweenText(el,to,fmt){const k=el.id;const from=tw[k]??to;tw[k]=to;const t0=performance.now(),dur=700;
+ function f(t){const e=Math.min(1,(t-t0)/dur),q=1-Math.pow(1-e,3);el.textContent=fmt(from+(to-from)*q);if(e<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+// --- ring ---
+const cv=$("#ring"),ctx=cv.getContext("2d");let W=0,DPR=1,angles=[],target=[],raf=0,spin=0;
+function size(){const r=cv.getBoundingClientRect();DPR=Math.min(3,window.devicePixelRatio||1);W=r.width;cv.width=W*DPR;cv.height=W*DPR;draw()}
+function setTargets(){const tot=state.subs.reduce((a,s)=>a+share(s),0)||1;let acc=0;target=state.subs.map(s=>{const a0=acc;acc+=share(s)/tot*Math.PI*2;return [a0,acc,s]});
+ if(angles.length!==target.length)angles=target.map(t=>[t[0],t[0]]);cancelAnimationFrame(raf);animate()}
+function animate(){let moving=false;angles=angles.map((a,i)=>{const t=target[i];const n=[a[0]+(t[0]-a[0])*.16,a[1]+(t[1]-a[1])*.16];if(Math.abs(n[0]-t[0])>.001||Math.abs(n[1]-t[1])>.001)moving=true;return n});draw();if(moving)raf=requestAnimationFrame(animate)}
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const f=v=>Math.max(0,Math.min(255,Math.round(amt<0?v*(1+amt):v+(255-v)*amt)));return `rgb(${f(r)},${f(g)},${f(b)})`}
+function draw(){if(!W)return;const c=ctx;c.setTransform(DPR,0,0,DPR,0,0);c.clearRect(0,0,W,W);const cx=W/2,cy=W/2;
+ const R=W*.46,ro=W*.43,ri=W*.29;
+ // brass tray
+ let g=c.createRadialGradient(cx-R*.3,cy-R*.4,R*.1,cx,cy,R*1.02);g.addColorStop(0,"#5A4A35");g.addColorStop(.55,"#3A2E22");g.addColorStop(1,"#1A140E");
+ c.beginPath();c.arc(cx,cy,R,0,Math.PI*2);c.fillStyle=g;c.shadowColor="rgba(0,0,0,.6)";c.shadowBlur=W*.06;c.shadowOffsetY=W*.03;c.fill();c.shadowColor="transparent";
+ g=c.createLinearGradient(0,cy-R,0,cy+R);g.addColorStop(0,"rgba(244,215,154,.9)");g.addColorStop(.5,"rgba(140,100,50,.6)");g.addColorStop(1,"rgba(244,215,154,.5)");
+ c.lineWidth=W*.008;c.strokeStyle=g;c.stroke();
+ // velvet well
+ g=c.createRadialGradient(cx,cy-R*.1,ri*.4,cx,cy,ro*1.05);g.addColorStop(0,"#2B2140");g.addColorStop(1,"#120D1C");
+ c.beginPath();c.arc(cx,cy,ro*1.03,0,Math.PI*2);c.fillStyle=g;c.fill();
+ // segments
+ const gap=state.subs.length>1?.022:0, base=-Math.PI/2;
+ angles.forEach((a,i)=>{const s=target[i][2];const v=verdict(s);let a0=base+a[0]+gap/2,a1=base+a[1]-gap/2;if(a1<=a0)return;
+  const lift=v==="cancel"?-W*.012:0, rr=ro+lift, rin=ri+(v==="cancel"?W*.02:0);
+  c.beginPath();c.arc(cx,cy,rr,a0,a1);c.arc(cx,cy,rin,a1,a0,true);c.closePath();
+  const mid=(a0+a1)/2;const lx=cx+Math.cos(mid)*(ri+ro)/2,ly=cy+Math.sin(mid)*(ri+ro)/2;
+  const gg=c.createRadialGradient(lx-W*.05,ly-W*.06,W*.01,lx,ly,W*.2);
+  const col=v==="cancel"?"#4A4258":s.c;
+  gg.addColorStop(0,shade(col,.35));gg.addColorStop(.5,col);gg.addColorStop(1,shade(col,-.45));
+  c.fillStyle=gg;c.shadowColor="rgba(0,0,0,.5)";c.shadowBlur=W*.02;c.shadowOffsetY=W*.008;c.fill();c.shadowColor="transparent";
+  if(v==="rotate"){c.save();c.clip();c.strokeStyle="rgba(255,240,200,.18)";c.lineWidth=W*.006;for(let k=-W;k<W;k+=W*.03){c.beginPath();c.moveTo(k,0);c.lineTo(k+W,W);c.stroke()}c.restore()}
+  if(v==="cancel"){c.save();c.setLineDash([W*.012,W*.01]);c.strokeStyle="rgba(240,101,111,.7)";c.lineWidth=W*.004;c.stroke();c.restore()}
+  // label
+  if(a1-a0>.32){c.save();c.fillStyle=v==="cancel"?"rgba(242,234,219,.55)":"rgba(255,255,255,.95)";c.font=`800 ${Math.max(10,W*.032)}px Manrope, system-ui, sans-serif`;c.textAlign="center";c.textBaseline="middle";c.shadowColor="rgba(0,0,0,.5)";c.shadowBlur=4;c.fillText(mono(s.n),lx,ly);c.restore()}
+ });
+ // glass gloss over ring
+ c.save();c.beginPath();c.arc(cx,cy,ro,0,Math.PI*2);c.arc(cx,cy,ri,0,Math.PI*2,true);c.clip();
+ g=c.createLinearGradient(cx-ro,cy-ro,cx+ro*.4,cy+ro*.6);g.addColorStop(0,"rgba(255,255,255,.28)");g.addColorStop(.35,"rgba(255,255,255,.04)");g.addColorStop(1,"rgba(0,0,0,.25)");
+ c.fillStyle=g;c.fillRect(0,0,W,W);
+ c.beginPath();c.arc(cx,cy,(ro+ri)/2+W*.04,Math.PI*1.08+spin,Math.PI*1.42+spin);c.strokeStyle="rgba(255,255,255,.35)";c.lineWidth=W*.012;c.lineCap="round";c.stroke();c.restore();
+ // inner bevel
+ c.beginPath();c.arc(cx,cy,ri-W*.004,0,Math.PI*2);c.strokeStyle="rgba(244,215,154,.35)";c.lineWidth=W*.004;c.stroke();
+}
+cv.addEventListener("click",e=>{const r=cv.getBoundingClientRect();const x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;const d=Math.hypot(x,y);
+ if(d<r.width*.27||d>r.width*.46){openSheet("subs");return}
+ let a=Math.atan2(y,x)+Math.PI/2;if(a<0)a+=Math.PI*2;const hit=target.find(t=>a>=t[0]&&a<t[1]);if(hit)openSheet("detail",hit[2].id)});
+window.addEventListener("resize",size);
+// --- render summary ---
+function render(){const k=calc();
+ tweenText($("#bigTotal"),k.yr,v=>money(v,0));tweenText($("#moTotal"),k.mo,v=>money(v)+" a month");
+ tweenText($("#savePill"),k.save,v=>"Sweep saves "+money(v,0)+" a year");
+ const rotMo=k.rot.length>1?k.rotSum:0;
+ $("#bKeep").style.flexGrow=k.keep||.001;$("#bRot").style.flexGrow=rotMo||.001;$("#bCan").style.flexGrow=k.can||.001;
+ $("#lKeep").textContent="Keep "+money(k.keep,0);$("#lRot").textContent="Rotate "+money(rotMo,0);$("#lCan").textContent="Cancel "+money(k.can,0);
+ $("#hint").hidden=!state.sample;
+ const bf=new Date(2026,10,27),now=new Date();now.setHours(0,0,0,0);const dd=Math.round((bf-now)/864e5);
+ $("#bfPill").textContent=dd>1?`Black Friday in ${dd} days`:dd===1?"Black Friday tomorrow":dd>=-3?"Black Friday deals now":"Rotation plan";
+ setTargets();save();
+}
+// --- sheet ---
+let cur=null,curId=null;const sheet=$("#sheet"),scrim=$("#scrim"),body=$("#sheetBody");
+function openSheet(which,id){cur=which;curId=id||null;document.querySelectorAll(".dock button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.open===which));
+ fill();sheet.classList.add("on");scrim.classList.add("on");sheet.style.transform="";}
+function closeSheet(){cur=null;sheet.classList.remove("on");scrim.classList.remove("on");document.querySelectorAll(".dock button").forEach(b=>b.setAttribute("aria-pressed","false"))}
+scrim.addEventListener("click",closeSheet);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+document.querySelectorAll(".dock button").forEach(b=>b.addEventListener("click",()=>{if(cur===b.dataset.open)closeSheet();else openSheet(b.dataset.open)}));
+$("#bfPill").addEventListener("click",()=>openSheet("rotate"));
+// drag sheet down to close
+(function(){let y0=null,dy=0;const g=$("#grab");g.addEventListener("pointerdown",e=>{y0=e.clientY;g.setPointerCapture(e.pointerId);sheet.style.transition="none"});
+ g.addEventListener("pointermove",e=>{if(y0==null)return;dy=Math.max(0,e.clientY-y0);sheet.style.transform=`translateY(${dy}px)`});
+ g.addEventListener("pointerup",()=>{sheet.style.transition="";if(dy>90)closeSheet();sheet.style.transform="";y0=null;dy=0})})();
+function buzz(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function nextBill(d){const t=new Date();t.setHours(0,0,0,0);let n=new Date(t.getFullYear(),t.getMonth(),d);if(n<t)n=new Date(t.getFullYear(),t.getMonth()+1,d);return n}
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const VL={keep:"Keep",rotate:"Rotate",cancel:"Cancel"};
+function fill(){const k=calc();
+ if(cur==="subs"){$("#sheetTitle").textContent="Subs";$("#sheetSub").textContent=`${state.subs.length} subs · ${money(k.mo)}/mo`;
+  body.innerHTML=`<p class="note">Set how often you use each one. Swipe right to keep, left to cancel, or tap the tag.</p>`+
+  state.subs.map(s=>{const v=verdict(s);return `<div class="row" data-id="${s.id}"><div class="under"><span class="l">Keep</span><span class="r">Cancel</span></div>
+   <div class="top"><div class="mono" style="background:${s.c}">${esc(mono(s.n))}</div>
+   <div class="nm"><b>${esc(s.n)}</b><span>${money(cpu(s))} per use${s.split>1?` · split ${s.split} ways`:""}</span></div>
+   <div class="pr">${money(share(s))}<br><button class="chip ${v}" data-chip="${s.id}" type="button">${VL[v]}${s.ov?" ·you":""}</button></div>
+   <div class="seg" role="group" aria-label="How often">${Object.keys(USE).map(u=>`<button type="button" data-use="${u}" data-sid="${s.id}" aria-pressed="${s.u===u}">${USE[u].l}</button>`).join("")}</div></div></div>`}).join("")+
+  `<div class="btns"><button class="btn" id="startMine" type="button">${state.sample?"Clear sample, start mine":"Reset to sample"}</button></div>`;
+  wireRows();
+ } else if(cur==="rotate"){$("#sheetTitle").textContent="Rotate";
+  const r=k.rot.slice().sort((a,b)=>share(b)-share(a));$("#sheetSub").textContent=r.length>1?`${r.length} streamers, one at a time`:"";
+  const start=new Date();start.setDate(1);start.setMonth(start.getMonth()+1);
+  const months=r.length>1?Array.from({length:6},(_,i)=>{const d=new Date(start.getFullYear(),start.getMonth()+i,1);const s=r[i%r.length];return {d,s}}):[];
+  body.innerHTML=r.length>1?`<div class="kpis"><div class="kpi"><div class="v">${money(k.rotSave,0)}</div><div class="k">saved a year<br>by rotating</div></div><div class="kpi"><div class="v">${money(k.after)}</div><div class="k">a month<br>after the sweep</div></div></div>
+   <p class="note">Keep one streamer at a time, binge it, then switch. Cancel each one the day before it renews.</p>
+   <div class="months">${months.map(m=>`<div class="month"><div class="m">${MON[m.d.getMonth()]} ${String(m.d.getFullYear()).slice(2)}</div><div class="mono s" style="background:${m.s.c}">${esc(mono(m.s.n))}</div><b>${esc(m.s.n.replace(/ (Standard|Premium|Essential|Basic)$/,""))}</b><span>${money(k.keep+share(m.s))}/mo total</span></div>`).join("")}</div>
+   <p class="note"><b style="color:var(--rotate)">Black Friday tip:</b> streamers have run deep promo prices over Black Friday weekend (Nov 27 to 30 this year) in past years. If one of these is on your list, wait and rejoin at the deal price.</p>`
+   :`<p class="note">Mark two or more streaming services as Rotate (use them monthly or less) and you'll get a month-by-month plan here.</p>`;
+ } else if(cur==="bills"){$("#sheetTitle").textContent="Bills";
+  const list=state.subs.map(s=>({s,d:nextBill(s.d)})).sort((a,b)=>a.d-b.d);const t=new Date();t.setHours(0,0,0,0);
+  const in30=list.filter(x=>(x.d-t)/864e5<=30);$("#sheetSub").textContent=`${money(in30.reduce((a,x)=>a+share(x.s),0))} in the next 30 days`;
+  const max=Math.max(...list.map(x=>share(x.s)),1);
+  let strip=`<div class="strip" aria-hidden="true"><div class="today" style="left:4%"></div>`;
+  for(let i=0;i<=30;i+=10){const d=new Date(t);d.setDate(d.getDate()+i);strip+=`<span class="t" style="left:${4+i/30*92}%">${MON[d.getMonth()]} ${d.getDate()}</span>`}
+  in30.forEach((x,i)=>{const day=(x.d-t)/864e5;const sz=14+share(x.s)/max*18;strip+=`<span class="p" style="left:${4+day/30*92}%;top:${i%2?24:38}px;width:${sz}px;height:${sz}px;background:${x.s.c};opacity:${verdict(x.s)==="cancel"?.45:1}"></span>`});
+  strip+="</div>";
+  body.innerHTML=strip+list.map(x=>{const v=verdict(x.s);const cb=new Date(x.d);cb.setDate(cb.getDate()-1);
+   return `<div class="bill"><div class="d">${x.d.getDate()}<small>${MON[x.d.getMonth()]}</small></div><div><b>${esc(x.s.n)}</b><div class="w">${v==="keep"?"Renews automatically":`<span style="color:var(--${v})">${VL[v]}:</span> cancel by ${MON[cb.getMonth()]} ${cb.getDate()}`}</div></div><div class="pr">${money(share(x.s))}</div></div>`}).join("")+
+   `<div class="btns"><button class="btn gold" id="icsBtn" type="button">Add renewals to calendar</button><button class="btn" id="shareBtn" type="button">Share my sweep</button></div><p class="note" id="icsNote">The calendar file repeats monthly and nudges you the day before each bill.</p>`;
+  $("#icsBtn").onclick=exportIcs;$("#shareBtn").onclick=shareSweep;
+ } else if(cur==="add"){$("#sheetTitle").textContent="Add";$("#sheetSub").textContent="2026 US list prices";
+  const have=new Set(state.subs.map(s=>s.n));
+  body.innerHTML=`<div class="btns" style="margin-top:0"><button class="btn gold" id="voiceBtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Say it</button></div>
+   <p class="note" id="voiceNote">Try "Hulu 18.99 on the 9th".</p>
+   <div class="cat">${CATALOG.map((c,i)=>`<button type="button" data-cat="${i}" class="${have.has(c.n)?"on":""}"><span class="mono" style="background:${JEWELS[i%JEWELS.length]}">${esc(mono(c.n))}</span><b>${esc(c.n)}</b><span>${have.has(c.n)?"Added":money(c.p)+"/mo"}</span></button>`).join("")}</div>
+   <form id="customForm"><label for="cName">Something else</label><input id="cName" placeholder="Gym, cloud storage, meal kit" required maxlength="40">
+   <div class="grid2"><div><label for="cPrice">Per month</label><input id="cPrice" type="number" inputmode="decimal" step="0.01" min="0" placeholder="9.99" required></div>
+   <div><label for="cDay">Bills on day</label><input id="cDay" type="number" inputmode="numeric" min="1" max="28" placeholder="15" required></div></div>
+   <div class="btns"><button class="btn gold" type="submit">Add it</button></div></form>
+   <p class="src">Prices from the <a href="https://tech.yahoo.com/streaming/articles/streaming-price-hike-tracker-much-150929260.html" target="_blank" rel="noopener">Yahoo Tech price tracker</a> (Aug 31, 2026) and <a href="https://www.fox5ny.com/news/2026-streaming-price-hikes-netflix-spotify-youtube-more-see-list" target="_blank" rel="noopener">FOX 5 NY</a> (Apr 11, 2026). Check your own bill; tap any sub to fix its price.</p>`;
+  body.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{const c=CATALOG[+b.dataset.cat];if(have.has(c.n)){toast("Already on your list");return}addSub(c.n,c.p,c.k,new Date().getDate()>28?28:new Date().getDate());});
+  $("#customForm").onsubmit=e=>{e.preventDefault();addSub($("#cName").value.trim(),+$("#cPrice").value,"other",Math.min(28,Math.max(1,+$("#cDay").value)))};
+  $("#voiceBtn").onclick=voice;
+ } else if(cur==="detail"){const s=state.subs.find(x=>x.id===curId);if(!s){closeSheet();return}
+  $("#sheetTitle").textContent=s.n;$("#sheetSub").textContent=money(cpu(s))+" per use";const v=verdict(s);
+  body.innerHTML=`<div class="kpis"><div class="kpi"><div class="v">${money(share(s)*12,0)}</div><div class="k">your share<br>a year</div></div><div class="kpi"><div class="v" style="color:var(--${v})">${VL[v]}</div><div class="k">${s.ov?"your call":"suggested"}</div></div></div>
+   <label>How often you use it</label><div class="seg" role="group">${Object.keys(USE).map(u=>`<button type="button" data-du="${u}" aria-pressed="${s.u===u}">${USE[u].l}</button>`).join("")}</div>
+   <div class="grid2"><div><label for="dPrice">Price a month</label><input id="dPrice" type="number" inputmode="decimal" step="0.01" min="0" value="${s.p}"></div><div><label for="dDay">Bills on day</label><input id="dDay" type="number" inputmode="numeric" min="1" max="28" value="${s.d}"></div></div>
+   <label>People sharing it</label><div class="step"><button type="button" id="spM" aria-label="Fewer people">−</button><output id="spV">${s.split}</output><button type="button" id="spP" aria-label="More people">+</button><span class="note" style="margin:0">Family plan? Your share drops.</span></div>
+   <label>Verdict</label><div class="seg" role="group" style="grid-template-columns:repeat(4,1fr)">${["auto","keep","rotate","cancel"].map(o=>`<button type="button" data-ov="${o}" aria-pressed="${(s.ov||"auto")===o}">${o==="auto"?"Suggest":VL[o]}</button>`).join("")}</div>
+   <div class="btns"><button class="btn warn" id="rmBtn" type="button">Remove from list</button></div>`;
+  body.querySelectorAll("[data-du]").forEach(b=>b.onclick=()=>{s.u=b.dataset.du;buzz(8);render();fill()});
+  body.querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{s.ov=b.dataset.ov==="auto"?null:b.dataset.ov;buzz(12);render();fill()});
+  $("#dPrice").onchange=e=>{const p=+e.target.value;if(p>=0){s.p=p;render();fill()}};
+  $("#dDay").onchange=e=>{s.d=Math.min(28,Math.max(1,+e.target.value||1));render()};
+  $("#spM").onclick=()=>{s.split=Math.max(1,s.split-1);render();fill()};$("#spP").onclick=()=>{s.split=Math.min(8,s.split+1);render();fill()};
+  $("#rmBtn").onclick=()=>{state.subs=state.subs.filter(x=>x!==s);angles=[];state.sample=false;render();closeSheet();toast("Removed "+s.n)};
+ }
+}
+function wireRows(){
+ body.querySelectorAll("[data-use]").forEach(b=>b.onclick=e=>{e.stopPropagation();const s=state.subs.find(x=>x.id===b.dataset.sid);s.u=b.dataset.use;buzz(8);render();fill()});
+ body.querySelectorAll("[data-chip]").forEach(b=>b.onclick=e=>{e.stopPropagation();const s=state.subs.find(x=>x.id===b.dataset.chip);const order=["keep","rotate","cancel"];const n=order[(order.indexOf(verdict(s))+1)%3];s.ov=n===auto(s)?null:n;buzz(12);render();fill()});
+ body.querySelectorAll(".row").forEach(row=>{const top=row.querySelector(".top");const s=state.subs.find(x=>x.id===row.dataset.id);let x0=null,dx=0,moved=false;
+  top.addEventListener("pointerdown",e=>{if(e.target.closest("button"))return;x0=e.clientX;dx=0;moved=false;top.style.transition="none"});
+  top.addEventListener("pointermove",e=>{if(x0==null)return;dx=e.clientX-x0;if(Math.abs(dx)>6)moved=true;top.style.transform=`translateX(${Math.max(-120,Math.min(120,dx))}px)`});
+  const end=()=>{if(x0==null)return;top.style.transition="";top.style.transform="";if(dx>80){s.ov="keep";buzz(15);render();fill();toast("Keeping "+s.n)}else if(dx<-80){s.ov="cancel";buzz([10,40,10]);render();fill();toast("Marked "+s.n+" to cancel")}else if(!moved){openSheet("detail",s.id)}x0=null};
+  top.addEventListener("pointerup",end);top.addEventListener("pointercancel",()=>{x0=null;top.style.transform=""})});
+ $("#startMine").onclick=()=>{if(state.sample){state={sample:false,subs:[]};angles=[];render();openSheet("add");toast("Fresh list. Tap what you pay for.")}else{try{localStorage.removeItem(KEY)}catch(e){}state=load();angles=[];render();fill()}};
+}
+function addSub(n,p,k,d){if(!n||!(p>=0))return;if(state.sample){state={sample:false,subs:[]};angles=[]}
+ const i=state.subs.length;state.subs.push({id:"u"+Date.now(),n,p,k,u:"weekly",d,c:JEWELS[(i+3)%JEWELS.length],split:1,ov:null});angles=[];buzz(10);render();fill();toast("Added "+n)}
+// --- voice add (Web Speech) ---
+function voice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const note=$("#voiceNote");
+ if(!SR){note.textContent="Voice isn't available in this browser. Tap a service below instead.";return}
+ const r=new SR();r.lang="en-US";r.interimResults=false;r.maxAlternatives=1;note.textContent="Listening…";
+ r.onresult=e=>{const t=e.results[0][0].transcript;note.textContent=`Heard "${t}"`;parseVoice(t)};
+ r.onerror=()=>{note.textContent="Couldn't hear that. Allow the mic, or tap a service below."};
+ try{r.start()}catch(e){note.textContent="Voice couldn't start here. Tap a service below."}}
+function parseVoice(t){const low=t.toLowerCase();let best=null;
+ CATALOG.forEach(c=>{const w=c.n.toLowerCase().replace(/[^a-z0-9 +]/g,"").split(" ")[0].replace("+","");if(low.replace(/\+/g," plus").includes(w)||low.includes(w.replace("plus","")))if(!best||c.n.length<best.n.length)best=c});
+ const pm=low.match(/\$?(\d+)(?:[.\s](\d{2}))?\s*(?:dollars?)?/);const dm=low.match(/(?:on the|on|day)\s*(\d{1,2})(?:st|nd|rd|th)?/);
+ let price=best?best.p:null;const nums=[...low.matchAll(/\d+(?:\.\d{1,2})?/g)].map(m=>+m[0]);
+ if(nums.length){const dayN=dm?+dm[1]:null;const pr=nums.find(n=>n!==dayN||String(n).includes("."));if(pr!=null)price=pr}
+ const day=dm?Math.min(28,Math.max(1,+dm[1])):new Date().getDate()>28?28:new Date().getDate();
+ const name=best?best.n:t.replace(/\$?\d+(\.\d+)?|dollars?|on the \d+\w*|a month|per month/gi,"").trim().replace(/^\w/,c=>c.toUpperCase());
+ if(!name||price==null){$("#voiceNote").textContent=`Heard "${t}". Add the price too, like "Hulu 18.99".`;return}
+ addSub(name.slice(0,40),price,best?best.k:"other",day)}
+// --- calendar file ---
+function icsText(){const pad=n=>String(n).padStart(2,"0");const fmt=d=>d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());const stamp=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
+ const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Sub Sweep//EN","CALSCALE:GREGORIAN"];
+ state.subs.forEach(s=>{const d=nextBill(s.d),e=new Date(d);e.setDate(e.getDate()+1);const v=verdict(s);
+  lines.push("BEGIN:VEVENT","UID:"+s.id+"-subsweep","DTSTAMP:"+stamp,"DTSTART;VALUE=DATE:"+fmt(d),"DTEND;VALUE=DATE:"+fmt(e),"RRULE:FREQ=MONTHLY",
+   "SUMMARY:"+(v==="keep"?"":(v==="cancel"?"Cancel? ":"Rotate? "))+s.n.replace(/[,;]/g," ")+" renews "+money(share(s)),
+   "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:"+s.n.replace(/[,;]/g," ")+" bills tomorrow","END:VALARM","END:VEVENT")});
+ lines.push("END:VCALENDAR");return lines.join("\r\n")}
+async function exportIcs(){const txt=icsText();const note=$("#icsNote");
+ try{const f=new File([txt],"sub-sweep-renewals.ics",{type:"text/calendar"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Sub Sweep renewals"});return}}catch(e){if(e&&e.name==="AbortError")return}
+ if(window.top!==window){try{await navigator.clipboard.writeText(txt);note.textContent="Copied the calendar file text. Open the phone version to save it straight to Calendar."}catch(e){note.textContent="Open the phone version to save renewals to Calendar."}return}
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/calendar"}));a.download="sub-sweep-renewals.ics";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);note.textContent="Saved. Open the file to add the reminders.";}
+async function shareSweep(){const k=calc();const txt=`My Sub Sweep: I pay ${money(k.yr,0)} a year for ${state.subs.length} subscriptions. Sweeping saves ${money(k.save,0)} a year.\n`+
+ state.subs.map(s=>`${VL[verdict(s)]}: ${s.n} ${money(share(s))}`).join("\n");
+ try{if(navigator.share){await navigator.share({title:"My Sub Sweep",text:txt});return}}catch(e){if(e&&e.name==="AbortError")return}
+ try{await navigator.clipboard.writeText(txt);toast("Copied your sweep")}catch(e){toast("Sharing isn't available here")}}
+// --- offline + home screen install ---
+if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+// gentle gloss drift
+(function g(){if(!matchMedia("(prefers-reduced-motion: reduce)").matches){spin=Math.sin(performance.now()/2600)*.18;draw();}setTimeout(()=>requestAnimationFrame(g),60)})();
+size();render();
+})();
+</script>
+</body>
+</html>
