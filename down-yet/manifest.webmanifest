@@ -1,0 +1,15 @@
+{
+  "name": "Down Yet",
+  "short_name": "Down Yet",
+  "description": "Is it me or is it them? One tap checks your connection and the official status pages.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F0EEE9",
+  "theme_color": "#F0EEE9",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
