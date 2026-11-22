@@ -1,0 +1,15 @@
+{
+  "name": "Tilt Parade",
+  "short_name": "Tilt Parade",
+  "description": "Will the giant balloons fly? Check the wind, then tilt to steer one down the avenue.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#DCE8FF",
+  "theme_color": "#8FB5FF",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
