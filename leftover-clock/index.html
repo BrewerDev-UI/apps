@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F0EEE9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Leftovers">
+<meta name="description" content="Snap each leftover. It names the dish, starts its safe-to-eat clock and tells you what to eat first. Photos stay on your phone.">
+<title>Leftover Clock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Young+Serif&display=swap" rel="stylesheet">
+<link id="touchicon" rel="apple-touch-icon" href="">
+<style>
+:root{
+  --cloud:#F0EEE9; --sage:#E2E4D8; --olive:#6B7A3A; --deep:#2E3320; --rose:#C98F86; --saffron:#E3B23C; --amber:#D98C3A;
+  --red:#B4574B; --ink:#2E3320; --muted:#6d705f; --card:#FBFAF7;
+  --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--cloud);color:var(--ink);font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;background:
+  radial-gradient(120% 60% at 50% -10%, #fffdf6 0%, rgba(255,253,246,0) 60%),
+  repeating-linear-gradient(90deg, rgba(46,51,32,.018) 0 2px, transparent 2px 5px), var(--cloud)}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.mono{font-family:'Space Mono',ui-monospace,monospace}
+.serif{font-family:'Young Serif',Georgia,serif;font-weight:400}
+.app{max-width:480px;margin:0 auto;padding:calc(var(--safe-t) + 12px) 16px calc(var(--safe-b) + 120px)}
+.top{display:flex;align-items:center;justify-content:space-between;height:40px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.02em;font-size:14px;color:var(--olive);text-transform:uppercase}
+.brand svg{width:22px;height:22px}
+.iconbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--deep)}
+.iconbtn:active{background:var(--sage)}
+.iconbtn svg{width:22px;height:22px}
+
+/* hero */
+.hero{margin:10px 0 6px;min-height:150px}
+.hero .kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-size:40px;line-height:1.02;margin:6px 0 8px;color:var(--deep);letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--olive);background:linear-gradient(transparent 62%, rgba(227,178,60,.45) 62%);padding:0 2px}
+.hero .until{font-size:17px;font-weight:600}
+.hero .until .mono{font-weight:700}
+.hero .then{margin-top:6px;font-size:14px;color:var(--muted)}
+.swapin{animation:swapin .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes swapin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.clock{display:inline-block;line-height:1.2em;margin-top:10px;padding:6px 14px 6px 10px;border-radius:999px;background:var(--deep);color:var(--cloud);font-size:15px;white-space:nowrap}
+.clock .dot{display:inline-block;vertical-align:middle;margin:-2px 8px 0 0;width:8px;height:8px;border-radius:50%;background:var(--saffron);box-shadow:0 0 0 3px rgba(227,178,60,.25);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(227,178,60,0)}}
+.roll{display:inline-block;height:1.2em;overflow:hidden;vertical-align:top;line-height:1.2em}
+.roll>span{display:block;transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
+.roll>span>i{display:block;font-style:normal;height:1.2em}
+.warn{display:flex;align-items:center;gap:10px;margin:10px 0 0;padding:10px 12px;border-radius:14px;background:rgba(180,87,75,.1);color:#7d3329;font-size:14px;font-weight:600}
+.warn button{margin-left:auto;padding:6px 10px;border-radius:10px;background:#7d3329;color:#fff;font-size:13px}
+
+/* fridge */
+.fridge{position:relative;margin:14px -16px 0;padding:22px 16px 0;border-radius:0;background:
+  radial-gradient(90% 70% at 50% 0%, rgba(255,255,250,1) 0%, rgba(240,244,240,.9) 45%, rgba(218,224,216,.95) 100%);
+  box-shadow:inset 0 14px 30px -16px rgba(46,51,32,.25), inset 0 -1px 0 rgba(255,255,255,.6);overflow:hidden}
+.fridge:before{content:"";position:absolute;left:50%;top:-30px;width:70%;height:60px;transform:translateX(-50%);background:radial-gradient(closest-side, rgba(255,250,225,.95), transparent);pointer-events:none}
+.fridge .label{position:absolute;left:16px;top:8px;font-size:11px;font-weight:800;letter-spacing:.14em;color:rgba(46,51,32,.45);text-transform:uppercase}
+.shelfrow{display:flex;gap:14px;overflow-x:auto;padding:16px 4px 0;scroll-snap-type:x mandatory;scrollbar-width:none;min-height:176px;align-items:flex-end}
+.shelfrow::-webkit-scrollbar{display:none}
+.steel{height:18px;margin:0 -16px;position:relative;background:
+  repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 1px, rgba(0,0,0,.04) 1px 2px, transparent 2px 4px),
+  linear-gradient(180deg,#f7f8f6 0%,#c9ccc4 38%,#a9ada3 55%,#d8dad3 80%,#8f9389 100%);
+  box-shadow:0 10px 18px -6px rgba(46,51,32,.35)}
+.steel:after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:rgba(255,255,255,.9)}
+.shelfgap{height:16px}
+.jar{flex:0 0 auto;width:118px;scroll-snap-align:start;position:relative;padding-bottom:6px;animation:dropin .6s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes dropin{from{opacity:0;transform:translateY(-26px) scale(.96)}to{opacity:1;transform:none}}
+.jar .shadow{position:absolute;left:8px;right:8px;bottom:-4px;height:14px;background:radial-gradient(closest-side, rgba(30,34,20,.38), transparent);filter:blur(1px)}
+.jar .lid{height:16px;margin:0 6px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,#8d9a5c,#6B7A3A 60%,#55622c);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.jar.freezer .lid{background:linear-gradient(180deg,#a9bcc8,#7d93a3 60%,#62798a)}
+.jar .glass{position:relative;height:118px;border-radius:6px 6px 16px 16px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.2));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75), inset 0 -10px 18px rgba(255,255,255,.35), 0 1px 0 rgba(46,51,32,.08), 0 6px 14px -8px rgba(46,51,32,.4)}
+.jar .food{position:absolute;inset:8px 7px 7px;border-radius:4px 4px 12px 12px;background-size:cover;background-position:center;filter:saturate(1.08) contrast(1.02)}
+.jar .frost{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.08) 40%,rgba(255,255,255,.22));backdrop-filter:blur(.6px);-webkit-backdrop-filter:blur(.6px)}
+.jar.freezer .frost{background:linear-gradient(180deg,rgba(235,244,250,.62),rgba(235,244,250,.35));backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.jar .shine{position:absolute;top:-10%;left:12%;width:16%;height:120%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.75),rgba(255,255,255,0));transform:skewX(-8deg);opacity:.75}
+.jar .shine2{position:absolute;top:0;right:10%;width:5%;height:100%;background:rgba(255,255,255,.5);opacity:.5}
+.jar .badge{position:absolute;top:22px;right:-4px;padding:3px 8px;border-radius:999px;font:700 12px 'Space Mono',monospace;color:#fff;box-shadow:0 3px 8px -3px rgba(0,0,0,.4)}
+.t-green{background:var(--olive)} .t-amber{background:var(--amber)} .t-red{background:var(--red)} .t-past{background:#5b5b55} .t-ice{background:#62798a}
+.jar .name{margin-top:8px;font-size:13px;font-weight:700;text-align:center;line-height:1.15;color:var(--deep)}
+.jar .sub{font:400 11px 'Space Mono',monospace;text-align:center;color:var(--muted)}
+.jar.isPast .food{filter:grayscale(.7) brightness(.9)}
+.emptyshelf{flex:1;text-align:center;color:var(--muted);padding:30px 10px 26px;font-size:14px}
+.emptyshelf .ghostjar{width:70px;height:84px;margin:0 auto 10px;border:2px dashed rgba(107,122,58,.4);border-radius:6px 6px 16px 16px}
+
+/* cards */
+.section{margin-top:22px}
+.section h2{font-size:22px;margin:0 0 10px;color:var(--deep)}
+.card{background:var(--card);border-radius:20px;padding:16px;box-shadow:0 1px 0 rgba(46,51,32,.05),0 10px 30px -18px rgba(46,51,32,.35)}
+.idea{background:linear-gradient(135deg,#fbf6e8,#f4ecd6);position:relative;overflow:hidden}
+.idea:after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(closest-side,rgba(227,178,60,.35),transparent)}
+.idea h3{font-size:21px;margin:2px 0 6px}
+.idea p{margin:0;font-size:15px;line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{padding:5px 10px;border-radius:999px;background:rgba(107,122,58,.13);color:var(--deep);font-size:13px;font-weight:600}
+
+.tl{position:relative}
+.tlaxis{display:grid;grid-template-columns:repeat(7,1fr);margin-left:92px;font:700 10px 'Space Mono',monospace;color:var(--muted);text-transform:uppercase}
+.tlaxis span{border-left:1px solid rgba(46,51,32,.1);padding-left:3px}
+.tlrow{display:flex;align-items:center;height:30px}
+.tlrow .n{width:92px;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:6px}
+.tlrow .track{position:relative;flex:1;height:12px;border-radius:6px;background:rgba(46,51,32,.06)}
+.tlrow .bar{position:absolute;top:0;height:12px;border-radius:6px;transition:left .6s, width .6s}
+.tlrow .bar.max{opacity:.28}
+.tlrow .ice{font:400 11px 'Space Mono',monospace;color:#62798a}
+.nowline{position:absolute;top:18px;bottom:0;width:2px;background:var(--deep);border-radius:2px}
+.nowline:before{content:"now";position:absolute;bottom:-16px;left:-10px;font:700 9px 'Space Mono',monospace;color:var(--deep);background:var(--card);padding:0 2px}
+
+.row{display:flex;gap:10px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border-radius:16px;font-weight:700;font-size:15px;background:var(--sage);color:var(--deep)}
+.btn svg{width:20px;height:20px}
+.btn.dark{background:var(--deep);color:var(--cloud)}
+.btn.sun{background:var(--saffron);color:var(--deep)}
+.btn:active{transform:scale(.98)}
+.fine{margin-top:22px;font-size:12px;line-height:1.5;color:var(--muted)}
+.fine b{color:var(--deep)}
+
+.fab{position:fixed;left:50%;bottom:calc(var(--safe-b) + 18px);transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:10px;height:62px;padding:0 26px 0 20px;border-radius:999px;background:var(--deep);color:var(--cloud);font-weight:800;font-size:17px;box-shadow:0 14px 30px -10px rgba(46,51,32,.7), inset 0 1px 0 rgba(255,255,255,.15)}
+.fab .lens{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f6dd8f,var(--saffron) 45%,#a87a17);box-shadow:inset 0 0 0 3px rgba(0,0,0,.2)}
+.fab:active{transform:translateX(-50%) scale(.97)}
+
+/* sheets */
+.scrim{position:fixed;inset:0;background:rgba(30,34,20,.38);z-index:30;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:31;max-width:480px;margin:0 auto;max-height:92dvh;overflow:auto;background:var(--cloud);border-radius:26px 26px 0 0;padding:10px 16px calc(var(--safe-b) + 20px);animation:up .38s cubic-bezier(.2,.9,.25,1);box-shadow:0 -20px 40px -20px rgba(0,0,0,.35)}
+@keyframes up{from{transform:translateY(100%)}}
+.grab{width:42px;height:5px;border-radius:3px;background:rgba(46,51,32,.2);margin:0 auto 12px}
+.sheet h2{font-size:26px;margin:0 0 4px}
+.sheet .lead{color:var(--muted);margin:0 0 14px;font-size:14px}
+.photo{position:relative;height:210px;border-radius:20px;overflow:hidden;background:#ddd center/cover}
+.scan{position:absolute;left:0;right:0;height:60px;background:linear-gradient(180deg,transparent,rgba(227,178,60,.55),transparent);animation:scan 1.6s ease-in-out infinite}
+@keyframes scan{0%{top:-60px}100%{top:210px}}
+.status{margin:10px 0 6px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.prog{flex:1;height:5px;border-radius:3px;background:rgba(46,51,32,.1);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--olive);transition:width .3s}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{padding:11px 14px;border-radius:14px;background:var(--card);font-weight:700;font-size:15px;box-shadow:inset 0 0 0 1.5px rgba(46,51,32,.12);display:flex;gap:8px;align-items:center}
+.pick small{font:400 11px 'Space Mono',monospace;color:var(--muted)}
+.pick.on{background:var(--deep);color:var(--cloud);box-shadow:none}
+.pick.on small{color:var(--saffron)}
+.pick.top{box-shadow:inset 0 0 0 2px var(--olive)}
+.seg{display:flex;padding:4px;border-radius:16px;background:var(--sage);gap:4px}
+.seg button{flex:1;height:44px;border-radius:12px;font-weight:700}
+.seg button.on{background:var(--card);box-shadow:0 2px 6px -2px rgba(0,0,0,.2)}
+.field{margin-top:16px}
+.field>label{display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+input[type=datetime-local]{width:100%;height:46px;border-radius:12px;border:0;background:var(--card);padding:0 12px;font:inherit;box-shadow:inset 0 0 0 1.5px rgba(46,51,32,.12);color:var(--ink)}
+.more{color:var(--olive);font-weight:700;font-size:14px;padding:8px 0}
+
+.ring{display:block;margin:6px auto 10px}
+.ring .t{font:700 44px 'Space Mono',monospace;fill:var(--deep)}
+.temp{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:rgba(201,143,134,.18)}
+.temp .deg{font:700 28px 'Space Mono',monospace;color:var(--red)}
+.menu{position:absolute;right:16px;top:calc(var(--safe-t) + 54px);z-index:25;background:var(--card);border-radius:16px;padding:6px;min-width:210px;box-shadow:0 20px 40px -14px rgba(0,0,0,.35);animation:swapin .2s}
+.menu button{display:block;width:100%;text-align:left;padding:12px;border-radius:10px;font-weight:600}
+.menu button:active{background:var(--sage)}
+.toast{position:fixed;left:50%;bottom:calc(var(--safe-b) + 92px);transform:translateX(-50%);z-index:40;background:var(--deep);color:var(--cloud);padding:10px 16px;border-radius:14px;font-size:14px;font-weight:600;animation:swapin .3s;max-width:88vw;text-align:center}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<noscript>Leftover Clock needs JavaScript.</noscript>
+<input id="cam" type="file" accept="image/*" capture="environment" hidden>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js"></script>
+<script>
+'use strict';
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+const html = htm.bind(React.createElement);
+const H = 3600e3, D = 24 * H;
+
+/* ---------- USDA-based keeping times (fridge days, freezer months). Good-until uses the short end. ---------- */
+const DISH = {
+  turkey:   { name:'Turkey', label:'sliced roast turkey', fridge:[3,4], freezer:[2,6], kind:'meat', min:3, how:'Cover, add a splash of broth so it stays moist, stir or flip halfway.' },
+  ham:      { name:'Ham', label:'sliced baked ham', fridge:[3,4], freezer:[1,2], kind:'meat', min:3, how:'Cover with a damp paper towel. Heat in 1-minute bursts.' },
+  stuffing: { name:'Stuffing', label:'bread stuffing', fridge:[3,4], freezer:[1,1], kind:'side', min:3, how:'Sprinkle with broth, cover, heat and stir halfway. Crisp it in a skillet if you like.' },
+  mashed:   { name:'Mashed potatoes', label:'mashed potatoes', fridge:[3,4], freezer:[2,3], kind:'side', min:3, how:'Stir in a splash of milk, cover, stir every minute.' },
+  gravy:    { name:'Gravy', label:'brown gravy', fridge:[1,2], freezer:[2,3], kind:'sauce', min:4, how:'USDA says bring gravy to a rolling boil on the stove, stirring.' },
+  cranberry:{ name:'Cranberry sauce', label:'cranberry sauce', fridge:[10,14], freezer:[1,2], kind:'cold', min:0, how:'Serve it cold. No reheating needed.' },
+  greenbean:{ name:'Green bean casserole', label:'green bean casserole with fried onions', fridge:[3,4], freezer:[2,3], kind:'side', min:3, how:'Cover, heat, stir halfway. Top with fresh crispy onions after.' },
+  pie:      { name:'Pie', label:'a slice of pie', fridge:[3,4], freezer:[1,2], kind:'cold', min:0, how:'Fine cold. To warm: 350°F oven for about 15 minutes.' },
+  rolls:    { name:'Rolls', label:'dinner rolls', fridge:[5,7], freezer:[3,3], kind:'bread', min:0, how:'Wrap in foil, 350°F oven for about 8 minutes.' },
+  mac:      { name:'Mac and cheese', label:'macaroni and cheese', fridge:[3,4], freezer:[1,2], kind:'side', min:3, how:'Stir in a splash of milk, cover, heat 2 minutes, stir, 1 more.' },
+  sweetpot: { name:'Sweet potatoes', label:'sweet potato casserole', fridge:[3,4], freezer:[2,3], kind:'side', min:3, how:'Cover, heat and stir halfway. Marshmallows go soft, that\'s fine.' },
+};
+const KEYS = Object.keys(DISH);
+const IDEAS = [
+  { t:'Leftover stack sandwich', uses:['turkey','stuffing','cranberry','rolls'], how:'Split a roll, pile on warm turkey and a stuffing patty, swipe cranberry on the lid.' },
+  { t:'Thanksgiving pot pie', uses:['turkey','gravy','greenbean','mashed'], how:'Turkey, green beans and gravy in a dish, mashed potatoes on top, bake at 400°F until bubbling.' },
+  { t:'Shepherd\'s-style bake', uses:['turkey','mashed','gravy'], how:'Turkey in gravy on the bottom, mashed potatoes spread on top, broil until golden.' },
+  { t:'Stuffing waffles', uses:['stuffing','gravy','cranberry'], how:'Press stuffing in a hot waffle iron until crisp, pour hot gravy over, cranberry on the side.' },
+  { t:'Ham and mac skillet', uses:['ham','mac'], how:'Dice ham, fold into mac and cheese in a skillet, crisp the bottom.' },
+  { t:'Sweet potato ham hash', uses:['ham','sweetpot','rolls'], how:'Fry diced ham and sweet potato in a hot pan, toasted roll on the side.' },
+  { t:'Crispy potato cakes', uses:['mashed','ham','turkey'], how:'Shape mashed potatoes with chopped meat into patties, fry until brown on both sides.' },
+  { t:'Turkey mac bake', uses:['turkey','mac'], how:'Fold turkey into mac and cheese, top with crumbs, bake until hot through.' },
+  { t:'Cranberry turkey sliders', uses:['rolls','turkey','cranberry'], how:'Toast split rolls, layer turkey and cranberry, bake 10 minutes.' },
+  { t:'Pie for breakfast', uses:['pie'], how:'A cold slice with yogurt and coffee. No shame.' },
+];
+
+/* ---------- time helpers ---------- */
+const fmtWhen = ms => { const d = new Date(ms); const w = d.toLocaleDateString('en-US',{weekday:'short'}); let h = d.getHours(), m = d.getMinutes(); const ap = h>=12?'PM':'AM'; h = h%12||12; return `${w} ${h}${m?':'+String(m).padStart(2,'0'):''} ${ap}`; };
+const fmtDate = ms => new Date(ms).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+function lastThu5(now){ const d = new Date(now); d.setHours(17,0,0,0); while (d.getDay()!==4 || d.getTime()>now) d.setDate(d.getDate()-1); return d.getTime(); }
+const goodUntil = it => it.store==='freezer' ? (it.frozeAt||it.cooked) + DISH[it.dish].freezer[0]*30*D : it.cooked + DISH[it.dish].fridge[0]*D;
+const maxUntil  = it => it.store==='freezer' ? (it.frozeAt||it.cooked) + DISH[it.dish].freezer[1]*30*D : it.cooked + DISH[it.dish].fridge[1]*D;
+const tone = (it,now) => { if (it.store==='freezer') return 'ice'; const h=(goodUntil(it)-now)/H; return h<=0?'past':h<24?'red':h<48?'amber':'green'; };
+const badge = (it,now) => { const h=(goodUntil(it)-now)/H; if (it.store==='freezer') return h<60*24 ? Math.max(0,Math.floor(h/24))+'d' : Math.floor(h/24/30)+'mo'; if (h<=0) return 'past'; if (h<24) return Math.ceil(h)+'h'; return Math.floor(h/24)+'d'; };
+const left = ms => { if (ms<=0) return ['0','0','00']; const d=Math.floor(ms/D), h=Math.floor(ms%D/H), m=Math.floor(ms%H/60e3); return [String(d),String(h),String(m).padStart(2,'0')]; };
+
+/* ---------- storage (phone only) ---------- */
+const LS='leftover-clock.v1';
+const load = () => { try { return JSON.parse(localStorage.getItem(LS))||{items:[]}; } catch { return {items:[]}; } };
+const save = s => { try { localStorage.setItem(LS, JSON.stringify(s)); } catch (e) { console.warn('save failed', e); } };
+
+/* ---------- drawn sample photos ---------- */
+const PAL = { turkey:['#d9b48a','#c28d5c','#f0d9b5'], ham:['#e8a1a0','#d47f80','#f6cfc8'], stuffing:['#9b6b3f','#c08a55','#6f8a3a'], mashed:['#f3ead3','#e7d9b4','#d9a441'],
+  gravy:['#7a4a26','#8f5a30','#a86d3c'], cranberry:['#8e1f2f','#b22f43','#6d1422'], greenbean:['#5f8a3a','#7aa04a','#c99a56'], pie:['#d9822b','#e9a24f','#e6c27a'],
+  rolls:['#d4a05a','#e8bf7a','#b9813f'], mac:['#f0b43c','#e59e2a','#f7d27a'], sweetpot:['#e07a2e','#f2f0e6','#c9632a'] };
+function samplePhoto(k){
+  const [a,b,c]=PAL[k]; let s=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='${a}'/>`;
+  let r=k.length*7+3; const rnd=()=>((r=r*9301+49297)%233280)/233280;
+  for(let i=0;i<26;i++){ const x=rnd()*100,y=rnd()*100,w=6+rnd()*18,hh=4+rnd()*12; s+=`<ellipse cx='${x.toFixed(1)}' cy='${y.toFixed(1)}' rx='${w.toFixed(1)}' ry='${hh.toFixed(1)}' fill='${i%3?b:c}' opacity='${(.5+rnd()*.5).toFixed(2)}' transform='rotate(${(rnd()*180).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})'/>`; }
+  s+=`<rect width='100' height='100' fill='url(#g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.25'/><stop offset='1' stop-color='#000' stop-opacity='.18'/></linearGradient></defs></svg>`;
+  return 'data:image/svg+xml,'+encodeURIComponent(s);
+}
+function sampleFridge(now){
+  const mk=(dish,ago,store='fridge')=>({id:Math.random().toString(36).slice(2),dish,photo:samplePhoto(dish),store,cooked:now-ago,frozeAt:store==='freezer'?now-ago+D:undefined,sample:true});
+  return [mk('turkey',2.1*D),mk('gravy',1.4*D),mk('stuffing',2.1*D),mk('mashed',2.1*D),mk('cranberry',2.1*D),mk('pie',1.2*D),mk('ham',3*D,'freezer')];
+}
+
+/* ---------- photo shrink (kept on the phone) ---------- */
+function shrink(file, size){ return new Promise((res,rej)=>{ const url=URL.createObjectURL(file); const img=new Image(); img.onload=()=>{ const s=Math.min(1,size/Math.min(img.width,img.height)); const c=document.createElement('canvas'); c.width=Math.round(img.width*s); c.height=Math.round(img.height*s); c.getContext('2d').drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url); res(c); }; img.onerror=rej; img.src=url; }); }
+
+/* ---------- on-device dish model (transformers.js, loaded later) ---------- */
+const TJS='https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js';
+const MODEL='Xenova/clip-vit-base-patch32';
+const Model = { lib:null, pipe:null, loading:null, device:null, listeners:new Set(), state:{stage:'idle',pct:0},
+  set(s){ this.state={...this.state,...s}; this.listeners.forEach(f=>f(this.state)); },
+  async importLib(){ if (!this.lib) this.lib = import(TJS); return this.lib; },
+  async ready(){
+    if (this.pipe) return this.pipe; if (this.loading) return this.loading;
+    this.loading = (async()=>{
+      const T = await this.importLib(); T.env.allowLocalModels=false;
+      const files={}; const progress = p => { if (p.status==='progress' && p.total){ files[p.file]=[p.loaded,p.total]; let a=0,b=0; for (const k in files){a+=files[k][0];b+=files[k][1];} this.set({stage:'download',pct:Math.round(a/b*100)}); } };
+      this.set({stage:'download',pct:0});
+      const tries = navigator.gpu ? ['webgpu','wasm'] : ['wasm'];
+      for (const device of tries){
+        try { this.pipe = await T.pipeline('zero-shot-image-classification', MODEL, { device, dtype:'q8', progress_callback:progress }); this.device=device; this.set({stage:'ready',pct:100,device}); return this.pipe; }
+        catch(e){ console.warn('model on',device,'failed',e); }
+      }
+      this.loading=null; this.set({stage:'error'}); throw new Error('model failed');
+    })();
+    return this.loading;
+  },
+  async classify(canvas){
+    const pipe = await this.ready();
+    const out = await pipe(canvas.toDataURL('image/jpeg',.9), KEYS.map(k=>`a photo of leftover ${DISH[k].label} in a food container`));
+    return out.map(o=>({ key:KEYS[KEYS.findIndex(k=>o.label.includes(DISH[k].label))], score:o.score })).filter(o=>o.key);
+  }
+};
+function useModel(){ const [s,set]=useState(Model.state); useEffect(()=>{ Model.listeners.add(set); return ()=>Model.listeners.delete(set); },[]); return s; }
+
+/* ---------- sound: unlock on a tap so the chime plays with the silent switch on ---------- */
+const Sound = { ctx:null, el:null,
+  unlock(){
+    try { if (navigator.audioSession) navigator.audioSession.type='playback'; } catch {}
+    if (!this.ctx){ const C=window.AudioContext||window.webkitAudioContext; if (C) this.ctx=new C(); }
+    if (this.ctx && this.ctx.state==='suspended') this.ctx.resume();
+    if (!this.el){ // a silent looping media element moves iOS into the playback audio session
+      const sr=8000,n=sr/2,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+      w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);
+      this.el=new Audio(URL.createObjectURL(new Blob([b],{type:'audio/wav'}))); this.el.loop=true; this.el.setAttribute('playsinline','');
+    }
+    this.el.play().catch(()=>{});
+  },
+  chime(){
+    const c=this.ctx; if(!c) return; const t0=c.currentTime+.05;
+    [[880,0],[1318.5,.22],[1760,.44],[1318.5,.9],[1760,1.12]].forEach(([f,dt])=>{
+      [1,2.76,5.4].forEach((m,i)=>{ const o=c.createOscillator(),g=c.createGain(); o.frequency.value=f*m; o.type='sine';
+        g.gain.setValueAtTime(0,t0+dt); g.gain.linearRampToValueAtTime([.32,.1,.04][i],t0+dt+.01); g.gain.exponentialRampToValueAtTime(.0001,t0+dt+1.4/(i+1));
+        o.connect(g).connect(c.destination); o.start(t0+dt); o.stop(t0+dt+1.6); });
+    });
+  },
+  stop(){ try{ this.el && this.el.pause(); }catch{} }
+};
+const buzz = p => { try { navigator.vibrate && navigator.vibrate(p); } catch {} };
+
+/* ---------- calendar file ---------- */
+function icsFor(items){
+  const z=ms=>new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+  const ev=items.map(it=>{ const g=goodUntil(it), at=Math.max(Date.now()+10*60e3, g-6*H); const nm=DISH[it.dish].name;
+    return ['BEGIN:VEVENT',`UID:${it.id}@leftover-clock`,`DTSTAMP:${z(Date.now())}`,`DTSTART:${z(at)}`,`DTEND:${z(at+30*60e3)}`,
+      `SUMMARY:Eat the ${nm.toLowerCase()} (good until ${fmtWhen(g)})`,`DESCRIPTION:Leftover Clock: ${nm} is safe to eat until ${fmtWhen(g)}. When in doubt\\, throw it out.`,
+      'BEGIN:VALARM','ACTION:DISPLAY','TRIGGER:-PT0M',`DESCRIPTION:Eat the ${nm.toLowerCase()}`,'END:VALARM','END:VEVENT'].join('\r\n'); });
+  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Leftover Clock//EN','CALSCALE:GREGORIAN',...ev,'END:VCALENDAR'].join('\r\n');
+}
+
+/* ---------- icons ---------- */
+const I = {
+  share: html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>`,
+  more: html`<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>`,
+  cal: html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`,
+  bell: html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg>`,
+  flame: html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3c1 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-4 3-7 1 2 2 2 3 1z"/></svg>`,
+  logo: html`<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="9" fill="#6B7A3A"/><circle cx="12" cy="13" r="6.6" fill="#F0EEE9"/><path d="M12 9v4l3 2" stroke="#2E3320" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="9" y="1.5" width="6" height="3" rx="1.5" fill="#E3B23C"/></svg>`,
+};
+
+/* ---------- ticking digits ---------- */
+function Roll({ v }){ return html`<span>${[...v].map((ch,i)=> /\d/.test(ch)
+  ? html`<span key=${i} class="roll"><span style=${{transform:`translateY(-${+ch*1.2}em)`}}>${[0,1,2,3,4,5,6,7,8,9].map(n=>html`<i key=${n}>${n}</i>`)}</span></span>`
+  : html`<span key=${i}>${ch}</span>`)}</span>`; }
+
+/* ---------- app ---------- */
+function App(){
+  const [st,setSt]=useState(load);
+  const [now,setNow]=useState(Date.now());
+  const [sheet,setSheet]=useState(null);   // {type:'snap'|'item'|'reheat', ...}
+  const [menu,setMenu]=useState(false);
+  const [toast,setToast]=useState('');
+  const items=st.items;
+  const upd = fn => setSt(s=>{ const n={...s,items:fn(s.items)}; save(n); return n; });
+  useEffect(()=>{ const t=setInterval(()=>setNow(Date.now()),1000); return ()=>clearInterval(t); },[]);
+  useEffect(()=>{ if(!toast) return; const t=setTimeout(()=>setToast(''),2600); return ()=>clearTimeout(t); },[toast]);
+  // lazy: fetch the model library once the first screen is up (the big model waits for the first snap)
+  useEffect(()=>{ const go=()=>Model.importLib().catch(()=>{}); const t=('requestIdleCallback' in window)?requestIdleCallback(go,{timeout:4000}):setTimeout(go,2500); return ()=>{ try{cancelIdleCallback(t)}catch{} clearTimeout(t); }; },[]);
+  // notifications while the app is open
+  useEffect(()=>{ if(!st.notify || !('Notification' in window) || Notification.permission!=='granted') return;
+    const ts=items.filter(i=>i.store==='fridge').map(it=>{ const at=goodUntil(it)-6*H-Date.now(); if(at<0||at>2**31-1) return null;
+      return setTimeout(()=>{ try{ new Notification('Leftover Clock',{body:`Eat the ${DISH[it.dish].name.toLowerCase()} soon. Good until ${fmtWhen(goodUntil(it))}.`}); }catch{} },at); });
+    return ()=>ts.forEach(t=>t&&clearTimeout(t)); },[items,st.notify]);
+  window.__lc={ st, setSt, upd, now, setSheet, Model, sampleFridge };
+
+  const sorted=useMemo(()=>[...items].sort((a,b)=>goodUntil(a)-goodUntil(b)),[items]);
+  const fridge=sorted.filter(i=>i.store==='fridge');
+  const past=fridge.filter(i=>goodUntil(i)<=now);
+  const live=fridge.filter(i=>goodUntil(i)>now);
+  const first=live[0], next=live[1];
+
+  const idea=useMemo(()=>{ if(!live.length) return null; const w={}; live.forEach((it,i)=>{ w[it.dish]=Math.max(w[it.dish]||0, 1/(1+i)); });
+    let best=null,bs=0; for(const id of IDEAS){ const have=id.uses.filter(u=>w[u]); if(!have.length) continue; const s=have.reduce((a,u)=>a+w[u],0)+(have.includes(live[0].dish)?1:0); if(s>bs){bs=s;best={...id,have};} } return best; },[live.map(i=>i.id).join()]);
+
+  const openCam=()=>{ Sound.unlock(); Model.ready().catch(()=>{}); const el=document.getElementById('cam'); el.value=''; el.onchange=async e=>{ const f=e.target.files[0]; if(!f) return; try{ const c=await shrink(f,240); setSheet({type:'snap',canvas:c,photo:c.toDataURL('image/jpeg',.72)}); }catch{ setToast('Could not read that photo'); } }; el.click(); };
+  const shareHero=async()=>{ const text = first?`Eat ${DISH[first.dish].name.toLowerCase()} first, good until ${fmtWhen(goodUntil(first))}.`:'Leftover Clock: snap your leftovers, see what to eat first.';
+    try{ if(navigator.share) await navigator.share({title:'Leftover Clock',text,url:location.href}); else { await navigator.clipboard.writeText(text); setToast('Copied'); } }catch{} };
+  const remind=async()=>{ const list=items.filter(i=>i.store==='fridge'&&goodUntil(i)>now); if(!list.length){ setToast('Nothing in the fridge to remind about'); return; }
+    const file=new File([icsFor(list)],'leftovers.ics',{type:'text/calendar'});
+    try{ if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file],title:'Leftover reminders'}); return; } }catch(e){ if(e.name==='AbortError') return; }
+    const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download='leftovers.ics'; a.click(); setToast('Calendar file saved'); };
+  const notify=async()=>{ if(!('Notification' in window)){ setToast('On iPhone, add to Home Screen first for alerts'); return; }
+    const p=await Notification.requestPermission(); if(p==='granted'){ setSt(s=>{const n={...s,notify:true};save(n);return n;}); setToast('Alerts on while the app is open'); } else setToast('Alerts are blocked in settings'); };
+
+  const [d,h,m]=first?left(goodUntil(first)-now):['0','0','00'];
+  const sec=String(Math.floor(((first?goodUntil(first)-now:0)%60e3)/1000)).padStart(2,'0');
+
+  return html`<div class="app">
+    <div class="top">
+      <div class="brand">${I.logo} Leftover Clock</div>
+      <div style=${{display:'flex'}}>
+        <button class="iconbtn" aria-label="Share" onClick=${shareHero}>${I.share}</button>
+        <button class="iconbtn" aria-label="More" onClick=${()=>setMenu(!menu)}>${I.more}</button>
+      </div>
+    </div>
+    ${menu && html`<div class="menu" onClick=${()=>setMenu(false)}>
+      <button onClick=${()=>{ upd(()=>sampleFridge(Date.now())); setToast('Sample fridge loaded'); }}>Try a sample fridge</button>
+      ${items.some(i=>i.sample) && html`<button onClick=${()=>upd(xs=>xs.filter(i=>!i.sample))}>Remove sample items</button>`}
+      <button onClick=${()=>{ if(confirm('Clear the whole fridge?')) upd(()=>[]); }}>Clear the fridge</button>
+    </div>`}
+
+    <section class="hero">
+      ${first ? html`<div key=${first.id} class="swapin">
+          <div class="kicker">Eat first</div>
+          <h1 class="serif">Eat <em>${DISH[first.dish].name.toLowerCase()}</em> first</h1>
+          <div class="until">good until <span class="mono">${fmtWhen(goodUntil(first))}</span></div>
+          <div class="clock mono"><span class="dot"></span><${Roll} v=${d}/>d <${Roll} v=${h.padStart(2,'0')}/>h <${Roll} v=${m}/>m <${Roll} v=${sec}/>s</div>
+          <div style=${{height:12}}></div>
+          ${next && html`<div class="then">then ${DISH[next.dish].name.toLowerCase()} · ${fmtWhen(goodUntil(next))}</div>`}
+        </div>`
+      : html`<div class="swapin">
+          <div class="kicker">${items.length?'Nothing urgent':'Fridge is empty'}</div>
+          <h1 class="serif">${items.length?'Only freezer food left':'Snap a leftover to start its clock'}</h1>
+          ${!items.length && html`<button class="btn sun" style=${{maxWidth:240,marginTop:8}} onClick=${()=>upd(()=>sampleFridge(Date.now()))}>Try a sample fridge</button>`}
+        </div>`}
+      ${past.length>0 && html`<div class="warn">Past safe window: ${past.map(p=>DISH[p.dish].name.toLowerCase()).join(', ')}. Toss it.
+        <button onClick=${()=>{ buzz(20); upd(xs=>xs.filter(i=>!past.includes(i))); setToast('Tossed'); }}>Tossed</button></div>`}
+    </section>
+
+    <section class="fridge">
+      <div class="label">Fridge</div>
+      <div class="shelfrow">
+        ${fridge.length ? fridge.map((it,i)=>html`<${Jar} key=${it.id} it=${it} now=${now} i=${i} onClick=${()=>setSheet({type:'item',id:it.id})}/>`)
+          : html`<div class="emptyshelf"><div class="ghostjar"></div>Your shelf is clear.</div>`}
+      </div>
+      <div class="steel"></div>
+      ${items.some(i=>i.store==='freezer') && html`<div>
+        <div class="shelfgap"></div><div class="label" style=${{position:'static',padding:'6px 0 0'}}>Freezer</div>
+        <div class="shelfrow" style=${{minHeight:150}}>${sorted.filter(i=>i.store==='freezer').map((it,i)=>html`<${Jar} key=${it.id} it=${it} now=${now} i=${i} onClick=${()=>setSheet({type:'item',id:it.id})}/>`)}</div>
+        <div class="steel"></div></div>`}
+      <div style=${{height:14}}></div>
+    </section>
+
+    ${idea && html`<section class="section">
+      <h2 class="serif">Tonight</h2>
+      <div class="card idea"><div class="kicker" style=${{fontSize:11,fontWeight:800,letterSpacing:'.12em',color:'#8a6a1a',textTransform:'uppercase'}}>Uses what ends first</div>
+        <h3 class="serif">${idea.t}</h3><p>${idea.how}</p>
+        <div class="chips">${idea.have.map(u=>html`<span key=${u} class="chip">${DISH[u].name}</span>`)}</div></div>
+    </section>`}
+
+    ${items.length>0 && html`<section class="section">
+      <h2 class="serif">This week</h2>
+      <div class="card"><${Timeline} items=${sorted} now=${now}/></div>
+      <div class="row" style=${{marginTop:12}}>
+        <button class="btn" onClick=${remind}>${I.cal} Calendar</button>
+        <button class="btn" onClick=${notify}>${I.bell} ${st.notify?'Alerts on':'Alerts'}</button>
+      </div>
+    </section>`}
+
+    <p class="fine"><b>Times follow USDA guidance</b> for cooked leftovers kept at 40°F or below: meats, sides and pie 3 to 4 days, gravy 1 to 2, cranberry sauce 10 to 14. The clock uses the short end. Freezer food stays safe; its months are for best taste. Get leftovers into the fridge within 2 hours. When in doubt, throw it out.<br/><br/>
+    <b>Photos never leave your phone.</b> The dish guess runs on the phone. The first snap downloads a 147 MB dish model once (Wi-Fi is best); until then you pick the dish yourself. Alerts only fire while the app is open, and on iPhone only from the Home Screen; the calendar file always works. iPhones don't vibrate for web apps.</p>
+
+    <button class="fab" onClick=${openCam}><span class="lens"></span>Snap a leftover</button>
+
+    ${sheet && html`<div class="scrim" onClick=${()=>setSheet(null)}></div>`}
+    ${sheet?.type==='snap' && html`<${SnapSheet} s=${sheet} now=${now} onClose=${()=>setSheet(null)} onSave=${it=>{ upd(xs=>[...xs,it]); setSheet(null); buzz([15,40,15]); setToast(`${DISH[it.dish].name} added · good until ${fmtWhen(goodUntil(it))}`); }}/>`}
+    ${sheet?.type==='item' && items.find(i=>i.id===sheet.id) && html`<${ItemSheet} it=${items.find(i=>i.id===sheet.id)} now=${now}
+        onClose=${()=>setSheet(null)} onReheat=${it=>setSheet({type:'reheat',dish:it.dish})}
+        onChange=${p=>upd(xs=>xs.map(i=>i.id===sheet.id?{...i,...p}:i))} onRemove=${why=>{ upd(xs=>xs.filter(i=>i.id!==sheet.id)); setSheet(null); buzz(20); setToast(why); }}/>`}
+    ${sheet?.type==='reheat' && html`<${Reheat} dish=${sheet.dish} onClose=${()=>setSheet(null)}/>`}
+    ${toast && html`<div class="toast">${toast}</div>`}
+  </div>`;
+}
+
+function Jar({ it, now, i, onClick }){
+  const t=tone(it,now);
+  return html`<button class=${`jar ${it.store==='freezer'?'freezer':''} ${t==='past'?'isPast':''}`} style=${{animationDelay:`${i*70}ms`}} onClick=${onClick} aria-label=${DISH[it.dish].name}>
+    <div class="shadow"></div><div class="lid"></div>
+    <div class="glass"><div class="food" style=${{backgroundImage:`url("${it.photo}")`}}></div><div class="frost"></div><div class="shine"></div><div class="shine2"></div></div>
+    <span class=${`badge t-${t}`}>${badge(it,now)}</span>
+    <div class="name">${DISH[it.dish].name}</div>
+    <div class="sub">${it.store==='freezer'?'til '+fmtDate(goodUntil(it)):fmtWhen(goodUntil(it))}</div>
+  </button>`;
+}
+
+function Timeline({ items, now }){
+  const start=new Date(now-D); start.setHours(0,0,0,0); const s=start.getTime(), span=7*D;
+  const pct=ms=>Math.max(0,Math.min(100,(ms-s)/span*100));
+  const col={green:'var(--olive)',amber:'var(--amber)',red:'var(--red)',past:'#8b8b84'};
+  return html`<div class="tl">
+    <div class="tlaxis">${[...Array(7)].map((_,i)=>html`<span key=${i}>${new Date(s+i*D).toLocaleDateString('en-US',{weekday:'short'})}</span>`)}</div>
+    <div style=${{position:'relative'}}>
+      ${items.map(it=>{ const t=tone(it,now); return html`<div key=${it.id} class="tlrow"><div class="n">${DISH[it.dish].name}</div>
+        ${it.store==='freezer' ? html`<div class="ice">frozen · best by ${fmtDate(goodUntil(it))}</div>`
+        : html`<div class="track">
+            <div class="bar max" style=${{left:pct(it.cooked)+'%',width:(pct(maxUntil(it))-pct(it.cooked))+'%',background:col[t]}}></div>
+            <div class="bar" style=${{left:pct(it.cooked)+'%',width:(pct(goodUntil(it))-pct(it.cooked))+'%',background:col[t]}}></div></div>`}
+      </div>`; })}
+      <div class="nowline" style=${{left:`calc(92px + (100% - 92px) * ${pct(now)/100})`,top:-2}}></div>
+    </div></div>`;
+}
+
+function SnapSheet({ s, now, onClose, onSave }){
+  const m=useModel();
+  const [guess,setGuess]=useState(null);
+  const [dish,setDish]=useState(null);
+  const [all,setAll]=useState(false);
+  const [store,setStore]=useState('fridge');
+  const def=lastThu5(now);
+  const [cooked,setCooked]=useState(()=> now-def<=4*D ? def : now);
+  useEffect(()=>{ let off=false; Model.classify(s.canvas).then(r=>{ if(off) return; const top=r.slice(0,3); setGuess(top); setDish(d=>d||top[0]?.key); }).catch(()=>{ if(!off) setAll(true); }); return ()=>{off=true}; },[]);
+  const picks = guess && !all ? guess : KEYS.map(k=>({key:k}));
+  const times=[[def,fmtWhen(def)],[(()=>{const d=new Date(now-D);d.setHours(19,0,0,0);return d.getTime();})(),'Last night 7 PM'],[now,'Just now']];
+  const local=ms=>{ const d=new Date(ms); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,16); };
+  return html`<div class="sheet" role="dialog" aria-label="Label this leftover"><div class="grab"></div>
+    <h2 class="serif">What's in it?</h2>
+    <div class="photo" style=${{backgroundImage:`url(${s.photo})`}}>${!guess && !all && html`<div class="scan"></div>`}</div>
+    <div class="status">${ guess ? html`<span>Best guesses, made on your phone${Model.device?' ('+(Model.device==='webgpu'?'GPU':'CPU')+')':''}</span>`
+      : all||m.stage==='error' ? html`<span>Pick the dish</span>`
+      : m.stage==='download' ? html`<span>Getting the dish model, ${m.pct}%</span><div class="prog"><i style=${{width:m.pct+'%'}}></i></div>`
+      : html`<span>Looking...</span>` }</div>
+    <div class="picks">${picks.map((p,i)=>html`<button key=${p.key} class=${`pick ${dish===p.key?'on':''} ${guess&&!all&&i===0&&dish!==p.key?'top':''}`} onClick=${()=>setDish(p.key)}>
+      ${DISH[p.key].name}${p.score!=null && html`<small>${Math.round(p.score*100)}%</small>`}</button>`)}</div>
+    ${!all && html`<button class="more" onClick=${()=>setAll(true)}>${guess?'Not these? Show all dishes':'Pick it myself'}</button>`}
+    <div class="field"><label>Where</label><div class="seg">
+      ${['fridge','freezer'].map(x=>html`<button key=${x} class=${store===x?'on':''} onClick=${()=>setStore(x)}>${x==='fridge'?'Fridge':'Freezer'}</button>`)}</div></div>
+    <div class="field"><label>Cooked</label><div class="picks">
+      ${times.map(([ms,l])=>html`<button key=${l} class=${`pick ${Math.abs(cooked-ms)<60e3?'on':''}`} onClick=${()=>setCooked(ms)}>${l}</button>`)}</div>
+      <input type="datetime-local" style=${{marginTop:8}} value=${local(cooked)} onChange=${e=>{ const v=new Date(e.target.value).getTime(); if(!isNaN(v)) setCooked(Math.min(v,Date.now())); }}/></div>
+    ${dish && html`<p class="lead" style=${{marginTop:14}}>${DISH[dish].name}: ${store==='fridge'?`${DISH[dish].fridge[0]} to ${DISH[dish].fridge[1]} days in the fridge, good until `:`${DISH[dish].freezer.join(' to ')} months best quality, until `}<b class="mono">${store==='fridge'?fmtWhen(cooked+DISH[dish].fridge[0]*D):fmtDate(Date.now()+DISH[dish].freezer[0]*30*D)}</b></p>`}
+    <div class="row" style=${{marginTop:6}}><button class="btn" onClick=${onClose}>Cancel</button>
+      <button class="btn dark" disabled=${!dish} style=${{opacity:dish?1:.4}} onClick=${()=>onSave({id:Math.random().toString(36).slice(2),dish,photo:s.photo,store,cooked,frozeAt:store==='freezer'?Date.now():undefined})}>Start the clock</button></div>
+  </div>`;
+}
+
+function ItemSheet({ it, now, onClose, onReheat, onChange, onRemove }){
+  const g=goodUntil(it), x=DISH[it.dish], t=tone(it,now);
+  return html`<div class="sheet"><div class="grab"></div>
+    <div style=${{display:'flex',gap:14,alignItems:'center'}}>
+      <div class="photo" style=${{width:96,height:96,flex:'0 0 auto',borderRadius:18,backgroundImage:`url("${it.photo}")`}}></div>
+      <div><h2 class="serif">${x.name}</h2>
+        <div class="lead" style=${{margin:0}}>${it.store==='freezer'?`Frozen. Best by ${fmtDate(g)}.`:t==='past'?`Past its safe window (${fmtWhen(g)}). Toss it.`:`Good until ${fmtWhen(g)}`}</div>
+        <div class="lead mono" style=${{margin:'4px 0 0',fontSize:12}}>cooked ${fmtWhen(it.cooked)}</div></div></div>
+    <div class="row" style=${{marginTop:16}}>
+      ${x.kind!=='cold' && it.store==='fridge' && t!=='past' && html`<button class="btn sun" onClick=${()=>onReheat(it)}>${I.flame} Reheat</button>`}
+      ${it.store==='fridge' && t!=='past' && html`<button class="btn" onClick=${()=>{ onChange({store:'freezer',frozeAt:Date.now()}); onClose(); }}>Move to freezer</button>`}
+      ${it.store==='freezer' && html`<button class="btn" onClick=${()=>{ onChange({store:'fridge',cooked:Date.now()-Math.max(0,DISH[it.dish].fridge[0]-1)*D,frozeAt:undefined}); onClose(); }}>Thawing in fridge</button>`}
+    </div>
+    ${it.store==='freezer' && html`<p class="lead" style=${{marginTop:8}}>Thawed in the fridge, eat within a day.</p>`}
+    <div class="row" style=${{marginTop:10}}>
+      <button class="btn dark" onClick=${()=>onRemove(`${x.name} eaten`)}>Ate it</button>
+      <button class="btn" onClick=${()=>onRemove(`${x.name} tossed`)}>Tossed it</button></div>
+  </div>`;
+}
+
+function Reheat({ dish, onClose }){
+  const x=DISH[dish]; const presets=[1,2,3,4,5,8,10,15,20];
+  const [mins,setMins]=useState(x.min||3);
+  const [end,setEnd]=useState(null);
+  const [left,setLeft]=useState(null);
+  const [done,setDone]=useState(false);
+  const lock=useRef(null);
+  useEffect(()=>{ if(!end) return; const t=setInterval(()=>{ const l=end-Date.now(); if(l<=0){ clearInterval(t); setLeft(0); setEnd(null); setDone(true); Sound.chime(); buzz([200,100,200,100,400]);
+      try{ document.hidden && 'Notification' in window && Notification.permission==='granted' && new Notification('Leftover Clock',{body:`${x.name} timer done. Check 165°F.`}); }catch{}
+      try{ lock.current && lock.current.release(); }catch{} } else setLeft(l); },200); return ()=>clearInterval(t); },[end]);
+  useEffect(()=>()=>{ try{ lock.current && lock.current.release(); }catch{} Sound.stop(); },[]);
+  const start=async()=>{ Sound.unlock(); setDone(false); setEnd(Date.now()+mins*60e3); setLeft(mins*60e3); try{ lock.current=await navigator.wakeLock?.request('screen'); }catch{} };
+  const total=mins*60e3, frac=left==null?1:left/total, r=88, C=2*Math.PI*r;
+  const mm=String(Math.floor((left??total)/60e3)), ss=String(Math.floor((left??total)%60e3/1000)).padStart(2,'0');
+  return html`<div class="sheet"><div class="grab"></div>
+    <h2 class="serif">Reheat ${x.name.toLowerCase()}</h2>
+    <p class="lead">${x.how}</p>
+    <svg class="ring" width="220" height="220" viewBox="0 0 220 220">
+      <circle cx="110" cy="110" r=${r} fill="none" stroke="#E2E4D8" stroke-width="14"/>
+      <circle cx="110" cy="110" r=${r} fill="none" stroke=${done?'#6B7A3A':'#D98C3A'} stroke-width="14" stroke-linecap="round" stroke-dasharray=${C} stroke-dashoffset=${C*(1-frac)} transform="rotate(-90 110 110)" style=${{transition:'stroke-dashoffset .25s linear'}}/>
+      <text x="110" y="124" text-anchor="middle" class="t">${done?'Done':`${mm}:${ss}`}</text></svg>
+    ${!end && !done && html`<div class="picks" style=${{justifyContent:'center',marginBottom:12}}>${presets.map(p=>html`<button key=${p} class=${`pick ${mins===p?'on':''}`} onClick=${()=>setMins(p)}>${p} min</button>`)}</div>`}
+    <div class="temp"><span class="deg">165°F</span><span style=${{fontSize:14}}>${done?'Check the thickest part with a thermometer. Not there yet? Stir and heat 1 more minute.':'Leftovers are safe once the center hits 165°F. Stir halfway for even heat.'}</span></div>
+    <div class="row" style=${{marginTop:14}}>
+      <button class="btn" onClick=${onClose}>Close</button>
+      ${end ? html`<button class="btn" onClick=${()=>{ setEnd(null); setLeft(null); }}>Stop</button>`
+        : html`<button class="btn dark" onClick=${done?()=>{ setMins(1); setDone(false); setTimeout(start,0); }:start}>${done?'1 more minute':'Start timer'}</button>`}
+    </div></div>`;
+}
+
+/* ---------- home screen icon + manifest ---------- */
+(function(){
+  try {
+    const c=document.createElement('canvas'); c.width=c.height=180; const g=c.getContext('2d');
+    g.fillStyle='#F0EEE9'; g.fillRect(0,0,180,180); g.fillStyle='#6B7A3A'; g.beginPath(); g.arc(90,98,62,0,7); g.fill();
+    g.fillStyle='#F0EEE9'; g.beginPath(); g.arc(90,98,46,0,7); g.fill(); g.fillStyle='#E3B23C'; g.fillRect(70,20,40,18);
+    g.strokeStyle='#2E3320'; g.lineWidth=10; g.lineCap='round'; g.beginPath(); g.moveTo(90,98); g.lineTo(90,68); g.moveTo(90,98); g.lineTo(112,112); g.stroke();
+    const icon=c.toDataURL('image/png'); document.getElementById('touchicon').href=icon;
+    const man={name:'Leftover Clock',short_name:'Leftovers',start_url:location.href,display:'standalone',background_color:'#F0EEE9',theme_color:'#F0EEE9',icons:[{src:icon,sizes:'180x180',type:'image/png'}]};
+    const l=document.createElement('link'); l.rel='manifest'; l.href=URL.createObjectURL(new Blob([JSON.stringify(man)],{type:'application/manifest+json'})); document.head.appendChild(l);
+  } catch {}
+})();
+
+ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);
+</script>
+</body>
+</html>
